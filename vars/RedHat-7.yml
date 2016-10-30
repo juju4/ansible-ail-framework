@@ -1,0 +1,38 @@
+---
+
+ail_pkg:
+  - git
+  - python-devel
+  - "@Development tools"
+  - libffi-devel
+  - openssl-devel
+  - libfuzzy-devel
+  - wget
+  - python-pip
+  - python-virtualenv
+  - python-devel
+  - freetype-devel
+  - screen
+  - gcc-g++
+#  - python-tk
+  - unzip
+  - snappy-devel
+  - cmake
+  - numpy
+#  - libadns1
+#  - libadns1-devel
+  - libev-devel
+  - gmp-devel
+  - graphviz
+#  - libfuzzy-devel
+  - supervisor
+  - redis
+
+ail_services:
+    - redis
+    - supervisord
+
+supervisor_confdir: /etc/supervisord.d
+supervisor_ext: ini
+supervisor_service: supervisord
+

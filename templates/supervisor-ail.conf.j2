@@ -1,0 +1,12 @@
+## /etc/supervisor/conf.d/ail.conf
+[program:ail]
+command={{ ail_virtualenv }}/bin/python {{ ail_root }}/var/www/Flask_server.py
+directory={{ ail_root }}/var/www
+user={{ ail_user }}
+stdout_logfile=/var/log/supervisor/ail-framework.log
+redirect_stderr=true
+autostart=true
+autorestart=true
+startsecs=10
+environment=AIL_HOME="{{ ail_root }}",AIL_BIN="{{ ail_root }}/bin",AIL_FLASK="{{ ail_root }}/var/www",AIL_REDIS="{{ ail_root }}/redis/src",AIL_LEVELDB="{{ ail_root }}/redis-leveldb"
+

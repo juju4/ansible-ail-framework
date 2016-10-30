@@ -1,0 +1,26 @@
+---
+
+ail_user: _ail
+ail_home: /var/_ail
+ail_root: "{{ ail_home }}/AIL"
+## Note: virtualenv not inside AIL to avoid conflict with git operations
+ail_virtualenv: "{{ ail_home }}/AILENV"
+
+ail_enable_pystemonfeeder: false
+pystemon_redis_host: localhost
+pystemon_redis_port: 6379
+pystemon_redis_db: 10
+
+SBADMIN_VERSION: '3.3.7'
+JQVERSION: "1.12.4"
+
+ail_redislvdbhost: 127.0.0.1
+ail_redislvdbdir: "{{ ail_root }}/LEVEL_DB_DATA"
+ail_redislvdb_nb_db: 13
+
+ail_redis_bind: 127.0.0.1
+#ail_redis_bind: 192.168.1.100 10.0.0.1
+
+## TODO
+#ail_term_tracklist: /path/file
+

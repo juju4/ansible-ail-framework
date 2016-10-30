@@ -1,0 +1,5 @@
+---
+
+- name: supervisor update
+  service: name={{ supervisor_service }} state=restarted sleep=5
+

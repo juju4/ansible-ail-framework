@@ -1,0 +1,10 @@
+---
+
+supervisor_confdir: /etc/supervisord.d
+supervisor_ext: ini
+supervisor_service: supervisord
+
+ail_services:
+    - redis
+    - supervisord
+

@@ -1,0 +1,11 @@
+## /etc/supervisor/conf.d/pystemonfeeder.conf
+[program:pystemonfeeder]
+command={{ ail_root }}/bin/feeder/pystemon-feeder.py
+directory={{ ail_root }}
+user={{ ail_user }}
+stdout_logfile=/var/log/supervisor/pystemon-feeder.log
+redirect_stderr=true
+autostart=true
+autorestart=true
+startsecs=10
+

@@ -1,0 +1,12 @@
+## /etc/supervisor/conf.d/ail-logqueue.conf
+[program:ail-logqueue]
+command={{ ail_virtualenv }}/bin/log_subscriber -p 6380 -c Queuing -l ../logs/
+directory={{ ail_virtualenv }}
+user={{ ail_user }}
+stdout_logfile=/var/log/supervisor/ail-logqueue.log
+redirect_stderr=true
+autostart=true
+autorestart=true
+startsecs=10
+environment=AIL_HOME="{{ ail_root }}",AIL_BIN="{{ ail_root }}/bin",AIL_FLASK="{{ ail_root }}/var/www",AIL_REDIS="{{ ail_root }}/redis/src",AIL_LEVELDB="{{ ail_root }}/redis-leveldb",PATH="$AIL_LEVELDB:$AIL_REDIS:$AIL_HOME:$PATH",AILENV="{{ ail_root}}"
+
