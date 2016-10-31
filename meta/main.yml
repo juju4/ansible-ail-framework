@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: juju4
-  description: TEMPLATE
+  description: CIRCL.LU Analysis of Information Leaks framework aka AIL framework
   license: BSD
   min_ansible_version: 1.9
   #
@@ -12,14 +12,12 @@ galaxy_info:
   platforms:
   - name: EL
     versions:
-     - 6
+#     - 6
      - 7
   - name: Ubuntu
     versions:
     - trusty
     - xenial
-  - name: Debian
-    versions:
   #
   # Below are all categories currently available. Just as with
   # the platforms above, uncomment those that apply to your role.
