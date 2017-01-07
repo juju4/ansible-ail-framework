@@ -29,3 +29,12 @@
     - /var/_ail/AIL/configs/*.conf
   notify:
     - supervisor update
+
+## missing part for redis role
+- block:
+    - name: ensure run directory exists
+      file: dest=/run/redis state=directory mode=0755 owner=redis group=redis
+    - name: ensure pid directory for redis user at reboot (systemd-tmpfiles)
+      lineinfile: dest=/etc/tmpfiles.d/redis.conf line='    d    /run/redis   0755 redis redis - -' create=yes
+  when: ansible_service_mgr == 'systemd'
+
