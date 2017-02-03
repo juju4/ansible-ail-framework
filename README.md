@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/juju4/ansible-ail-framework.svg?branch=master)](https://travis-ci.org/juju4/ansible-ail-framework)
+[![Build Status - Master](https://travis-ci.org/juju4/ansible-ail-framework.svg?branch=master)](https://travis-ci.org/juju4/ansible-ail-framework)
+[![Build Status - Devel](https://travis-ci.org/juju4/ansible-ail-framework.svg?branch=devel)](https://travis-ci.org/juju4/ansible-ail-framework/branches)
 # CIRCL AIL framework ansible role
 
 Ansible role to setup CIRCL.LU Analysis of Information Leaks framework
@@ -11,6 +12,7 @@ https://www.circl.lu/assets/files/201603owasp_circl.pdf
 ### Ansible
 It was tested on the following versions:
  * 2.0
+ * 2.2
 
 ### Operating systems
 

@@ -154,7 +154,7 @@
       "image": "ubuntu-16-04-x64",
       "region": "nyc2",
       "size": "512mb",
-      "droplet_name": "adduser",
+      "droplet_name": "ail-framework",
       "snapshot_name": "ail-framework-packer-{{isotime \"2006-01-02\"}}"
     }
   ],
