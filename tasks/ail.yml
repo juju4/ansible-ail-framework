@@ -138,6 +138,8 @@
 - name: disable redis upstream package service
   service: name=redis-server enabled=no state=stopped
 
+- meta: flush_handlers
+
 - name: ensure services are enabled and started
   service: name={{ item }} enabled=yes state=started
   with_items: "{{ ail_services }}"
