@@ -17,6 +17,13 @@
   become: yes
   become_user: "{{ ail_user }}"
 
+- name: re-enable adns pip dependency
+  replace:
+    dest: "{{ ail_root }}/pip_packages_requirement.txt"
+    regexp: '^#https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/adns-python/adns-python-1.2.1.tar.gz'
+    replace: 'https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/adns-python/adns-python-1.2.1.tar.gz'
+    backup: yes
+
 - name: install pip dependencies
   pip: "requirements={{ ail_root }}/pip_packages_requirement.txt virtualenv={{ ail_virtualenv }}"
 - name: extra configuration for AILENV
