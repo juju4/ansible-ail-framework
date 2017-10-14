@@ -1,4 +1,5 @@
 ## /etc/supervisor/conf.d/ail-queues.conf
+# {{ ansible_managed }}
 [program:ail-queues]
 command={{ ail_virtualenv }}/bin/python {{ ail_root }}/bin/launch_queues.py
 #directory={{ ail_root }}/bin

@@ -1,4 +1,5 @@
 ## /etc/supervisor/conf.d/ail-redis-leveldb2014.conf
+# {{ ansible_managed }}
 [program:ail-redis-leveldb2014]
 command=redis-leveldb -H '{{ ail_redislvdbhost }}' -D '{{ ail_redislvdbdir }}/2014/' -P 2014 -M '{{ ail_redislvdb_nb_db }}'
 directory={{ ail_root }}

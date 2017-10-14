@@ -1,4 +1,5 @@
 ## /etc/supervisor/conf.d/ail-redis6381.conf
+# {{ ansible_managed }}
 [program:ail-redis6381]
 command=redis-server {{ ail_root }}/configs/6381.conf
 directory={{ ail_root }}

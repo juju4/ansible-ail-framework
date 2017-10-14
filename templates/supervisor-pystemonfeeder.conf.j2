@@ -1,4 +1,5 @@
 ## /etc/supervisor/conf.d/pystemonfeeder.conf
+# {{ ansible_managed }}
 [program:pystemonfeeder]
 command={{ ail_root }}/bin/feeder/pystemon-feeder.py
 directory={{ ail_root }}
