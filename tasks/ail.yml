@@ -126,7 +126,7 @@
     - WebStats
     - ModuleStats
     - SQLInjectionDetection
-    - BrowseWarningPaste
+#    - BrowseWarningPaste
     - SentimentAnalysis
   notify:
     - supervisor update
@@ -187,7 +187,7 @@
     - ail-script-WebStats
     - ail-script-ModuleStats
     - ail-script-SQLInjectionDetection
-    - ail-script-BrowseWarningPaste
+#    - ail-script-BrowseWarningPaste
     - ail-script-SentimentAnalysis
 
 - name: Wait for Redis to be started
