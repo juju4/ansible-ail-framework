@@ -28,6 +28,10 @@ ail_pkg:
   - graphviz
   - libfuzzy-dev
   - supervisor
+  - python3-pip
+
+ail_pip3_deps:
+  - pymisp
 
 ail_services:
 #    - redis-server
