@@ -1,0 +1,42 @@
+---
+
+ail_pkg:
+  - git
+  - build-essential
+  - libffi-dev
+  - libssl-dev
+  - libfuzzy-dev
+  - wget
+  - python3-pip
+  - python3-virtualenv
+  - python3-dev
+  - libfreetype6-dev
+  - screen
+  - g++
+  - python-tk
+  - unzip
+  - libsnappy-dev
+  - cmake
+  - libssl-dev
+  - libfreetype6-dev
+  - python-numpy
+  - libadns1
+  - libadns1-dev
+  - libev-dev
+  - libgmp-dev
+  - graphviz
+  - libfuzzy-dev
+  - supervisor
+  - python3-pip
+
+ail_pip3_deps:
+  - pymisp
+
+ail_services:
+#    - redis-server
+    - supervisor
+
+supervisor_confdir: /etc/supervisor/conf.d
+supervisor_ext: conf
+supervisor_service: supervisor
+

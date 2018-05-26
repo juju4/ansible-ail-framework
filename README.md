@@ -13,10 +13,11 @@ https://www.circl.lu/assets/files/201603owasp_circl.pdf
 It was tested on the following versions:
  * 2.0
  * 2.2
+ * 2.5
 
 ### Operating systems
 
-Tested with vagrant on Ubuntu 14.04, Kitchen test with trusty and centos7
+Tested on Ubuntu 16.04, 18.04
 
 ## Example Playbook
 
