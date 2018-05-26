@@ -2,15 +2,14 @@
 
 ail_pkg:
   - git
-  - python-dev
   - build-essential
   - libffi-dev
   - libssl-dev
   - libfuzzy-dev
   - wget
-  - python-pip
+  - python3-pip
   - python-virtualenv
-  - python-dev
+  - python3-dev
   - libfreetype6-dev
   - screen
   - g++
@@ -29,6 +28,7 @@ ail_pkg:
   - libfuzzy-dev
   - supervisor
   - python3-pip
+  - tor
 
 ail_pip3_deps:
   - pymisp
@@ -41,3 +41,4 @@ supervisor_confdir: /etc/supervisor/conf.d
 supervisor_ext: conf
 supervisor_service: supervisor
 
+python_bin: python3

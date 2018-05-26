@@ -28,7 +28,7 @@ galaxy_info:
   - security
 #dependencies: []
 dependencies:
-#  - juju4.redhat-epel
+  - juju4.redhat-epel
   - juju4.faup
   - juju4.tlsh
   - geerlingguy.redis

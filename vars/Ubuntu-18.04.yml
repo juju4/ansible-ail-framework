@@ -8,7 +8,7 @@ ail_pkg:
   - libfuzzy-dev
   - wget
   - python3-pip
-  - python3-virtualenv
+  - python-virtualenv
   - python3-dev
   - libfreetype6-dev
   - screen
@@ -28,6 +28,7 @@ ail_pkg:
   - libfuzzy-dev
   - supervisor
   - python3-pip
+  - tor
 
 ail_pip3_deps:
   - pymisp
@@ -40,3 +41,4 @@ supervisor_confdir: /etc/supervisor/conf.d
 supervisor_ext: conf
 supervisor_service: supervisor
 
+python_bin: python3

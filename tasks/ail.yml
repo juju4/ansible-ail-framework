@@ -19,13 +19,20 @@
 
 - name: re-enable adns pip dependency
   replace:
-    dest: "{{ ail_root }}/pip_packages_requirement.txt"
+    dest: "{{ ail_root }}/pip3_packages_requirement.txt"
     regexp: '^#https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/adns-python/adns-python-1.2.1.tar.gz'
     replace: 'https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/adns-python/adns-python-1.2.1.tar.gz'
     backup: yes
 
+# FIXME! pip3 fails on adns-python-1.2.1
+#   adnsmodule.c:62:8: error: unknown type name 'PyModuleDef'
 - name: install pip dependencies
-  pip: "requirements={{ ail_root }}/pip_packages_requirement.txt virtualenv={{ ail_virtualenv }}"
+  pip:
+    requirements: "{{ ail_root }}/pip3_packages_requirement.txt"
+    virtualenv: "{{ ail_virtualenv }}"
+    virtualenv_python: "{{ python_bin }}"
+  environment:
+    LC_ALL: C
 
 - name: install pip3 dependencies
   pip:

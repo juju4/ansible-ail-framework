@@ -2,15 +2,15 @@
 
 ail_pkg:
   - git
-  - python-devel
+  - python34-devel
   - "@Development tools"
   - libffi-devel
   - openssl-devel
   - libfuzzy-devel
   - wget
-  - python-pip
+  - python34-pip
   - python-virtualenv
-  - python-devel
+  - python34-devel
   - freetype-devel
   - screen
   - gcc-g++
@@ -36,3 +36,4 @@ supervisor_confdir: /etc/supervisord.d
 supervisor_ext: ini
 supervisor_service: supervisord
 
+python_bin: python3.4
