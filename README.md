@@ -3,9 +3,11 @@
 # CIRCL AIL framework ansible role
 
 Ansible role to setup CIRCL.LU Analysis of Information Leaks framework
-https://github.com/CIRCL/AIL-framework
-http://www.foo.be/cours/dess-20152016/AIL.pdf
-https://www.circl.lu/assets/files/201603owasp_circl.pdf
+* https://github.com/CIRCL/AIL-framework
+* http://www.foo.be/cours/dess-20152016/AIL.pdf
+* https://www.circl.lu/assets/files/201603owasp_circl.pdf
+
+There is an [official ansible role](https://github.com/CIRCL/AIL-framework/tree/master/ansible) included since Mar 2018.
 
 ## Requirements & Dependencies
 
