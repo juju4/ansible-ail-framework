@@ -21,6 +21,7 @@
     - { u: "https://github.com/BlackrockDigital/startbootstrap-sb-admin-2/archive/v{{ SBADMIN_VERSION }}.zip", d: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}-2.zip" }
     - { u: "http://canvasjs.com/fdm/chart/", d: "{{ ail_home }}/3rd-archives/canvasjs.zip" }
     - { u: "https://jqueryui.com/resources/download/jquery-ui-1.12.0.zip", d: "{{ ail_home }}/3rd-archives/jquery-ui.zip" }
+    - { u: "https://github.com/FortAwesome/Font-Awesome/archive/v{{ FONT_AWESOME_VERSION }}.zip", d: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{FONT_AWESOME_VERSION }}.zip" }
 
 - name: uncompress 3rd party archives
   unarchive: "src={{ item.s }} dest={{ item.d }} creates={{ item.c }} owner={{ ail_user }}"
@@ -29,6 +30,7 @@
     - { s: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}-2.zip", d: "{{ ail_home }}/3rd-archives", c: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-2-{{SBADMIN_VERSION}}/js" }
     - { s: "{{ ail_home }}/3rd-archives/canvasjs.zip", d: "{{ ail_home }}/3rd-archives", c: "{{ ail_home }}/3rd-archives/jquery.canvasjs.min.js" }
     - { s: "{{ ail_home }}/3rd-archives/jquery-ui.zip", d: "{{ ail_home }}/3rd-archives", c: "{{ ail_home }}/3rd-archives/jquery-ui-1.12.0/jquery-ui.min.js" }
+    - { s: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{FONT_AWESOME_VERSION }}.zip", d: "{{ ail_home }}/3rd-archives", c: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{FONT_AWESOME_VERSION }}/CONTRIBUTING.md" }
 
 - name: copy relevant files of 3rd party archives - js
   copy: src={{ item }} dest="{{ ail_root }}/var/www/static/js" mode=0644 owner={{ ail_user }}
@@ -43,7 +45,7 @@
   copy: src={{ item }} dest="{{ ail_root }}/var/www/static/fonts" mode=0644 owner={{ ail_user }}
   with_fileglob:
     - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{SBADMIN_VERSION}}/fonts/*"
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{SBADMIN_VERSION}}/font-awesome/*"
+    - "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{FONT_AWESOME_VERSION }}/fonts/*"
 
 - name: copy relevant files of 3rd party archives - css
   copy: src={{ item }} dest="{{ ail_root }}/var/www/static/css" mode=0644 owner={{ ail_user }}

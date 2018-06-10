@@ -23,14 +23,22 @@
     regexp: '^#https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/adns-python/adns-python-1.2.1.tar.gz'
     replace: 'https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/adns-python/adns-python-1.2.1.tar.gz'
     backup: yes
+  when: python_bin != 'python3'
 
-# FIXME! pip3 fails on adns-python-1.2.1
-#   adnsmodule.c:62:8: error: unknown type name 'PyModuleDef'
+- name: Initialize python3 virtualenv
+  command: "virtualenv -p {{ python_bin }} {{ ail_virtualenv }}"
+  args:
+    creates: "{{ ail_virtualenv }}/bin/{{ python_bin }}"
+
+# FIXME! pip fails. pip module pointing wrong pip version
+#   adnsmodule.c:62:8: error: unknown type name 'PyModuleDef' => using python2 instead of python3???
 - name: install pip dependencies
-  pip:
-    requirements: "{{ ail_root }}/pip3_packages_requirement.txt"
-    virtualenv: "{{ ail_virtualenv }}"
-    virtualenv_python: "{{ python_bin }}"
+#  pip:
+#    requirements: "{{ ail_root }}/pip3_packages_requirement.txt"
+#    virtualenv: "{{ ail_virtualenv }}"
+##    virtualenv_command: "virtualenv -p {{ python_bin }}"
+#    virtualenv_python: "{{ python_bin }}"
+  command: "{{ ail_virtualenv }}/bin/pip3 install -r {{ ail_root }}/pip3_packages_requirement.txt"
   environment:
     LC_ALL: C
 
@@ -39,7 +47,7 @@
     name: "{{ item }}"
     executable: pip3
   with_items: "{{ ail_pip3_deps | default([]) }}"
-  when: ansible_distribution_release == 'xenial'
+  when: ansible_distribution_release == 'xenial' or ansible_distribution_release == 'bionic'
 
 - name: extra configuration for AILENV
   lineinfile: "dest={{ ail_virtualenv }}/bin/activate line={{ item }} backup=yes"
@@ -48,7 +56,7 @@
     - "export AIL_BIN={{ ail_root }}/bin"
     - "export AIL_FLASK={{ ail_root }}/var/www"
     - "export AIL_REDIS={{ ail_root }}/redis/src"
-    - "export AIL_LEVELDB={{ ail_root }}/redis-leveldb"
+    - "export AIL_ARDB={{ ail_root }}/ardb/src"
 
 - name: ensure appropriate directories exist
   file: "dest={{ item }} state=directory mode=0755 owner={{ ail_user }}"
@@ -56,11 +64,6 @@
     - "{{ ail_root }}/PASTES"
     - "{{ ail_root }}/Blooms"
     - "{{ ail_root }}/dumps"
-    - "{{ ail_root }}/LEVEL_DB_DATA/2013"
-    - "{{ ail_root }}/LEVEL_DB_DATA/2014"
-    - "{{ ail_root }}/LEVEL_DB_DATA/2016"
-    - "{{ ail_root }}/LEVEL_DB_DATA/2017"
-    - "{{ ail_root }}/LEVEL_DB_DATA/{{ ansible_date_time.year }}"
 
 - block:
     - name: review pystemon-feeder settings
@@ -117,11 +120,6 @@
     - ail-redis6380
     - ail-redis6381
     - ail-redis6382
-    - ail-redis-leveldb2013
-    - ail-redis-leveldb2014
-    - ail-redis-leveldb2016
-    - ail-redis-leveldb2017
-    - "ail-redis-leveldb{{ ansible_date_time.year }}"
     - ail-logqueue
     - ail-queues
 ## Note: repeatedly output state? not sure needed as daemon
@@ -187,11 +185,6 @@
     - ail-redis6379
     - ail-redis6381
     - ail-redis6382
-    - ail-redis-leveldb2013
-    - ail-redis-leveldb2014
-    - ail-redis-leveldb2016
-    - ail-redis-leveldb2017
-    - "ail-redis-leveldb{{ ansible_date_time.year }}"
     - ail-logqueue
     - ail-queues
     - ail-script-Global

@@ -13,4 +13,5 @@
 #- include: redhat.yml
 #  when: ansible_os_family == "RedHat" or ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
+- include: ardb.yml
 - include: ail.yml

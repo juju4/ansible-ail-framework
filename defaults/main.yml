@@ -5,6 +5,7 @@ ail_home: /var/_ail
 ail_root: "{{ ail_home }}/AIL"
 ## Note: virtualenv not inside AIL to avoid conflict with git operations
 ail_virtualenv: "{{ ail_home }}/AILENV"
+ardb_root: "{{ ail_home }}/ARDB"
 
 ail_enable_pystemonfeeder: false
 pystemon_redis_host: localhost
@@ -13,6 +14,7 @@ pystemon_redis_db: 10
 
 SBADMIN_VERSION: '3.3.7'
 JQVERSION: "1.12.4"
+FONT_AWESOME_VERSION: '4.7.0'
 
 ail_redislvdbhost: 127.0.0.1
 ail_redislvdbdir: "{{ ail_root }}/LEVEL_DB_DATA"

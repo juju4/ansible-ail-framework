@@ -32,6 +32,6 @@ dependencies:
   - juju4.faup
   - juju4.tlsh
   - geerlingguy.redis
-  - juju4.redis-leveldb
+#  - juju4.redis-leveldb
   - juju4.pystemon
 

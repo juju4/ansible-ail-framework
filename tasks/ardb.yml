@@ -1,0 +1,13 @@
+---
+
+- name: git clone ARDB
+  git:
+    repo: https://github.com/yinqiwen/ardb.git
+    dest: "{{ ardb_root }}"
+  ignore_errors: true
+
+- name: build ARDB
+  command: make
+  args:
+    chdir: "{{ ardb_root }}"
+    creates: "{{ ardb_root }}/src/ardb-repair"
