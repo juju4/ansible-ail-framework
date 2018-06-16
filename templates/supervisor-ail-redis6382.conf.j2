@@ -1,7 +1,7 @@
 ## /etc/supervisor/conf.d/ail-redis6382.conf
 # {{ ansible_managed }}
 [program:ail-redis6382]
-command=redis-server {{ ail_root }}/configs/6382.conf
+command={{ ardb_root }}/src/ardb-server {{ ail_root }}/configs/6382.conf
 directory={{ ail_root }}/bin
 user={{ ail_user }}
 stdout_logfile=/var/log/supervisor/ail-redis6382.log
@@ -9,5 +9,5 @@ redirect_stderr=true
 autostart=true
 autorestart=true
 startsecs=10
-environment=AIL_HOME="{{ ail_root }}",AIL_BIN="{{ ail_root }}/bin",AIL_FLASK="{{ ail_root }}/var/www",AIL_REDIS="{{ ail_root }}/redis/src",AIL_ARDB="{{ ail_root }}/ardb/src",PATH="$AIL_ARDB:$AIL_REDIS:$AIL_HOME:$PATH",AILENV="{{ ail_root}}"
+environment=AIL_HOME="{{ ail_root }}",AIL_BIN="{{ ail_root }}/bin",AIL_FLASK="{{ ail_root }}/var/www",AIL_REDIS="{{ ail_root }}/redis/src",AIL_ARDB="{{ ardb_root }}/src",PATH="$AIL_ARDB:$AIL_REDIS:$AIL_HOME:$PATH",AILENV="{{ ail_root}}"
 
