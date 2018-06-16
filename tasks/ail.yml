@@ -10,6 +10,8 @@
 - name: ensure right permissions for ail homedir
   file: "dest={{ ail_home }} state=directory mode=0755 owner={{ ail_user }}"
 
+- include: ardb.yml
+
 - name: git clone AIL
   git: repo=https://github.com/CIRCL/AIL-framework.git
        dest="{{ ail_root }}"
