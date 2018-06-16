@@ -45,7 +45,7 @@
 - name: install pip3 dependencies
   pip:
     name: "{{ item }}"
-    executable: pip3
+    executable: "{{ ail_virtualenv }}/bin/pip3"
   with_items: "{{ ail_pip3_deps | default([]) }}"
   when: ansible_distribution_release == 'xenial' or ansible_distribution_release == 'bionic'
 
