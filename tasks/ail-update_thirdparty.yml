@@ -30,7 +30,7 @@
     - { s: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}-2.zip", d: "{{ ail_home }}/3rd-archives", c: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-2-{{SBADMIN_VERSION}}/js" }
     - { s: "{{ ail_home }}/3rd-archives/canvasjs.zip", d: "{{ ail_home }}/3rd-archives", c: "{{ ail_home }}/3rd-archives/jquery.canvasjs.min.js" }
     - { s: "{{ ail_home }}/3rd-archives/jquery-ui.zip", d: "{{ ail_home }}/3rd-archives", c: "{{ ail_home }}/3rd-archives/jquery-ui-1.12.0/jquery-ui.min.js" }
-    - { s: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{FONT_AWESOME_VERSION }}.zip", d: "{{ ail_home }}/3rd-archives", c: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{FONT_AWESOME_VERSION }}/CONTRIBUTING.md" }
+    - { s: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{FONT_AWESOME_VERSION }}.zip", d: "{{ ail_home }}/3rd-archives", c: "{{ ail_home }}/3rd-archives/Font-Awesome-{{FONT_AWESOME_VERSION }}/CONTRIBUTING.md" }
 
 - name: copy relevant files of 3rd party archives - js
   copy: src={{ item }} dest="{{ ail_root }}/var/www/static/js" mode=0644 owner={{ ail_user }}
