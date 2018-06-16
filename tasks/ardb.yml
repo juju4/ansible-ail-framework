@@ -11,3 +11,5 @@
   args:
     chdir: "{{ ardb_root }}"
     creates: "{{ ardb_root }}/src/ardb-repair"
+  async: 1800
+  poll: 60
