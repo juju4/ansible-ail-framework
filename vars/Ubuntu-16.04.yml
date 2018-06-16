@@ -33,6 +33,8 @@ ail_pkg:
 
 ail_pip3_deps:
   - pymisp
+  - git+https://github.com/MISP/PyTaxonomies
+  - git+https://github.com/MISP/PyMISPGalaxies
 
 ail_services:
 #    - redis-server
