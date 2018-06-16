@@ -30,6 +30,7 @@ ail_pkg:
   - supervisor
   - libfreetype6-dev
   - libxft-dev
+  - wget
 
 ail_services:
 #    - redis-server

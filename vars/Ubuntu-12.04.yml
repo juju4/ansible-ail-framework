@@ -28,6 +28,7 @@ ail_pkg:
   - graphviz
   - libfuzzy-dev
   - supervisor
+  - wget
 
 ail_services:
 #    - redis-server
