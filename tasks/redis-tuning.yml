@@ -10,6 +10,7 @@
     - name: check current state of Transparent Huge Pages (THP)
       shell: "cat /sys/kernel/mm/transparent_hugepage/enabled"
       register: statethp
+      changed_when: false
     - name: disable Transparent Huge Pages (THP) in kernel (for redis)
       shell: "echo never > /sys/kernel/mm/transparent_hugepage/enabled"
       when: statethp is defined and statethp.stdout is defined and statethp.stdout.find("^never") == -1
@@ -37,4 +38,3 @@
     - name: ensure pid directory for redis user at reboot (systemd-tmpfiles)
       lineinfile: dest=/etc/tmpfiles.d/redis.conf line='    d    /run/redis   0755 redis redis - -' create=yes
   when: ansible_service_mgr == 'systemd'
-

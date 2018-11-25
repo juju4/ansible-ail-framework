@@ -13,8 +13,10 @@
 - include: ardb.yml
 
 - name: git clone AIL
-  git: repo=https://github.com/CIRCL/AIL-framework.git
-       dest="{{ ail_root }}"
+  git:
+    repo: https://github.com/CIRCL/AIL-framework.git
+    dest: "{{ ail_root }}"
+    version: HEAD
   ignore_errors: true
   become: yes
   become_user: "{{ ail_user }}"
@@ -177,7 +179,10 @@
 - meta: flush_handlers
 
 - name: ensure services are enabled and started
-  service: name={{ item }} enabled=yes state=started
+  service:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
   with_items: "{{ ail_services }}"
 
 - name: ensure supervisor programs are started
@@ -223,4 +228,3 @@
     - 6381
     - 6382
 #  changed_when: false
-

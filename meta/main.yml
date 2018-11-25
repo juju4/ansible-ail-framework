@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: ail-framework
   author: juju4
   description: CIRCL.LU Analysis of Information Leaks framework aka AIL framework
   license: BSD
@@ -34,4 +35,3 @@ dependencies:
   - geerlingguy.redis
 #  - juju4.redis-leveldb
   - juju4.pystemon
-

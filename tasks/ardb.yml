@@ -4,6 +4,7 @@
   git:
     repo: https://github.com/yinqiwen/ardb.git
     dest: "{{ ardb_root }}"
+    version: HEAD
   ignore_errors: true
 
 - name: build ARDB

@@ -7,4 +7,3 @@ supervisor_service: supervisord
 ail_services:
     - redis
     - supervisord
-
