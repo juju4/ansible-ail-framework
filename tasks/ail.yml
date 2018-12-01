@@ -110,7 +110,12 @@
   stat: "path={{ ail_root }}/bin/packages/config.cfg"
   register: ailcfg
 - name: copy sample config
-  copy: "src={{ ail_root }}/bin/packages/config.cfg.sample dest={{ ail_root }}/bin/packages/config.cfg mode=0644 owner={{ ail_user }} remote_src=true"
+  copy:
+    src: "{{ ail_root }}/bin/packages/config.cfg.sample"
+    dest: "{{ ail_root }}/bin/packages/config.cfg"
+    mode: '0644'
+    owner: "{{ ail_user }}"
+    remote_src: true
   when: not ailcfg.stat.exists
 
 - include: ail-update_thirdparty.yml
@@ -163,9 +168,17 @@
     - supervisor update
 
 - name: ensure absolute path in redis 6382 config
-  replace: dest={{ ail_root }}/configs/6382.conf regexp="^dir ../dumps/" replace="dir {{ ail_root }}/dumps/" backup=yes
+  replace:
+    dest: "{{ ail_root }}/configs/6382.conf"
+    regexp: "^dir ../dumps/"
+    replace: "dir {{ ail_root }}/dumps/"
+    backup: yes
 - name: ensure absolute path in launch_queues.py
-  replace: dest={{ ail_root }}/bin/launch_queues.py regexp="'\./Queue" replace="'{{ ail_root }}/bin/Queue" backup=yes
+  replace:
+    dest: "{{ ail_root }}/bin/launch_queues.py"
+    regexp: "'\./Queue"
+    replace: "'{{ ail_root }}/bin/Queue"
+    backup: yes
 - name: check for all_modules.txt
   stat: path={{ ail_root }}/doc/all_modules.txt
   register: allmodules
