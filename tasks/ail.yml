@@ -176,7 +176,7 @@
 - name: ensure absolute path in launch_queues.py
   replace:
     dest: "{{ ail_root }}/bin/launch_queues.py"
-    regexp: "'\./Queue"
+    regexp: "'./Queue"
     replace: "'{{ ail_root }}/bin/Queue"
     backup: yes
 - name: check for all_modules.txt
