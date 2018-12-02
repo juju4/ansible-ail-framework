@@ -46,7 +46,6 @@ before_install:
   - cp test/travis/initctl_faker test/
   # Customize container
   - 'sudo docker build --rm=true --file=test/travis/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible test'
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm pip install ansible-lint'
 
 script:
   - container_id=$(mktemp)
