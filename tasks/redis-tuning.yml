@@ -1,7 +1,12 @@
 ---
 
-# WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
-# WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+# WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue
+#    add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command
+#    'sysctl vm.overcommit_memory=1' for this to take effect.
+# WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory
+#    usage issues with Redis. To fix this issue run the command
+#    'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order
+#    to retain the setting after a reboot. Redis must be restarted after THP is disabled.
 
 - block:
     - name: set vm.overcommit_memory = 1 for redis in case of low memory
@@ -16,16 +21,30 @@
       when: statethp is defined and statethp.stdout is defined and statethp.stdout.find("^never") == -1
 
     - name: disable Transparent Huge Pages (THP) in rc.local
-      lineinfile: dest=/etc/rc.local line="echo never > /sys/kernel/mm/transparent_hugepage/enabled" insertbefore="^exit 0" backup=yes
+      lineinfile:
+        dest: /etc/rc.local
+        line: "echo never > /sys/kernel/mm/transparent_hugepage/enabled"
+        insertbefore: "^exit 0"
+        backup: yes
 
-  when: not (ansible_virtualization_type is defined and (ansible_virtualization_type == "lxc" or ansible_virtualization_type == "docker"))
+  when: >
+    not (ansible_virtualization_type is defined and
+    (ansible_virtualization_type == "lxc" or ansible_virtualization_type == "docker"))
 
-- debug: msg="Warning! some kernel optimizations for redis were not enabled as you are in a container. Review them for host."
-  when: (ansible_virtualization_type is defined and (ansible_virtualization_type == "lxc" or ansible_virtualization_type == "docker"))
+- debug:
+    msg: >
+        Warning! some kernel optimizations for redis were not enabled as you are in a container. Review them for host.
+  when: >
+    not (ansible_virtualization_type is defined and
+    (ansible_virtualization_type == "lxc" or ansible_virtualization_type == "docker"))
 
 ## http://redis.io/topics/security
 - name: Restrict redis bind to {{ ail_redis_bind }}
-  lineinfile: dest={{ item }} line="bind {{ ail_redis_bind }}" backup=yes insertafter="# bind 127.0.0.1"
+  lineinfile:
+    dest: "{{ item }}"
+    line: "bind {{ ail_redis_bind }}"
+    backup: yes
+    insertafter: "# bind 127.0.0.1"
   with_fileglob:
     - /var/_ail/AIL/configs/*.conf
   notify:

@@ -24,8 +24,10 @@
 - name: re-enable adns pip dependency
   replace:
     dest: "{{ ail_root }}/pip3_packages_requirement.txt"
-    regexp: '^#https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/adns-python/adns-python-1.2.1.tar.gz'
-    replace: 'https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/adns-python/adns-python-1.2.1.tar.gz'
+    regexp: >
+      ^#https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/adns-python/adns-python-1.2.1.tar.gz
+    replace: >
+      https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/adns-python/adns-python-1.2.1.tar.gz
     backup: yes
   when: python_bin != 'python3'
 
@@ -71,25 +73,39 @@
 
 - block:
     - name: review pystemon-feeder settings
-      replace: "dest={{ ail_root }}/bin/feeder/pystemon-feeder.py regex={{ item.re }} replace={{ item.rep }} backup=yes"
+      replace:
+        dest: "{{ ail_root }}/bin/feeder/pystemon-feeder.py"
+        regex: "{{ item.re }}"
+        replace: "{{ item.rep }}"
+        backup: yes
       with_items:
-        - { re: "^r = redis.StrictRedis(host='.*', db=.*)", rep: "r = redis.StrictRedis(host='{{ pystemon_redis_host }}', db={{ pystemon_redis_db }})" }
+        - { re: "^r = redis.StrictRedis(host='.*', db=.*)",
+            rep: "r = redis.StrictRedis(host='{{ pystemon_redis_host }}', db={{ pystemon_redis_db }})"
+          }
         - { re: '^pystemonpath = ".*"', rep: "pystemonpath = \"{{ pystemon_root }}\"" }
     - name: configure pystemon-feeder in supervisor
-      template: "src=supervisor-pystemonfeeder.conf.j2 dest={{ supervisor_confdir }}/pystemonfeeder.{{ supervisor_ext }} mode=0644"
+      template:
+        src: supervisor-pystemonfeeder.conf.j2
+        dest: "{{ supervisor_confdir }}/pystemonfeeder.{{ supervisor_ext }}"
+        mode: '0644'
       notify:
         - supervisor update
   when: ail_enable_pystemonfeeder is defined and ail_enable_pystemonfeeder
 
 - name: Download the necessary NLTK corpora
-  command: "{{ ail_virtualenv }}/bin/python -m textblob.download_corpora creates={{ ail_virtualenv }}/lib/python2.7/site-packages/textblob/download_corpora.py"
+  command: >
+    {{ ail_virtualenv }}/bin/python -m textblob.download_corpora
+  args:
+    creates: "{{ ail_virtualenv }}/lib/python2.7/site-packages/textblob/download_corpora.py"
   environment:
     HOME: "{{ ail_root }}"
   become: yes
   become_user: "{{ ail_user }}"
 
 - name: Download sentiment vader
-  command: "{{ ail_virtualenv }}/bin/python -m nltk.downloader vader_lexicon creates={{ ail_virtualenv }}/lib/python2.7/site-packages/textblob/en/en-lexicon.txt"
+  command: "{{ ail_virtualenv }}/bin/python -m nltk.downloader vader_lexicon"
+  args:
+    creates: "{{ ail_virtualenv }}/lib/python2.7/site-packages/textblob/en/en-lexicon.txt"
   become: yes
   become_user: "{{ ail_user }}"
 
@@ -138,7 +154,10 @@
     - supervisor update
 
 - name: set ail supervisor config for script
-  template: "src=supervisor-ail-script-model.conf.j2 dest={{ supervisor_confdir }}/ail-script-{{ item }}.{{ supervisor_ext }} mode=0644"
+  template:
+    src: supervisor-ail-script-model.conf.j2
+    dest: "{{ supervisor_confdir }}/ail-script-{{ item }}.{{ supervisor_ext }}"
+    mode: '0644'
   with_items:
     - Global
     - Attributes
@@ -234,7 +253,9 @@
     - ail-script-SentimentAnalysis
 
 - name: Wait for Redis to be started
-  wait_for: port={{ item }} delay=15
+  wait_for:
+    port: "{{ item }}"
+    delay: 15
   with_items:
     - 6379
     - 6380

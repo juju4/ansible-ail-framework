@@ -4,33 +4,88 @@
   file: "dest={{ ail_home }}/3rd-archives state=directory mode=0755 owner={{ ail_user }}"
 
 - name: download 3rd parties dependencies
-  get_url: "url={{ item.u }} dest={{ item.d }} mode=0644 owner={{ ail_user }}"
+  get_url:
+    url: "{{ item.u }}"
+    dest: "{{ item.d }}"
+    mode: '0644'
+    owner: "{{ ail_user }}"
   with_items:
-    - { u: "http://dygraphs.com/dygraph-combined.js", d: "{{ ail_root }}/var/www/static/js/dygraph-combined.js" }
-    - { u: "http://code.jquery.com/jquery-{{ JQVERSION }}.js", d: "{{ ail_root }}/var/www/static/js/jquery.js" }
-    - { u: "https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js", d: "{{ ail_root }}/var/www/static/js/jquery.dataTables.min.js" }
-    - { u: "https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css", d: "{{ ail_root }}/var/www/static/css/dataTables.bootstrap.css" }
-    - { u: "https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js", d: "{{ ail_root }}/var/www/static/js/dataTables.bootstrap.js" }
-    - { u: "https://raw.githubusercontent.com/flot/flot/master/jquery.flot.js", d: "{{ ail_root }}/var/www/static/js/jquery.flot.js" }
-    - { u: "https://raw.githubusercontent.com/flot/flot/master/jquery.flot.pie.js", d: "{{ ail_root }}/var/www/static/js/jquery.flot.pie.js" }
-    - { u: "https://raw.githubusercontent.com/flot/flot/master/jquery.flot.time.js", d: "{{ ail_root }}/var/www/static/js/jquery.flot.time.js" }
-    - { u: "https://raw.githubusercontent.com/flot/flot/master/jquery.flot.stack.js", d: "{{ ail_root }}/var/www/static/js/jquery.flot.stack.js" }
-    - { u: "http://omnipotent.net/jquery.sparkline/2.1.2/jquery.sparkline.min.js", d: "{{ ail_root }}/var/www/static/js/jquery.sparkline.min.js" }
-    - { u: "https://www.circl.lu/assets/images/logos/AIL.png", d: "{{ ail_root }}/var/www/static/image/AIL.png" }
-    - { u: "https://github.com/BlackrockDigital/startbootstrap-sb-admin/archive/v{{ SBADMIN_VERSION }}.zip", d: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}.zip" }
-    - { u: "https://github.com/BlackrockDigital/startbootstrap-sb-admin-2/archive/v{{ SBADMIN_VERSION }}.zip", d: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}-2.zip" }
-    - { u: "http://canvasjs.com/fdm/chart/", d: "{{ ail_home }}/3rd-archives/canvasjs.zip" }
-    - { u: "https://jqueryui.com/resources/download/jquery-ui-1.12.0.zip", d: "{{ ail_home }}/3rd-archives/jquery-ui.zip" }
-    - { u: "https://github.com/FortAwesome/Font-Awesome/archive/v{{ FONT_AWESOME_VERSION }}.zip", d: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{ FONT_AWESOME_VERSION }}.zip" }
+    - { u: "http://dygraphs.com/dygraph-combined.js",
+        d: "{{ ail_root }}/var/www/static/js/dygraph-combined.js"
+      }
+    - { u: "http://code.jquery.com/jquery-{{ JQVERSION }}.js",
+        d: "{{ ail_root }}/var/www/static/js/jquery.js"
+      }
+    - { u: "https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js",
+        d: "{{ ail_root }}/var/www/static/js/jquery.dataTables.min.js"
+      }
+    - { u: "https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css",
+        d: "{{ ail_root }}/var/www/static/css/dataTables.bootstrap.css"
+      }
+    - { u: "https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js",
+        d: "{{ ail_root }}/var/www/static/js/dataTables.bootstrap.js"
+      }
+    - { u: "https://raw.githubusercontent.com/flot/flot/master/jquery.flot.js",
+        d: "{{ ail_root }}/var/www/static/js/jquery.flot.js"
+      }
+    - { u: "https://raw.githubusercontent.com/flot/flot/master/jquery.flot.pie.js",
+        d: "{{ ail_root }}/var/www/static/js/jquery.flot.pie.js"
+      }
+    - { u: "https://raw.githubusercontent.com/flot/flot/master/jquery.flot.time.js",
+        d: "{{ ail_root }}/var/www/static/js/jquery.flot.time.js"
+      }
+    - { u: "https://raw.githubusercontent.com/flot/flot/master/jquery.flot.stack.js",
+        d: "{{ ail_root }}/var/www/static/js/jquery.flot.stack.js"
+      }
+    - { u: "http://omnipotent.net/jquery.sparkline/2.1.2/jquery.sparkline.min.js",
+        d: "{{ ail_root }}/var/www/static/js/jquery.sparkline.min.js"
+      }
+    - { u: "https://www.circl.lu/assets/images/logos/AIL.png",
+        d: "{{ ail_root }}/var/www/static/image/AIL.png"
+      }
+    - { u: "https://github.com/BlackrockDigital/startbootstrap-sb-admin/archive/v{{ SBADMIN_VERSION }}.zip",
+        d: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}.zip"
+      }
+    - { u: "https://github.com/BlackrockDigital/startbootstrap-sb-admin-2/archive/v{{ SBADMIN_VERSION }}.zip",
+        d: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}-2.zip"
+      }
+    - { u: "http://canvasjs.com/fdm/chart/",
+        d: "{{ ail_home }}/3rd-archives/canvasjs.zip"
+      }
+    - { u: "https://jqueryui.com/resources/download/jquery-ui-1.12.0.zip",
+        d: "{{ ail_home }}/3rd-archives/jquery-ui.zip"
+      }
+    - { u: "https://github.com/FortAwesome/Font-Awesome/archive/v{{ FONT_AWESOME_VERSION }}.zip",
+        d: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{ FONT_AWESOME_VERSION }}.zip"
+      }
 
 - name: uncompress 3rd party archives
-  unarchive: "src={{ item.s }} dest={{ item.d }} creates={{ item.c }} owner={{ ail_user }}"
+  unarchive:
+    src: "{{ item.s }}"
+    dest: "{{ item.d }}"
+    creates: "{{ item.c }}"
+    owner: "{{ ail_user }}"
   with_items:
-    - { s: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}.zip", d: "{{ ail_home }}/3rd-archives", c: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/js" }
-    - { s: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}-2.zip", d: "{{ ail_home }}/3rd-archives", c: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-2-{{ SBADMIN_VERSION }}/js" }
-    - { s: "{{ ail_home }}/3rd-archives/canvasjs.zip", d: "{{ ail_home }}/3rd-archives", c: "{{ ail_home }}/3rd-archives/jquery.canvasjs.min.js" }
-    - { s: "{{ ail_home }}/3rd-archives/jquery-ui.zip", d: "{{ ail_home }}/3rd-archives", c: "{{ ail_home }}/3rd-archives/jquery-ui-1.12.0/jquery-ui.min.js" }
-    - { s: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{ FONT_AWESOME_VERSION }}.zip", d: "{{ ail_home }}/3rd-archives", c: "{{ ail_home }}/3rd-archives/Font-Awesome-{{ FONT_AWESOME_VERSION }}/CONTRIBUTING.md" }
+    - { s: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}.zip",
+        d: "{{ ail_home }}/3rd-archives",
+        c: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/js"
+      }
+    - { s: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}-2.zip",
+        d: "{{ ail_home }}/3rd-archives",
+        c: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-2-{{ SBADMIN_VERSION }}/js"
+      }
+    - { s: "{{ ail_home }}/3rd-archives/canvasjs.zip",
+        d: "{{ ail_home }}/3rd-archives",
+        c: "{{ ail_home }}/3rd-archives/jquery.canvasjs.min.js"
+      }
+    - { s: "{{ ail_home }}/3rd-archives/jquery-ui.zip",
+        d: "{{ ail_home }}/3rd-archives",
+        c: "{{ ail_home }}/3rd-archives/jquery-ui-1.12.0/jquery-ui.min.js"
+      }
+    - { s: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{ FONT_AWESOME_VERSION }}.zip",
+        d: "{{ ail_home }}/3rd-archives",
+        c: "{{ ail_home }}/3rd-archives/Font-Awesome-{{ FONT_AWESOME_VERSION }}/CONTRIBUTING.md"
+      }
 
 - name: copy relevant files of 3rd party archives - js
   copy: src={{ item }} dest="{{ ail_root }}/var/www/static/js" mode=0644 owner={{ ail_user }}
