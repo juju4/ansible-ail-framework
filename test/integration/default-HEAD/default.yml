@@ -1,0 +1,16 @@
+---
+
+- hosts: all
+  vars:
+    - faup_virtualenv_path: "{{ ail_virtualenv }}"
+    - faup_virtualenv_user: "{{ ail_user }}"
+    - faup_virtualenv_home: "{{ ail_home }}"
+    - tlsh_virtualenv_path: "{{ ail_virtualenv }}"
+    - tlsh_virtualenv_user: "{{ ail_user }}"
+    - tlsh_virtualenv_home: "{{ ail_home }}"
+    - tlsh_version: a67c69b0cdfd168c62c159d41b8a3612ee2b0df1
+    - redis_configure: false
+    - ail_version: HEAD
+    - ardb_version: HEAD
+  roles:
+    - juju4.ail_framework

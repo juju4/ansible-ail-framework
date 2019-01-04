@@ -1,8 +1,9 @@
 ---
 
 - name: install package dependencies
-  package: name={{ item }} state=present
-  with_items: "{{ ail_pkg }}"
+  package: name={{ ail_pkg }} state=present
+  register: pkg_result
+  until: pkg_result is success
 
 - name: create ail user
   user: name="{{ ail_user }}" home="{{ ail_home }}" comment="AIL app user" shell=/bin/bash
@@ -16,7 +17,7 @@
   git:
     repo: https://github.com/CIRCL/AIL-framework.git
     dest: "{{ ail_root }}"
-    version: HEAD
+    version: "{{ ail_version | default('v1.4') }}"
   ignore_errors: true
   become: yes
   become_user: "{{ ail_user }}"
@@ -54,6 +55,8 @@
     executable: "{{ ail_virtualenv }}/bin/pip3"
   with_items: "{{ ail_pip3_deps | default([]) }}"
   when: ansible_distribution_release == 'xenial' or ansible_distribution_release == 'bionic'
+  register: pkg_result
+  until: pkg_result is success
 
 - name: extra configuration for AILENV
   lineinfile: "dest={{ ail_virtualenv }}/bin/activate line={{ item }} backup=yes"
@@ -218,7 +221,9 @@
   with_items: "{{ ail_services }}"
 
 - name: ensure supervisor programs are started
-  supervisorctl: name={{ item }} state=started
+  supervisorctl:
+    name: "{{ item }}"
+    state: started
   with_items:
     - ail
     - ail-redis6379

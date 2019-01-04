@@ -1,5 +1,6 @@
 ---
 
+#ail_version: HEAD
 ail_user: _ail
 ail_home: /var/_ail
 ail_root: "{{ ail_home }}/AIL"
