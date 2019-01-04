@@ -79,6 +79,7 @@ after_failure:
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm systemctl -l --no-pager status apache2'
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm systemctl -l --no-pager status httpd'
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm journalctl -xe --no-pager'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm tail -200 /var/log/supervisor/ail-framework.log'
 
 after_script:
   # Clean up
