@@ -1,5 +1,5 @@
 ## /etc/supervisor/conf.d/ail-logscript.conf
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 [program:ail-logscript]
 command={{ ail_virtualenv }}/bin/log_subscriber -p 6380 -c Script -l ../logs/
 directory={{ ail_virtualenv }}

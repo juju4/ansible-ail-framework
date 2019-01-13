@@ -1,5 +1,5 @@
 ## /etc/supervisor/conf.d/ail-script-{{ item }}.conf
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 [program:ail-script-{{ item }}]
 command={{ ail_virtualenv }}/bin/python {{ ail_root }}/bin/{{ item }}.py
 directory={{ ail_root }}/bin

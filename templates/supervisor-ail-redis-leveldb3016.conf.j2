@@ -1,5 +1,5 @@
 ## /etc/supervisor/conf.d/ail-redis-leveldb3016.conf
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 [program:ail-redis-leveldb3016]
 command=redis-leveldb -H '{{ ail_redislvdbhost }}' -D '{{ ail_redislvdbdir }}/3016/' -P 3016 -M '{{ ail_redislvdb_nb_db }}'
 directory={{ ail_root }}

@@ -1,5 +1,5 @@
 ## /etc/supervisor/conf.d/ail-logqueue.conf
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 [program:ail-logqueue]
 command={{ ail_virtualenv }}/bin/log_subscriber -p 6380 -c Queuing -l ../logs/
 directory={{ ail_virtualenv }}

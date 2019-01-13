@@ -1,5 +1,5 @@
 ## /etc/supervisor/conf.d/ail.conf
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 [program:ail]
 command={{ ail_virtualenv }}/bin/python {{ ail_root }}/var/www/Flask_server.py
 directory={{ ail_root }}/var/www
