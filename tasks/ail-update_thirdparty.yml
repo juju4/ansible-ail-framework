@@ -28,13 +28,13 @@
     - { u: "https://raw.githubusercontent.com/flot/flot/master/source/jquery.flot.js",
         d: "{{ ail_root }}/var/www/static/js/jquery.flot.js"
       }
-    - { u: "https://raw.githubusercontent.com/flot/flot/master/jquery.flot.pie.js",
+    - { u: "https://raw.githubusercontent.com/flot/flot/master/source/jquery.flot.pie.js",
         d: "{{ ail_root }}/var/www/static/js/jquery.flot.pie.js"
       }
-    - { u: "https://raw.githubusercontent.com/flot/flot/master/jquery.flot.time.js",
+    - { u: "https://raw.githubusercontent.com/flot/flot/master/source/jquery.flot.time.js",
         d: "{{ ail_root }}/var/www/static/js/jquery.flot.time.js"
       }
-    - { u: "https://raw.githubusercontent.com/flot/flot/master/jquery.flot.stack.js",
+    - { u: "https://raw.githubusercontent.com/flot/flot/master/source/jquery.flot.stack.js",
         d: "{{ ail_root }}/var/www/static/js/jquery.flot.stack.js"
       }
     - { u: "http://omnipotent.net/jquery.sparkline/2.1.2/jquery.sparkline.min.js",
