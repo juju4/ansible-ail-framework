@@ -1,5 +1,5 @@
 ## /etc/supervisor/conf.d/ail-redis6382.conf
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 [program:ail-redis6382]
 command={{ ardb_root }}/src/ardb-server {{ ail_root }}/configs/6382.conf
 directory={{ ail_root }}/bin

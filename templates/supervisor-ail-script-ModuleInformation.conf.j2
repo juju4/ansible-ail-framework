@@ -1,5 +1,5 @@
 ## /etc/supervisor/conf.d/ail-script-ModuleInformation.conf
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 [program:ail-script-ModuleInformation]
 command={{ ail_virtualenv }}/bin/python {{ ail_root }}/bin/ModuleInformation.py -k 0 -c 1
 directory={{ ail_root }}/bin
