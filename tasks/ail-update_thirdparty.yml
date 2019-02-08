@@ -25,7 +25,7 @@
     - { u: "https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js",
         d: "{{ ail_root }}/var/www/static/js/dataTables.bootstrap.js"
       }
-    - { u: "https://raw.githubusercontent.com/flot/flot/master/jquery.flot.js",
+    - { u: "https://raw.githubusercontent.com/flot/flot/master/source/jquery.flot.js",
         d: "{{ ail_root }}/var/www/static/js/jquery.flot.js"
       }
     - { u: "https://raw.githubusercontent.com/flot/flot/master/jquery.flot.pie.js",
