@@ -38,7 +38,7 @@
     creates: "{{ ail_virtualenv }}/bin/{{ python_bin }}"
 
 - name: Ensure pybgpranking is installed - not on pypi
-  command: "{{ ail_virtualenv }}/bin/pip3 install git+https://github.com/D4-project/BGP-Ranking.git/#egg=bgpranking"
+  command: "{{ ail_virtualenv }}/bin/pip3 install git+https://github.com/D4-project/BGP-Ranking.git/@7e698f87366e6f99b4d0d11852737db28e3ddc62#egg=pybgpranking&subdirectory=client"
   environment:
     LC_ALL: C
 
