@@ -1,7 +1,6 @@
 ---
 
 - hosts: all
-#- hosts: test-kitchen
   vars:
     - faup_virtualenv_path: "{{ ail_virtualenv }}"
     - faup_virtualenv_user: "{{ ail_user }}"
