@@ -24,7 +24,7 @@
 
 - name: re-enable adns pip dependency
   replace:
-    dest: "{{ ail_root }}/{{ ail_requirement | default('requirement.txt') }}"
+    dest: "{{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
     regexp: >
       ^#https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/adns-python/adns-python-1.2.1.tar.gz
     replace: >
@@ -46,11 +46,11 @@
 #   adnsmodule.c:62:8: error: unknown type name 'PyModuleDef' => using python2 instead of python3???
 - name: install pip dependencies
 #  pip:
-#    requirements: "{{ ail_root }}/{{ ail_requirement | default('pip3_packages_requirement.txt') }}"
+#    requirements: "{{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
 #    virtualenv: "{{ ail_virtualenv }}"
 ##    virtualenv_command: "virtualenv -p {{ python_bin }}"
 #    virtualenv_python: "{{ python_bin }}"
-  command: "{{ ail_virtualenv }}/bin/pip3 install -r {{ ail_root }}/{{ ail_requirement | default('pip3_packages_requirement.txt') }}"
+  command: "{{ ail_virtualenv }}/bin/pip3 install -r {{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
   environment:
     LC_ALL: C
 
