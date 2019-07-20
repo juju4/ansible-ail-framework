@@ -32,6 +32,14 @@
     backup: yes
   when: python_bin != 'python3'
 
+# https://travis-ci.org/juju4/ansible-ail-framework/jobs/560020454#L8358
+- name: force pycountry 18.12.8
+  replace:
+    dest: "{{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
+    regexp: ^pycountry.*
+    replace: pycountry==18.12.8
+    backup: yes
+
 - name: Initialize python3 virtualenv
   command: "virtualenv -p {{ python_bin }} {{ ail_virtualenv }}"
   args:
