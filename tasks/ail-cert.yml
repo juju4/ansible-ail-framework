@@ -1,0 +1,18 @@
+---
+
+- name: Create self-signed certificate
+  command: "{{ item }}"
+  args:
+    chdir: "{{ ail_root }}/bin/helper/gen_cert"
+  with_items:
+    - bash gen_root.sh
+    - bash gen_cert.sh
+
+- name: Copy cert files
+  copy:
+    src: "{{ ail_root }}/bin/helper/gen_cert/{{ item }}"
+    dest: "{{ ail_root }}/var/www/{{ item }}"
+    mode: '0600'
+  with_items:
+    - server.crt
+    - server.key
