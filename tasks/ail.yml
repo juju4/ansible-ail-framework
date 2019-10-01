@@ -151,7 +151,7 @@
   when: not ailcfg.stat.exists
 
 - include: ail-cert.yml
-  when: ail_version and ail_version != 'v2.0'
+  when: ail_version is defined and ail_version != 'v2.0'
 
 - include: ail-update_thirdparty.yml
 - include: redis-tuning.yml
@@ -228,7 +228,9 @@
   service: name=redis-server enabled=no state=stopped
 
 - name: init update version
-  shell: "git describe --abbrev=0 --tags | tr -d '\n' > {{ ail_home }}/update/current_version"
+  shell: "git describe --abbrev=0 --tags | tr -d '\n' > {{ ail_root }}/update/current_version"
+  args:
+    creates: "{{ ail_root }}/update/current_version"
 
 - meta: flush_handlers
 
