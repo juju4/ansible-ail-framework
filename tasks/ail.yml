@@ -177,31 +177,7 @@
     src: supervisor-ail-script-model.conf.j2
     dest: "{{ supervisor_confdir }}/ail-script-{{ item }}.{{ supervisor_ext }}"
     mode: '0644'
-  with_items:
-    - Global
-    - Attributes
-    - Duplicates
-    - Lines
-    - DomClassifier
-    - Categ
-    - Tokenize
-    - CreditCards
-    - Onion
-    - Mail
-    - Web
-    - Credential
-    - Curve
-    - CurveManageTopSets
-    - Indexer
-    - Keys
-    - Phone
-    - Release
-    - Cve
-    - WebStats
-    - ModuleStats
-    - SQLInjectionDetection
-#    - BrowseWarningPaste
-    - SentimentAnalysis
+  with_items: "{{ ail_modules }}"
   notify:
     - supervisor update
 
@@ -241,7 +217,7 @@
     state: started
   with_items: "{{ ail_services }}"
 
-- name: ensure supervisor programs are started
+- name: ensure supervisor programs are started (core part)
   supervisorctl:
     name: "{{ item }}"
     state: started
@@ -252,31 +228,12 @@
     - ail-redis6382
     - ail-logqueue
     - ail-queues
-    - ail-script-Global
-    - ail-script-Attributes
-    - ail-script-Duplicates
-    - ail-script-Lines
-## 201706 'ail-script-DomClassifier: ERROR (already started)'
-#    - ail-script-DomClassifier
-    - ail-script-Categ
-    - ail-script-Tokenize
-    - ail-script-CreditCards
-    - ail-script-Onion
-    - ail-script-Mail
-    - ail-script-Web
-    - ail-script-Credential
-    - ail-script-Curve
-    - ail-script-CurveManageTopSets
-    - ail-script-Indexer
-    - ail-script-Keys
-    - ail-script-Phone
-    - ail-script-Release
-    - ail-script-Cve
-    - ail-script-WebStats
-    - ail-script-ModuleStats
-    - ail-script-SQLInjectionDetection
-#    - ail-script-BrowseWarningPaste
-    - ail-script-SentimentAnalysis
+
+- name: ensure supervisor programs are started (modules)
+  supervisorctl:
+    name: "ail-script-{{ item }}"
+    state: started
+  with_items: "{{ ail_modules }}"
 
 - name: Wait for Redis to be started
   wait_for:

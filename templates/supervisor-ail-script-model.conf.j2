@@ -1,7 +1,11 @@
 ## /etc/supervisor/conf.d/ail-script-{{ item }}.conf
 {{ ansible_managed | comment }}
 [program:ail-script-{{ item }}]
+{% if item == 'ModulesInformationV2' %}
+command={{ ail_virtualenv }}/bin/python {{ ail_root }}/bin/{{ item }}.py -k 0 -c 1
+{% else %}
 command={{ ail_virtualenv }}/bin/python {{ ail_root }}/bin/{{ item }}.py
+{% endif %}
 directory={{ ail_root }}/bin
 user={{ ail_user }}
 stdout_logfile=/var/log/supervisor/ail-script-{{ item }}.log
