@@ -34,7 +34,7 @@
       - Release
       - Cve
       - WebStats
-      - Libinjection
+      - LibInjection
       - MISP_The_Hive_feeder
       - Mixer
       - ModuleStats
