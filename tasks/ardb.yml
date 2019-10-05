@@ -7,6 +7,13 @@
     version: "{{ ardb_version | default('v0.9.7') }}"
   ignore_errors: true
 
+# failing in kitchen/lxd
+- name: Allow extract with different owner
+  replace:
+    dest: "{{ ardb_root }}/src/Makefile"
+    regexp: "tar jxf "
+    replace: "tar --no-same-owner -jxf "
+
 - name: build ARDB
   command: make
   args:
