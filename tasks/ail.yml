@@ -153,6 +153,13 @@
 - include: ail-cert.yml
   when: ail_version is defined and ail_version != 'v2.0'
 
+- name: Update python path
+  replace:
+    src: "{{ ail_root }}/bin/update-background.py"
+    regexp: "'python'"
+    replace: "'{{ ail_virtualenv }}/bin/python'"
+  when: ail_version is defined and ail_version != 'v2.0'
+
 - include: ail-update_thirdparty.yml
 - include: redis-tuning.yml
 
