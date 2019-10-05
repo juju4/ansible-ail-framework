@@ -217,6 +217,11 @@
 
 - meta: flush_handlers
 
+- name: give time to supervisor modules to start
+  pause:
+    seconds: 30
+  when: ail_version is defined and ail_version != 'v2.0'
+
 - name: ensure services are enabled and started
   service:
     name: "{{ item }}"
