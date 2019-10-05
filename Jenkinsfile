@@ -5,7 +5,7 @@ node {
     try{
         currentBuild.result = "SUCCESS"
         def workspace = pwd()
-        def directory = "juju4.ail-framework"
+        def directory = "juju4.ail_framework"
 
         stage 'Clean Workspace'
             deleteDir()
