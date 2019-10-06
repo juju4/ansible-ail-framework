@@ -90,6 +90,7 @@ after_failure:
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm journalctl -xe --no-pager'
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ls -la /var/_ail/AIL/bin/'
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ls -la /var/_ail/AIL/var/www/'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm supervisorctl status'
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ls -la /etc/supervisor/conf.d/'
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /etc/supervisor/conf.d/*'
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ls -la /var/log/supervisor/'
