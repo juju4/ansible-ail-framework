@@ -29,24 +29,35 @@ ail_redis_bind: 127.0.0.1
 
 ail_modules:
     - Global
+    - ApiKey
     - Attributes
+    - BankAccount
+    - Bitcoin
     - Duplicates
-    - Lines
     - DomClassifier
     - Categ
     - CreditCards
+    - DbCleaner
+    - Decoder
     - Onion
     - Mail
     - Web
     - Credential
-    - Curve
-    - CurveManageTopSets
     - Indexer
     - Keys
     - Phone
     - Release
     - Cve
     - WebStats
+    - LibInjection
+    - MISP_The_Hive_feeder
+    - Mixer
     - ModuleStats
+    - ModulesInformationV2
+    - PgpDump
+    - RegexTracker
     - SQLInjectionDetection
     - SentimentAnalysis
+    - submit_paste
+    - Tags
+    - TermTrackerMod
