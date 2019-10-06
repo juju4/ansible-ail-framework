@@ -237,8 +237,8 @@
     - ail-queues
 
 - name: update-background
-  shell: >
-    {{ ail_virtualenv }}/bin/python {{ ail_root }}/bin/update-background.py | tee /var/log/supervisor/ail-script-update-background.log
+  command: >
+    {{ ail_virtualenv }}/bin/python {{ ail_root }}/bin/update-background.py
   args:
     chdir: "{{ ail_root }}/bin"
     creates: /var/log/supervisor/ail-script-update-background.log
@@ -252,7 +252,13 @@
     AIL_LEVELDB: "{{ ail_root }}/redis-leveldb"
     PATH: "$AIL_LEVELDB:$AIL_REDIS:$AIL_HOME:$PATH"
     AILENV: "{{ ail_root }}"
+  register: updatebackground
   when: ail_version is defined and ail_version != 'v2.0'
+
+- name: update-background log
+  copy:
+    content: "{{ updatebackground }}"
+    dest: /var/log/supervisor/ail-script-update-background.log
 
 - name: ensure supervisor programs are started (modules)
   supervisorctl:
