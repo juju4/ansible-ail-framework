@@ -46,6 +46,6 @@
       - submit_paste
       - Tags
       - TermTrackerMod
-      - update-background
+#      - update-background
   roles:
     - juju4.ail_framework
