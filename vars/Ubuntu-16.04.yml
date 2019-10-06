@@ -30,6 +30,7 @@ ail_pkg:
   - python3-pip
   - tor
   - wget
+  - coreutils
 
 ail_pip3_deps:
   - pymisp

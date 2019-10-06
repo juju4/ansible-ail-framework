@@ -217,24 +217,6 @@
 
 - meta: flush_handlers
 
-- name: update-background
-  shell: >
-    {{ ail_virtualenv }}/bin/python {{ ail_root }}/bin/update-background.py | tee /var/log/supervisor/ail-script-update-background.log
-  args:
-    chdir: "{{ ail_root }}/bin"
-    creates: /var/log/supervisor/ail-script-update-background.log
-  become: yes
-  become_user: "{{ ail_user }}"
-  environment:
-    AIL_HOME: "{{ ail_root }}"
-    AIL_BIN: "{{ ail_root }}/bin"
-    AIL_FLASK: "{{ ail_root }}/var/www"
-    AIL_REDIS: "{{ ail_root }}/redis/src"
-    AIL_LEVELDB: "{{ ail_root }}/redis-leveldb"
-    PATH: "$AIL_LEVELDB:$AIL_REDIS:$AIL_HOME:$PATH"
-    AILENV: "{{ ail_root }}"
-  when: ail_version is defined and ail_version != 'v2.0'
-
 - name: ensure services are enabled and started
   service:
     name: "{{ item }}"
@@ -253,6 +235,24 @@
     - ail-redis6382
     - ail-logqueue
     - ail-queues
+
+- name: update-background
+  shell: >
+    {{ ail_virtualenv }}/bin/python {{ ail_root }}/bin/update-background.py | tee /var/log/supervisor/ail-script-update-background.log
+  args:
+    chdir: "{{ ail_root }}/bin"
+    creates: /var/log/supervisor/ail-script-update-background.log
+  become: yes
+  become_user: "{{ ail_user }}"
+  environment:
+    AIL_HOME: "{{ ail_root }}"
+    AIL_BIN: "{{ ail_root }}/bin"
+    AIL_FLASK: "{{ ail_root }}/var/www"
+    AIL_REDIS: "{{ ail_root }}/redis/src"
+    AIL_LEVELDB: "{{ ail_root }}/redis-leveldb"
+    PATH: "$AIL_LEVELDB:$AIL_REDIS:$AIL_HOME:$PATH"
+    AILENV: "{{ ail_root }}"
+  when: ail_version is defined and ail_version != 'v2.0'
 
 - name: ensure supervisor programs are started (modules)
   supervisorctl:
