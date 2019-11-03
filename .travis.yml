@@ -95,14 +95,8 @@ after_failure:
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /etc/supervisor/conf.d/*'
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ls -la /var/log/supervisor/'
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/supervisor/supervisord.log'
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/supervisor/ail-script-*.log'
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/supervisor/ail-script-Curve.log'
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/supervisor/ail-script-CurveManageTopSets.log'
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/supervisor/ail-script-LibInjection.log'
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/supervisor/ail-script-Lines.log'
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/supervisor/ail-script-Tokenize.log'
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm cat /var/log/supervisor/ail-script-update-background.log'
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm tail -200 /var/log/supervisor/ail-framework.log'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm find /var/log/supervisor/ -type f -name "ail-script-*.log" -exec cat {} \;'
 
 after_script:
   # Clean up
