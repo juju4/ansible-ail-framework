@@ -17,7 +17,7 @@
       - ApiKey
       - Attributes
       - BankAccount
-      - Bitcoin
+      - Cryptocurrencies
       - Duplicates
       - DomClassifier
       - Categ
@@ -45,6 +45,7 @@
       - SentimentAnalysis
       - submit_paste
       - Tags
+      - Tools
       - TermTrackerMod
 #      - update-background
   roles:
