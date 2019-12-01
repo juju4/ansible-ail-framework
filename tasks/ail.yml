@@ -137,14 +137,23 @@
   become: yes
   become_user: "{{ ail_user }}"
 
+- name: AIL v1 | Set config path
+  set_fact:
+    ail_config_path: "{{ ail_root }}/bin/packages/config.cfg"
+  when: not (ail_version is defined and ('v2' in ail_version or ail_version == 'HEAD'))
+- name: AIL v2 | Set config path
+  set_fact:
+    ail_config_path: "{{ ail_root }}/configs/core.cfg"
+  when: not (ail_version is defined and ('v2' in ail_version or ail_version == 'HEAD'))
 ## alternative: use a template if need to modify config
 - name: check if existing config
-  stat: "path={{ ail_root }}/bin/packages/config.cfg"
+  stat:
+    path: "{{ ail_config_path }}"
   register: ailcfg
 - name: copy sample config
   copy:
-    src: "{{ ail_root }}/bin/packages/config.cfg.sample"
-    dest: "{{ ail_root }}/bin/packages/config.cfg"
+    src: "{{ ail_config_path }}.sample"
+    dest: "{{ ail_config_path }}"
     mode: '0644'
     owner: "{{ ail_user }}"
     remote_src: true
