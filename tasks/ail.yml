@@ -64,9 +64,8 @@
 
 - name: install pip3 dependencies
   pip:
-    name: "{{ item }}"
+    name: "{{ ail_pip3_deps | default([]) }}"
     executable: "{{ ail_virtualenv }}/bin/pip3"
-  with_items: "{{ ail_pip3_deps | default([]) }}"
   when: ansible_distribution_release == 'xenial' or ansible_distribution_release == 'bionic'
   register: pkg_result
   until: pkg_result is success
