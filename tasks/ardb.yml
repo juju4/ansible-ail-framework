@@ -20,4 +20,13 @@
     chdir: "{{ ardb_root }}"
     creates: "{{ ardb_root }}/src/ardb-repair"
   async: 1800
-  poll: 60
+  poll: 0
+  register: ardb_build
+
+- name: check build status
+  async_status:
+    jid: "{{ ardb_build.ansible_job_id }}"
+  register: job_result
+  until: job_result.finished
+  retries: 30
+  delay: 60
