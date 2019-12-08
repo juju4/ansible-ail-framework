@@ -139,7 +139,7 @@
 - name: AIL <=v2.2 | Set config path
   set_fact:
     ail_config_path: "{{ ail_root }}/bin/packages/config.cfg"
-  when: 'v2.2' in ail_version
+  when: "'v2.2' in ail_version"
 - name: AIL >v2.2 | Set config path
   set_fact:
     ail_config_path: "{{ ail_root }}/configs/core.cfg"
