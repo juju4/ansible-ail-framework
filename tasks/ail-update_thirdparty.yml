@@ -178,7 +178,7 @@
     owner: "{{ ail_user }}"
 - name: copy relevant files of 3rd party archives - fonts awesome css
   copy:
-    src: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{ FONT_AWESOME_VERSION }}/css/all.min.css"
+    src: "{{ ail_home }}/3rd-archives/Font-Awesome-{{ FONT_AWESOME_VERSION }}/css/all.min.css"
     dest: "{{ ail_root }}/var/www/static/css/font-awesome.min.css"
     mode: '0644'
     owner: "{{ ail_user }}"
@@ -191,7 +191,7 @@
     owner: "{{ ail_user }}"
     remote_src: true
   with_fileglob:
-    - "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{ FONT_AWESOME_VERSION }}/webfonts/*"
+    - "{{ ail_home }}/3rd-archives/Font-Awesome-{{ FONT_AWESOME_VERSION }}/webfonts/*"
 
 - name: ensure have fonts dir
   file:
