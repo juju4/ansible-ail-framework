@@ -15,7 +15,9 @@ pystemon_redis_db: 10
 
 SBADMIN_VERSION: '3.3.7'
 JQVERSION: "1.12.4"
-FONT_AWESOME_VERSION: '4.7.0'
+BOOTSTRAP_VERSION: '4.2.1'
+FONT_AWESOME_VERSION: '5.7.1'
+D3_JS_VERSION: '5.5.0'
 
 ail_redislvdbhost: 127.0.0.1
 ail_redislvdbdir: "{{ ail_root }}/LEVEL_DB_DATA"

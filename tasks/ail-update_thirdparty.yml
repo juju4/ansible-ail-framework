@@ -1,7 +1,11 @@
 ---
 
 - name: have 3rd parties archives directory
-  file: "dest={{ ail_home }}/3rd-archives state=directory mode=0755 owner={{ ail_user }}"
+  file:
+    dest: "{{ ail_home }}/3rd-archives"
+    state: directory
+    mode: '0755'
+    owner: "{{ ail_user }}"
 
 - name: download 3rd parties dependencies
   get_url:
@@ -25,6 +29,12 @@
     - { u: "https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js",
         d: "{{ ail_root }}/var/www/static/js/dataTables.bootstrap.js"
       }
+    - { u: "https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css",
+        d: "{{ ail_root }}/var/www/static/css/dataTables.bootstrap.min.css"
+      }
+    - { u: "https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js",
+        d: "{{ ail_root }}/var/www/static/js/dataTables.bootstrap.min.js"
+      }
     - { u: "https://raw.githubusercontent.com/flot/flot/master/source/jquery.flot.js",
         d: "{{ ail_root }}/var/www/static/js/jquery.flot.js"
       }
@@ -43,6 +53,15 @@
     - { u: "https://www.circl.lu/assets/images/logos/AIL.png",
         d: "{{ ail_root }}/var/www/static/image/AIL.png"
       }
+    - { u: "https://www.circl.lu/assets/images/logos/AIL-logo.png",
+        d: "{{ ail_root }}/var/www/static/image/AIL-logo.png"
+      }
+    - { u: "https://github.com/twbs/bootstrap/releases/download/v{{ BOOTSTRAP_VERSION }}/bootstrap-${BOOTSTRAP_VERSION}-dist.zip",
+        d: "{{ ail_home }}/3rd-archives/bootstrap{{ BOOTSTRAP_VERSION }}.zip"
+      }
+    - { u: "https://github.com/FezVrasta/popper.js/archive/v1.14.3.zip",
+        d: "{{ ail_home }}/3rd-archives/popper.zip"
+      }
     - { u: "https://github.com/BlackrockDigital/startbootstrap-sb-admin/archive/v{{ SBADMIN_VERSION }}.zip",
         d: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}.zip"
       }
@@ -55,8 +74,20 @@
     - { u: "https://jqueryui.com/resources/download/jquery-ui-1.12.0.zip",
         d: "{{ ail_home }}/3rd-archives/jquery-ui.zip"
       }
-    - { u: "https://github.com/FortAwesome/Font-Awesome/archive/v{{ FONT_AWESOME_VERSION }}.zip",
+    - { u: "https://github.com/FortAwesome/Font-Awesome/archive/v4.7.0.zip",
+        d: "{{ ail_home }}/3rd-archives/FONT_AWESOME_4.7.0.zip"
+      }
+    - { u: "https://github.com/FortAwesome/Font-Awesome/archive/{{ FONT_AWESOME_VERSION }}.zip",
         d: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{ FONT_AWESOME_VERSION }}.zip"
+      }
+    - { u: "https://github.com/d3/d3/releases/download/v{{ D3_JS_VERSION }}/d3.zip",
+        d: "{{ ail_home }}/3rd-archives/d3_{{ D3_JS_VERSION }}.zip"
+      }
+    - { u: "https://github.com/moment/moment/archive/2.22.2.zip",
+        d: "{{ ail_home }}/3rd-archives/moment_2.22.2.zip"
+      }
+    - { u: "https://github.com/longbill/jquery-date-range-picker/archive/v0.18.0.zip",
+        d: "{{ ail_home }}/3rd-archives/daterangepicker_v0.18.0.zip"
       }
 
 - name: uncompress 3rd party archives
@@ -66,6 +97,14 @@
     creates: "{{ item.c }}"
     owner: "{{ ail_user }}"
   with_items:
+    - { s: "{{ ail_home }}/3rd-archives/bootstrap{{ BOOTSTRAP_VERSION }}.zip",
+        d: "{{ ail_home }}/3rd-archives",
+        c: "{{ ail_home }}/3rd-archives/xxx"
+      }
+    - { s: "{{ ail_home }}/3rd-archives/popper.zip",
+        d: "{{ ail_home }}/3rd-archives",
+        c: "{{ ail_home }}/3rd-archives/xxx"
+      }
     - { s: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}.zip",
         d: "{{ ail_home }}/3rd-archives",
         c: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/js"
@@ -82,29 +121,96 @@
         d: "{{ ail_home }}/3rd-archives",
         c: "{{ ail_home }}/3rd-archives/jquery-ui-1.12.0/jquery-ui.min.js"
       }
+    - { s: "{{ ail_home }}/3rd-archives/FONT_AWESOME_4.7.0.zip",
+        d: "{{ ail_home }}/3rd-archives",
+        c: "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/CONTRIBUTING.md"
+      }
     - { s: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{ FONT_AWESOME_VERSION }}.zip",
         d: "{{ ail_home }}/3rd-archives",
         c: "{{ ail_home }}/3rd-archives/Font-Awesome-{{ FONT_AWESOME_VERSION }}/CONTRIBUTING.md"
       }
+    - { s: "{{ ail_home }}/3rd-archives/d3_{{ D3_JS_VERSION }}.zip",
+        d: "{{ ail_home }}/3rd-archives",
+        c: "{{ ail_home }}/3rd-archives/xxx"
+      }
+    - { s: "{{ ail_home }}/3rd-archives/moment_2.22.2.zip",
+        d: "{{ ail_home }}/3rd-archives",
+        c: "{{ ail_home }}/3rd-archives/xxx"
+      }
+    - { s: "{{ ail_home }}/3rd-archives/daterangepicker_v0.18.0.zip",
+        d: "{{ ail_home }}/3rd-archives",
+        c: "{{ ail_home }}/3rd-archives/xxx"
+      }
 
 - name: copy relevant files of 3rd party archives - js
-  copy: src={{ item }} dest="{{ ail_root }}/var/www/static/js" mode=0644 owner={{ ail_user }}
+  copy:
+    src: "{{ item }}"
+    dest: "{{ ail_root }}/var/www/static/js"
+    mode: '0644'
+    owner: "{{ ail_user }}"
   with_fileglob:
     - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/js/*"
+    - "{{ ail_home }}/3rd-archives/popper.js-1.14.3/dist/umd/popper.min.js"
+    - "{{ ail_home }}/3rd-archives/popper.js-1.14.3/dist/umd/popper.min.js.map"
+    - "{{ ail_home }}/3rd-archives/moment-2.22.2/min/moment.min.js"
+    - "{{ ail_home }}/3rd-archives/jquery-date-range-picker-0.18.0/dist/jquery.daterangepicker.min.js"
     - "{{ ail_home }}/3rd-archives/jquery.canvasjs.min.js"
     - "{{ ail_home }}/3rd-archives/jquery-ui-1.12.0/jquery-ui.min.js"
 
+- name: copy relevant files of 3rd party archives - css
+  copy:
+    src: "{{ item }}"
+    dest: "{{ ail_root }}/var/www/static/css"
+    mode: '0644'
+    owner: "{{ ail_user }}"
+  with_fileglob:
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/*"
+    - "{{ ail_home }}/3rd-archives/jquery-ui-1.12.0/jquery-ui.min.css"
+
+- name: ensure have webfonts dir
+  file:
+    dest: "{{ ail_root }}/var/www/static/webfonts"
+    state: directory
+    mode: '0755'
+    owner: "{{ ail_user }}"
+- name: copy relevant files of 3rd party archives - fonts awesome css
+  copy:
+    src: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{ FONT_AWESOME_VERSION }}/css/all.min.css"
+    dest: "{{ ail_root }}/var/www/static/css/font-awesome.min.css"
+    mode: '0644'
+    owner: "{{ ail_user }}"
+- name: copy relevant files of 3rd party archives - webfonts
+  copy:
+    src: "{{ item }}"
+    dest: "{{ ail_root }}/var/www/static/webfonts"
+    mode: '0644'
+    owner: "{{ ail_user }}"
+  with_fileglob:
+    - "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{ FONT_AWESOME_VERSION }}/webfonts/*"
+
 - name: ensure have fonts dir
-  file: "dest={{ ail_root }}/var/www/static/fonts state=directory mode=0755 owner={{ ail_user }}"
+  file:
+    dest: "{{ ail_root }}/var/www/static/fonts"
+    state: directory
+    mode: '0755'
+    owner: "{{ ail_user }}"
 - name: copy relevant files of 3rd party archives - fonts
-  copy: src={{ item }} dest="{{ ail_root }}/var/www/static/fonts" mode=0644 owner={{ ail_user }}
+  copy:
+    src: "{{ item }}"
+    dest: "{{ ail_root }}/var/www/static/fonts"
+    mode: '0644'
+    owner: "{{ ail_user }}"
   with_fileglob:
     - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/fonts/*"
-    - "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{ FONT_AWESOME_VERSION }}/fonts/*"
+    - "{{ ail_home }}/3rd-archives/FONT_AWESOME_4.7.0/fonts/*"
 
 - name: copy relevant files of 3rd party archives - css
-  copy: src={{ item }} dest="{{ ail_root }}/var/www/static/css" mode=0644 owner={{ ail_user }}
+  copy:
+    src: "{{ item }}"
+    dest: "{{ ail_root }}/var/www/static/css"
+    mode: '0644'
+    owner: "{{ ail_user }}"
   with_fileglob:
     - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/*"
     - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-2-{{ SBADMIN_VERSION }}/dist/css/*"
-    - "{{ ail_home }}/3rd-archives/jquery-ui-1.12.0/jquery-ui.min.css"
+    - "{{ ail_home }}/3rd-archives/jquery-date-range-picker-0.18.0/dist/daterangepicker.min.css"
