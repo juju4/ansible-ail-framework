@@ -2,7 +2,7 @@
 {{ ansible_managed | comment }}
 [program:ail-redis6382]
 command={{ ardb_root }}/src/ardb-server {{ ail_root }}/configs/6382.conf
-directory={{ ail_root }}/bin
+directory={{ ail_home }}
 user={{ ail_user }}
 stdout_logfile=/var/log/supervisor/ail-redis6382.log
 redirect_stderr=true
