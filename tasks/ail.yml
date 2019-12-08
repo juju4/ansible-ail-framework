@@ -136,14 +136,14 @@
   become: yes
   become_user: "{{ ail_user }}"
 
-- name: AIL v1 | Set config path
+- name: AIL <=v2.2 | Set config path
   set_fact:
     ail_config_path: "{{ ail_root }}/bin/packages/config.cfg"
-  when: not (ail_version is defined and ('v2' in ail_version or ail_version == 'HEAD'))
-- name: AIL v2 | Set config path
+  when: 'v2.2' in ail_version
+- name: AIL >v2.2 | Set config path
   set_fact:
     ail_config_path: "{{ ail_root }}/configs/core.cfg"
-  when: ail_version is defined and ('v2' in ail_version or ail_version == 'HEAD')
+  when: not (ail_version is defined)
 ## alternative: use a template if need to modify config
 - name: check if existing config
   stat:
