@@ -202,6 +202,13 @@
     regexp: "^dir ../dumps/"
     replace: "dir {{ ail_root }}/dumps/"
     backup: yes
+# https://github.com/facebook/rocksdb/wiki/Direct-IO
+# https://github.com/facebook/rocksdb/blob/aa1857e2df9251c57b9a61e1543969e9be0811bf/db/db_impl/db_impl_open.cc#L394
+- name: configure use_direct_io_for_flush_and_compaction in redis 6382 config
+  replace:
+    dest: "{{ ail_root }}/configs/6382.conf"
+    regexp: "use_direct_io_for_flush_and_compaction=.*;"
+    replace: "use_direct_io_for_flush_and_compaction={{ ail_rocksdb_directio | default('false') }};"
 - name: ensure absolute path in launch_queues.py
   replace:
     dest: "{{ ail_root }}/bin/launch_queues.py"
