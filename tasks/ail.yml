@@ -159,7 +159,7 @@
   when: not ailcfg.stat.exists
 
 - include: ail-cert.yml
-  when: ail_version is defined and ail_version != 'v2.0'
+  when: not (ail_version is defined) or ail_version == 'HEAD' or not ('v2.2' in ail_version)
 
 - name: Update python path
   replace:
