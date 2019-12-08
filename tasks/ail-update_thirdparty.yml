@@ -56,7 +56,7 @@
     - { u: "https://www.circl.lu/assets/images/logos/AIL-logo.png",
         d: "{{ ail_root }}/var/www/static/image/AIL-logo.png"
       }
-    - { u: "https://github.com/twbs/bootstrap/releases/download/v{{ BOOTSTRAP_VERSION }}/bootstrap-${BOOTSTRAP_VERSION}-dist.zip",
+    - { u: "https://github.com/twbs/bootstrap/releases/download/v{{ BOOTSTRAP_VERSION }}/bootstrap-{{ BOOTSTRAP_VERSION }}-dist.zip",
         d: "{{ ail_home }}/3rd-archives/bootstrap{{ BOOTSTRAP_VERSION }}.zip"
       }
     - { u: "https://github.com/FezVrasta/popper.js/archive/v1.14.3.zip",
