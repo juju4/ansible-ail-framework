@@ -30,3 +30,10 @@
   until: job_result.finished
   retries: 30
   delay: 60
+
+- name: Ensure DATA_ARDB exists
+  file:
+    dest: "{{ ail_home }}/DATA_ARDB"
+    state: directory
+    owner: "{{ ail_user }}"
+    mode: '0755'
