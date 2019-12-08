@@ -34,7 +34,7 @@ ail_modules:
     - ApiKey
     - Attributes
     - BankAccount
-    - Bitcoin
+    - Cryptocurrencies
     - Duplicates
     - DomClassifier
     - Categ
@@ -62,4 +62,6 @@ ail_modules:
     - SentimentAnalysis
     - submit_paste
     - Tags
+    - Tools
     - TermTrackerMod
+#    - update-background
