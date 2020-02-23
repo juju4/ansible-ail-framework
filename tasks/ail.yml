@@ -49,6 +49,15 @@
     backup: yes
   when: ansible_distribution_release == 'xenial'
 
+# https://github.com/ngoduykhanh/PowerDNS-Admin/pull/665
+- name: Xenial | force clikit 0.4.0 (else requires python>=3.6)
+  replace:
+    dest: "{{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
+    regexp: ^clikit.*
+    replace: clikit==0.4.0
+    backup: yes
+  when: ansible_distribution_release == 'xenial'
+
 - name: Initialize python3 virtualenv
   command: "virtualenv -p {{ python_bin }} {{ ail_virtualenv }}"
   args:
