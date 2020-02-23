@@ -49,19 +49,20 @@
     backup: yes
   when: ansible_distribution_release == 'xenial'
 
-# https://github.com/ngoduykhanh/PowerDNS-Admin/pull/665
-- name: Xenial | force clikit 0.4.0 (else requires python>=3.6)
-  replace:
-    dest: "{{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
-    regexp: ^clikit.*
-    replace: clikit==0.4.0
-    backup: yes
-  when: ansible_distribution_release == 'xenial'
-
 - name: Initialize python3 virtualenv
   command: "virtualenv -p {{ python_bin }} {{ ail_virtualenv }}"
   args:
     creates: "{{ ail_virtualenv }}/bin/{{ python_bin }}"
+
+# https://github.com/ngoduykhanh/PowerDNS-Admin/pull/665
+- name: Xenial | force clikit 0.4.0 (else requires python>=3.6)
+  pip:
+    name: clikit
+    version: 0.4.0
+    executable: "{{ ail_virtualenv }}/bin/pip3"
+  register: pkg_result
+  until: pkg_result is success
+  when: ansible_distribution_release == 'xenial'
 
 - name: Ensure pybgpranking is installed - not on pypi
   command: "{{ ail_virtualenv }}/bin/pip3 install git+https://github.com/D4-project/BGP-Ranking.git/@7e698f87366e6f99b4d0d11852737db28e3ddc62#egg=pybgpranking&subdirectory=client"
