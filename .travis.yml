@@ -114,8 +114,8 @@ after_failure:
   - mount
   - sudo -E su $USER -c "env PATH=$PATH kitchen exec ${suite}-${distribution}-${version//./} -c '/var/_ail/AILENV/bin/python -V'"
   - sudo -E su $USER -c "env PATH=$PATH kitchen exec ${suite}-${distribution}-${version//./} -c '/var/_ail/AILENV/bin/pip freeze'"
-  - sudo -E su $USER -c "env PATH=$PATH kitchen exec ${suite}-${distribution}-${version//./} -c '/var/_ail/AILENV/bin/python -c \"import locale; print locale.getpreferredencoding(False)\"'"
-  - sudo -E su $USER -c "env PATH=$PATH kitchen exec ${suite}-${distribution}-${version//./} -c '/var/_ail/AILENV/bin/python -c \"import locale; print locale.getpreferredencoding()\"'"
+  - sudo -E su $USER -c "env PATH=$PATH kitchen exec ${suite}-${distribution}-${version//./} -c '/var/_ail/AILENV/bin/python -c \"import locale; print(locale.getpreferredencoding(False))\"'"
+  - sudo -E su $USER -c "env PATH=$PATH kitchen exec ${suite}-${distribution}-${version//./} -c '/var/_ail/AILENV/bin/python -c \"import locale; print(locale.getpreferredencoding())\"'"
   - sudo -E su $USER -c "env PATH=$PATH kitchen exec ${suite}-${distribution}-${version//./} -c 'python -V'"
   - sudo -E su $USER -c "env PATH=$PATH kitchen exec ${suite}-${distribution}-${version//./} -c 'python -c \"import locale; print locale.getpreferredencoding(False)\"'"
   - sudo -E su $USER -c "env PATH=$PATH kitchen exec ${suite}-${distribution}-${version//./} -c 'python -c \"import locale; print locale.getpreferredencoding()\"'"
