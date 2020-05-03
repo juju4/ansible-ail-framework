@@ -22,8 +22,10 @@ provisioner:
 #  require_chef_for_busser: false
   enable_yum_epel: true
   ansible_connection: ssh
+  ansible_omnibus_url: https://raw.githubusercontent.com/juju4/omnibus-ansible/master/ansible_install.sh
 
 platforms:
+  - name: ubuntu-20.04
   - name: ubuntu-18.04
 #  - name: centos-7
 #  - name: alpine-3.4

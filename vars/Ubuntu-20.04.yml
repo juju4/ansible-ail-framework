@@ -1,0 +1,48 @@
+---
+
+ail_pkg:
+  - git
+  - build-essential
+  - libffi-dev
+  - libssl-dev
+  - libfuzzy-dev
+  - wget
+  - python3-pip
+  - python-virtualenv
+  - python3-dev
+  - libfreetype6-dev
+  - screen
+  - g++
+  - python-tk
+  - unzip
+  - libsnappy-dev
+  - cmake
+  - libssl-dev
+  - libfreetype6-dev
+  - python-numpy
+  - libadns1
+  - libadns1-dev
+  - libev-dev
+  - libgmp-dev
+  - graphviz
+  - libfuzzy-dev
+  - supervisor
+  - python3-pip
+  - tor
+  - wget
+
+ail_pip3_deps:
+  - pymisp
+  - git+https://github.com/MISP/PyTaxonomies
+  - git+https://github.com/MISP/PyMISPGalaxies
+  - git+https://github.com/TheHive-Project/TheHive4py
+
+ail_services:
+#    - redis-server
+    - supervisor
+
+supervisor_confdir: /etc/supervisor/conf.d
+supervisor_ext: conf
+supervisor_service: supervisor
+
+python_bin: python3
