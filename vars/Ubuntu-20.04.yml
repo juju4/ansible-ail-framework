@@ -8,18 +8,18 @@ ail_pkg:
   - libfuzzy-dev
   - wget
   - python3-pip
-  - python-virtualenv
+  - python3-virtualenv
   - python3-dev
   - libfreetype6-dev
   - screen
   - g++
-  - python-tk
+  - python3-tk
   - unzip
   - libsnappy-dev
   - cmake
   - libssl-dev
   - libfreetype6-dev
-  - python-numpy
+  - python3-numpy
   - libadns1
   - libadns1-dev
   - libev-dev
