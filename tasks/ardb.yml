@@ -17,9 +17,9 @@
 # fails if using command module
 - name: Ubuntu 20.04 | fetch rocksb
   shell: "make {{ ardb_root }}/src/../deps/rocksdb-5.12.2"
-    args:
-      chdir: "{{ ardb_root }}/src"
-      creates: "{{ ardb_root }}/deps/rocksdb-5.12.2/Makefile"
+  args:
+    chdir: "{{ ardb_root }}/src"
+    creates: "{{ ardb_root }}/deps/rocksdb-5.12.2/Makefile"
   when: (ansible_distribution == 'Ubuntu' and ansible_lsb.major_release|int == 20)
 
 - name: Ubuntu 20.04 | Workaround gcc-9 - rocksdb#5303
