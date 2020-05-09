@@ -283,8 +283,7 @@
     AIL_BIN: "{{ ail_root }}/bin"
     AIL_FLASK: "{{ ail_root }}/var/www"
     AIL_REDIS: "{{ ail_root }}/redis/src"
-    AIL_LEVELDB: "{{ ail_root }}/redis-leveldb"
-    PATH: "$AIL_LEVELDB:$AIL_REDIS:$AIL_HOME:$PATH"
+    PATH: "$AIL_REDIS:$AIL_HOME:$PATH"
     AILENV: "{{ ail_root }}"
   register: updatebackground
   when: ail_version is defined and ail_version != 'v2.0'
