@@ -59,8 +59,11 @@
     - { u: "https://github.com/twbs/bootstrap/releases/download/v{{ BOOTSTRAP_VERSION }}/bootstrap-{{ BOOTSTRAP_VERSION }}-dist.zip",
         d: "{{ ail_home }}/3rd-archives/bootstrap{{ BOOTSTRAP_VERSION }}.zip"
       }
-    - { u: "https://github.com/FezVrasta/popper.js/archive/v1.14.3.zip",
-        d: "{{ ail_home }}/3rd-archives/popper.zip"
+    - { u: "https://unpkg.com/@popperjs/core@{{ POPPER_VERSION }}/dist/umd/popper.min.js",
+        d: "{{ ail_root }}/var/www/static/js/popper.min.js"
+      }
+    - { u: "https://unpkg.com/@popperjs/core@{{ POPPER_VERSION }}/dist/umd/popper.min.js.map",
+        d: "{{ ail_root }}/var/www/static/js/popper.min.js.map"
       }
     - { u: "https://github.com/BlackrockDigital/startbootstrap-sb-admin/archive/v{{ SBADMIN_VERSION }}.zip",
         d: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}.zip"
@@ -99,10 +102,6 @@
     remote_src: true
   with_items:
     - { s: "{{ ail_home }}/3rd-archives/bootstrap{{ BOOTSTRAP_VERSION }}.zip",
-        d: "{{ ail_home }}/3rd-archives",
-        c: "{{ ail_home }}/3rd-archives/xxx"
-      }
-    - { s: "{{ ail_home }}/3rd-archives/popper.zip",
         d: "{{ ail_home }}/3rd-archives",
         c: "{{ ail_home }}/3rd-archives/xxx"
       }

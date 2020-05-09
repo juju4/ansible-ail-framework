@@ -18,6 +18,7 @@ JQVERSION: "1.12.4"
 BOOTSTRAP_VERSION: '4.2.1'
 FONT_AWESOME_VERSION: '5.7.1'
 D3_JS_VERSION: '5.5.0'
+POPPER_VERSION: '2.0.6'
 
 ail_redislvdbhost: 127.0.0.1
 ail_redislvdbdir: "{{ ail_root }}/LEVEL_DB_DATA"
