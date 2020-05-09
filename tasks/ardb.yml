@@ -14,6 +14,12 @@
     regexp: "tar jxf "
     replace: "tar --no-same-owner -jxf "
 
+- name: Ubuntu 20.04 | Workaround gcc-9 - rocksdb#5303
+  replace:
+    dest: "{{ ardb_root }}/deps/rocksdb-5.1.2/Makefile"
+    regexp: '^CXXFLAGS += \${EXTRA_CXXFLAGS}$'
+    replace: 'CXXFLAGS += \${EXTRA_CXXFLAGS} -Wno-error=deprecated-copy -Wno-error=pessimizing-move -Wno-error=class-memaccess'
+
 - name: build ARDB
   command: make
   args:
