@@ -1,7 +1,7 @@
 ## /etc/supervisor/conf.d/ail-redis6380.conf
 {{ ansible_managed | comment }}
 [program:ail-redis6380]
-command=redis-server {{ ail_root }}/configs/6380.conf
+command=/usr/bin/redis-server {{ ail_root }}/configs/6380.conf
 directory={{ ail_root }}
 user={{ ail_user }}
 stdout_logfile=/var/log/supervisor/ail-redis6380.log
