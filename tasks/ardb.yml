@@ -24,7 +24,7 @@
 
 - name: Ubuntu 20.04 | Workaround gcc-9 - rocksdb#5303
   replace:
-    dest: "{{ ardb_root }}/deps/rocksdb-5.1.2/Makefile"
+    dest: "{{ ardb_root }}/deps/rocksdb-5.12.2/Makefile"
     regexp: '^CXXFLAGS \+= \$\{EXTRA_CXXFLAGS\}*'
     replace: 'CXXFLAGS += ${EXTRA_CXXFLAGS} -Wno-error=deprecated-copy -Wno-error=pessimizing-move -Wno-error=class-memaccess'
   when: (ansible_distribution == 'Ubuntu' and ansible_lsb.major_release|int == 20)
