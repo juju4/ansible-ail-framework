@@ -92,6 +92,8 @@
     - { u: "https://github.com/longbill/jquery-date-range-picker/archive/v0.18.0.zip",
         d: "{{ ail_home }}/3rd-archives/daterangepicker_v0.18.0.zip"
       }
+  register: dl_result
+  until: dl_result is success
 
 - name: uncompress 3rd party archives
   unarchive:
