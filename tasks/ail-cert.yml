@@ -21,3 +21,4 @@
   with_items:
     - server.crt
     - server.key
+  become: yes
