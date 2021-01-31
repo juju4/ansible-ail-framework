@@ -13,10 +13,11 @@
     dest: "{{ ardb_root }}/src/Makefile"
     regexp: "tar jxf "
     replace: "tar --no-same-owner -jxf "
+    mode: '0644'
 
 # fails if using command module
 - name: Ubuntu 20.04 | fetch rocksb
-  shell: "make {{ ardb_root }}/src/../deps/rocksdb-5.12.2"
+  command: "make {{ ardb_root }}/src/../deps/rocksdb-5.12.2"
   args:
     chdir: "{{ ardb_root }}/src"
     creates: "{{ ardb_root }}/deps/rocksdb-5.12.2/Makefile"
@@ -27,6 +28,7 @@
     dest: "{{ ardb_root }}/deps/rocksdb-5.12.2/Makefile"
     regexp: '^CXXFLAGS \+= \$\{EXTRA_CXXFLAGS\}*'
     replace: 'CXXFLAGS += ${EXTRA_CXXFLAGS} -Wno-error=deprecated-copy -Wno-error=pessimizing-move -Wno-error=class-memaccess'
+    mode: '0644'
   when: (ansible_distribution == 'Ubuntu' and ansible_lsb.major_release|int == 20)
 
 - name: build ARDB

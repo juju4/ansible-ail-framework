@@ -29,6 +29,7 @@
       ^#https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/adns-python/adns-python-1.2.1.tar.gz
     replace: >
       https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/adns-python/adns-python-1.2.1.tar.gz
+    mode: '0644'
     backup: yes
   when: python_bin != 'python3'
 
@@ -38,6 +39,7 @@
     dest: "{{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
     regexp: ^pycountry.*
     replace: pycountry==18.12.8
+    mode: '0644'
     backup: yes
 
 # https://travis-ci.org/juju4/ansible-ail-framework/jobs/640492250#L7794
@@ -46,6 +48,7 @@
     dest: "{{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
     regexp: ^pymisp.*
     replace: pymisp==2.4.119.1
+    mode: '0644'
     backup: yes
   when: ansible_distribution_release == 'xenial'
 
@@ -65,18 +68,18 @@
   when: ansible_distribution_release == 'xenial'
 
 - name: Ensure pybgpranking is installed - not on pypi
-  command: "{{ ail_virtualenv }}/bin/pip3 install git+https://github.com/D4-project/BGP-Ranking.git/@7e698f87366e6f99b4d0d11852737db28e3ddc62#egg=pybgpranking&subdirectory=client"
+  command: "{{ ail_virtualenv }}/bin/pip3 install git+https://github.com/D4-project/BGP-Ranking.git/@7e698f87366e6f99b4d0d11852737db28e3ddc62#egg=pybgpranking&subdirectory=client"  # noqa 204 301
   environment:
     LC_ALL: C
 
 # FIXME! pip fails. pip module pointing wrong pip version
 #   adnsmodule.c:62:8: error: unknown type name 'PyModuleDef' => using python2 instead of python3???
-- name: install pip dependencies
-#  pip:
-#    requirements: "{{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
-#    virtualenv: "{{ ail_virtualenv }}"
-##    virtualenv_command: "virtualenv -p {{ python_bin }}"
-#    virtualenv_python: "{{ python_bin }}"
+- name: install pip dependencies  # noqa 301
+  # pip:
+  #   requirements: "{{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
+  #   virtualenv: "{{ ail_virtualenv }}"
+  ##   virtualenv_command: "virtualenv -p {{ python_bin }}"
+  #   virtualenv_python: "{{ python_bin }}"
   command: "{{ ail_virtualenv }}/bin/pip3 install -r {{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
   environment:
     LC_ALL: C
@@ -90,7 +93,11 @@
   until: pkg_result is success
 
 - name: extra configuration for AILENV
-  lineinfile: "dest={{ ail_virtualenv }}/bin/activate line={{ item }} backup=yes"
+  lineinfile:
+    dest: "{{ ail_virtualenv }}/bin/activate"
+    line: "{{ item }}"
+    mode: '0755'
+    backup: yes
   with_items:
     - "export AIL_HOME={{ ail_root }}"
     - "export AIL_BIN={{ ail_root }}/bin"
@@ -111,11 +118,12 @@
         dest: "{{ ail_root }}/bin/feeder/pystemon-feeder.py"
         regex: "{{ item.re }}"
         replace: "{{ item.rep }}"
+        mode: '0755'
         backup: yes
       with_items:
         - { re: "^r = redis.StrictRedis(host='.*', db=.*)",
             rep: "r = redis.StrictRedis(host='{{ pystemon_redis_host }}', db={{ pystemon_redis_db }})"
-          }
+        }
         - { re: '^pystemonpath = ".*"', rep: "pystemonpath = \"{{ pystemon_root }}\"" }
     - name: configure pystemon-feeder in supervisor
       template:
@@ -143,14 +151,14 @@
   become: yes
   become_user: "{{ ail_user }}"
 
-- name: Download punkt
+- name: Download punkt  # noqa 301
   command: "{{ ail_virtualenv }}/bin/python -m nltk.downloader punkt"
-#  args:
-#    creates: "{{ ail_virtualenv }}/lib/python2.7/site-packages/???"
+  # args:
+  #   creates: "{{ ail_virtualenv }}/lib/python2.7/site-packages/???"
   become: yes
   become_user: "{{ ail_user }}"
 
-- name: Create the file all_module and update the graph in doc
+- name: Create the file all_module and update the graph in doc  # noqa 301
   command: "{{ ail_root }}/doc/generate_modules_data_flow_graph.sh"
   become: yes
   become_user: "{{ ail_user }}"
@@ -185,6 +193,7 @@
     path: "{{ ail_root }}/bin/update-background.py"
     regexp: "'python'"
     replace: "'{{ ail_virtualenv }}/bin/python'"
+    mode: '0755'
   when: ail_version is defined and ail_version != 'v2.0'
 
 - include: ail-update_thirdparty.yml
@@ -200,9 +209,9 @@
     - ail-redis6382
     - ail-logqueue
     - ail-queues
-## Note: repeatedly output state? not sure needed as daemon
-## Note2: specific file as have arguments
-#    - ail-script-ModuleInformation
+    ## Note: repeatedly output state? not sure needed as daemon
+    ## Note2: specific file as have arguments
+    # - ail-script-ModuleInformation
   notify:
     - supervisor update
 
@@ -220,6 +229,7 @@
     dest: "{{ ail_root }}/configs/6382.conf"
     regexp: "^dir ../dumps/"
     replace: "dir {{ ail_root }}/dumps/"
+    mode: '0644'
     backup: yes
 # https://github.com/facebook/rocksdb/wiki/Direct-IO
 # https://github.com/facebook/rocksdb/blob/aa1857e2df9251c57b9a61e1543969e9be0811bf/db/db_impl/db_impl_open.cc#L394
@@ -228,25 +238,33 @@
     dest: "{{ ail_root }}/configs/6382.conf"
     regexp: "use_direct_io_for_flush_and_compaction=.*;"
     replace: "use_direct_io_for_flush_and_compaction={{ ail_rocksdb_directio | default('false') }};"
+    mode: '0644'
 - name: ensure absolute path in launch_queues.py
   replace:
     dest: "{{ ail_root }}/bin/launch_queues.py"
     regexp: "'./Queue"
     replace: "'{{ ail_root }}/bin/Queue"
+    mode: '0755'
     backup: yes
 - name: check for all_modules.txt
   stat: path={{ ail_root }}/doc/all_modules.txt
   register: allmodules
 - name: for ModuleInformation.py start - BUG?
-  file: dest={{ ail_root }}/doc/all_modules.txt state=touch
+  file:
+    dest: "{{ ail_root }}/doc/all_modules.txt"
+    mode: '0600'
+    state: touch
   when: not allmodules.stat.exists
 
 - name: disable redis upstream package service
   service: name=redis-server enabled=no state=stopped
 
 - name: init update version
-  shell: "git describe --abbrev=0 --tags | tr -d '\n' > {{ ail_root }}/update/current_version"
+  shell: |
+    set -o pipefail
+    git describe --abbrev=0 --tags | tr -d '\n' > {{ ail_root }}/update/current_version  # noqa 303
   args:
+    executable: /bin/bash
     creates: "{{ ail_root }}/update/current_version"
 
 - meta: flush_handlers
@@ -256,7 +274,7 @@
     name: "{{ item }}"
     enabled: yes
     state: started
-  with_items: "{{ ail_services }}"
+  with_items: "{{ ail_services }}"
 
 - name: ensure supervisor programs are started (core part)
   supervisorctl:
@@ -292,6 +310,7 @@
   copy:
     content: "{{ updatebackground }}"
     dest: /var/log/supervisor/ail-script-update-background.log
+    mode: '0644'
 
 - name: ensure supervisor programs are started (modules)
   supervisorctl:

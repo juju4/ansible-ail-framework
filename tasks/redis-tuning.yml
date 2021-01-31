@@ -13,7 +13,7 @@
       sysctl: name="vm.overcommit_memory" value=1 sysctl_set=yes state=present reload=yes
 
     - name: check current state of Transparent Huge Pages (THP)
-      shell: "cat /sys/kernel/mm/transparent_hugepage/enabled"
+      command: "cat /sys/kernel/mm/transparent_hugepage/enabled"
       register: statethp
       changed_when: false
     - name: disable Transparent Huge Pages (THP) in kernel (for redis)
@@ -25,6 +25,7 @@
         dest: /etc/rc.local
         line: "echo never > /sys/kernel/mm/transparent_hugepage/enabled"
         insertbefore: "^exit 0"
+        mode: '0644'
         backup: yes
 
   when: >
@@ -43,6 +44,7 @@
   lineinfile:
     dest: "{{ item }}"
     line: "bind {{ ail_redis_bind }}"
+    mode: '0644'
     backup: yes
     insertafter: "# bind 127.0.0.1"
   with_fileglob:
@@ -55,5 +57,9 @@
     - name: ensure run directory exists
       file: dest=/run/redis state=directory mode=0755 owner=redis group=redis
     - name: ensure pid directory for redis user at reboot (systemd-tmpfiles)
-      lineinfile: dest=/etc/tmpfiles.d/redis.conf line='    d    /run/redis   0755 redis redis - -' create=yes
+      lineinfile:
+        dest: /etc/tmpfiles.d/redis.conf
+        line: '    d    /run/redis   0755 redis redis - -'
+        mode: '0644'
+        create: yes
   when: ansible_service_mgr == 'systemd'

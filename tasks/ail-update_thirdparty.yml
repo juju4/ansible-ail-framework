@@ -16,82 +16,82 @@
   with_items:
     - { u: "http://dygraphs.com/dygraph-combined.js",
         d: "{{ ail_root }}/var/www/static/js/dygraph-combined.js"
-      }
+    }
     - { u: "http://code.jquery.com/jquery-{{ JQVERSION }}.js",
         d: "{{ ail_root }}/var/www/static/js/jquery.js"
-      }
+    }
     - { u: "https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js",
         d: "{{ ail_root }}/var/www/static/js/jquery.dataTables.min.js"
-      }
+    }
     - { u: "https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css",
         d: "{{ ail_root }}/var/www/static/css/dataTables.bootstrap.css"
-      }
+    }
     - { u: "https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js",
         d: "{{ ail_root }}/var/www/static/js/dataTables.bootstrap.js"
-      }
+    }
     - { u: "https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css",
         d: "{{ ail_root }}/var/www/static/css/dataTables.bootstrap.min.css"
-      }
+    }
     - { u: "https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js",
         d: "{{ ail_root }}/var/www/static/js/dataTables.bootstrap.min.js"
-      }
+    }
     - { u: "https://raw.githubusercontent.com/flot/flot/master/source/jquery.flot.js",
         d: "{{ ail_root }}/var/www/static/js/jquery.flot.js"
-      }
+    }
     - { u: "https://raw.githubusercontent.com/flot/flot/master/source/jquery.flot.pie.js",
         d: "{{ ail_root }}/var/www/static/js/jquery.flot.pie.js"
-      }
+    }
     - { u: "https://raw.githubusercontent.com/flot/flot/master/source/jquery.flot.time.js",
         d: "{{ ail_root }}/var/www/static/js/jquery.flot.time.js"
-      }
+    }
     - { u: "https://raw.githubusercontent.com/flot/flot/master/source/jquery.flot.stack.js",
         d: "{{ ail_root }}/var/www/static/js/jquery.flot.stack.js"
-      }
+    }
     - { u: "http://omnipotent.net/jquery.sparkline/2.1.2/jquery.sparkline.min.js",
         d: "{{ ail_root }}/var/www/static/js/jquery.sparkline.min.js"
-      }
+    }
     - { u: "https://www.circl.lu/assets/images/logos/AIL.png",
         d: "{{ ail_root }}/var/www/static/image/AIL.png"
-      }
+    }
     - { u: "https://www.circl.lu/assets/images/logos/AIL-logo.png",
         d: "{{ ail_root }}/var/www/static/image/AIL-logo.png"
-      }
+    }
     - { u: "https://github.com/twbs/bootstrap/releases/download/v{{ BOOTSTRAP_VERSION }}/bootstrap-{{ BOOTSTRAP_VERSION }}-dist.zip",
         d: "{{ ail_home }}/3rd-archives/bootstrap{{ BOOTSTRAP_VERSION }}.zip"
-      }
+    }
     - { u: "https://unpkg.com/@popperjs/core@{{ POPPER_VERSION }}/dist/umd/popper.min.js",
         d: "{{ ail_root }}/var/www/static/js/popper.min.js"
-      }
+    }
     - { u: "https://unpkg.com/@popperjs/core@{{ POPPER_VERSION }}/dist/umd/popper.min.js.map",
         d: "{{ ail_root }}/var/www/static/js/popper.min.js.map"
-      }
+    }
     - { u: "https://github.com/BlackrockDigital/startbootstrap-sb-admin/archive/v{{ SBADMIN_VERSION }}.zip",
         d: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}.zip"
-      }
+    }
     - { u: "https://github.com/BlackrockDigital/startbootstrap-sb-admin-2/archive/v{{ SBADMIN_VERSION }}.zip",
         d: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}-2.zip"
-      }
+    }
     - { u: "http://canvasjs.com/fdm/chart/",
         d: "{{ ail_home }}/3rd-archives/canvasjs.zip"
-      }
+    }
     - { u: "https://jqueryui.com/resources/download/jquery-ui-1.12.0.zip",
         d: "{{ ail_home }}/3rd-archives/jquery-ui.zip"
-      }
+    }
     - { u: "https://github.com/FortAwesome/Font-Awesome/archive/v4.7.0.zip",
         d: "{{ ail_home }}/3rd-archives/FONT_AWESOME_4.7.0.zip"
-      }
+    }
     - { u: "https://github.com/FortAwesome/Font-Awesome/archive/{{ FONT_AWESOME_VERSION }}.zip",
         d: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{ FONT_AWESOME_VERSION }}.zip"
-      }
+    }
     - { u: "https://github.com/d3/d3/releases/download/v{{ D3_JS_VERSION }}/d3.zip",
         d: "{{ ail_home }}/3rd-archives/d3_{{ D3_JS_VERSION }}.zip"
-      }
+    }
     - { u: "https://github.com/moment/moment/archive/2.22.2.zip",
         d: "{{ ail_home }}/3rd-archives/moment_2.22.2.zip"
-      }
+    }
     - { u: "https://github.com/longbill/jquery-date-range-picker/archive/v0.18.0.zip",
         d: "{{ ail_home }}/3rd-archives/daterangepicker_v0.18.0.zip"
-      }
+    }
   register: dl_result
   until: dl_result is success
 
@@ -101,48 +101,49 @@
     dest: "{{ item.d }}"
     creates: "{{ item.c }}"
     owner: "{{ ail_user }}"
+    mode: '0755'
     remote_src: true
   with_items:
     - { s: "{{ ail_home }}/3rd-archives/bootstrap{{ BOOTSTRAP_VERSION }}.zip",
         d: "{{ ail_home }}/3rd-archives",
         c: "{{ ail_home }}/3rd-archives/xxx"
-      }
+    }
     - { s: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}.zip",
         d: "{{ ail_home }}/3rd-archives",
         c: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/js"
-      }
+    }
     - { s: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}-2.zip",
         d: "{{ ail_home }}/3rd-archives",
         c: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-2-{{ SBADMIN_VERSION }}/js"
-      }
+    }
     - { s: "{{ ail_home }}/3rd-archives/canvasjs.zip",
         d: "{{ ail_home }}/3rd-archives",
         c: "{{ ail_home }}/3rd-archives/jquery.canvasjs.min.js"
-      }
+    }
     - { s: "{{ ail_home }}/3rd-archives/jquery-ui.zip",
         d: "{{ ail_home }}/3rd-archives",
         c: "{{ ail_home }}/3rd-archives/jquery-ui-1.12.0/jquery-ui.min.js"
-      }
+    }
     - { s: "{{ ail_home }}/3rd-archives/FONT_AWESOME_4.7.0.zip",
         d: "{{ ail_home }}/3rd-archives",
         c: "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/CONTRIBUTING.md"
-      }
+    }
     - { s: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{ FONT_AWESOME_VERSION }}.zip",
         d: "{{ ail_home }}/3rd-archives",
         c: "{{ ail_home }}/3rd-archives/Font-Awesome-{{ FONT_AWESOME_VERSION }}/CONTRIBUTING.md"
-      }
+    }
     - { s: "{{ ail_home }}/3rd-archives/d3_{{ D3_JS_VERSION }}.zip",
         d: "{{ ail_home }}/3rd-archives",
         c: "{{ ail_home }}/3rd-archives/xxx"
-      }
+    }
     - { s: "{{ ail_home }}/3rd-archives/moment_2.22.2.zip",
         d: "{{ ail_home }}/3rd-archives",
         c: "{{ ail_home }}/3rd-archives/xxx"
-      }
+    }
     - { s: "{{ ail_home }}/3rd-archives/daterangepicker_v0.18.0.zip",
         d: "{{ ail_home }}/3rd-archives",
         c: "{{ ail_home }}/3rd-archives/xxx"
-      }
+    }
 
 - name: copy relevant files of 3rd party archives - js
   copy:

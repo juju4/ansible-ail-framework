@@ -5,5 +5,5 @@ supervisor_ext: ini
 supervisor_service: supervisord
 
 ail_services:
-    - redis
-    - supervisord
+  - redis
+  - supervisord

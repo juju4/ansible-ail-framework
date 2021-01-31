@@ -38,8 +38,8 @@ ail_pip3_deps:
   - git+https://github.com/TheHive-Project/TheHive4py
 
 ail_services:
-#    - redis-server
-    - supervisor
+  # - redis-server
+  - supervisor
 
 supervisor_confdir: /etc/supervisor/conf.d
 supervisor_ext: conf

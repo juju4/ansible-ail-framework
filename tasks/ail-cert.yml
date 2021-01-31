@@ -1,7 +1,7 @@
 ---
 
 - name: Create self-signed certificate
-  command: "{{ item }}"
+  command: "{{ item }}"  # noqa 301
   args:
     chdir: "{{ ail_root }}/bin/helper/gen_cert"
   with_items:

@@ -14,23 +14,23 @@ ail_pkg:
   - freetype-devel
   - screen
   - gcc-g++
-#  - python-tk
+  # - python-tk
   - unzip
   - snappy-devel
   - cmake
   - numpy
-#  - libadns1
-#  - libadns1-devel
+  # - libadns1
+  # - libadns1-devel
   - libev-devel
   - gmp-devel
   - graphviz
-#  - libfuzzy-devel
+  # - libfuzzy-devel
   - supervisor
   - redis
 
 ail_services:
-    - redis
-    - supervisord
+  - redis
+  - supervisord
 
 supervisor_confdir: /etc/supervisord.d
 supervisor_ext: ini

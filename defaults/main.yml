@@ -1,6 +1,6 @@
 ---
 
-#ail_version: HEAD
+# ail_version: HEAD
 ail_user: _ail
 ail_home: /var/_ail
 ail_root: "{{ ail_home }}/AIL"
@@ -25,44 +25,44 @@ ail_redislvdbdir: "{{ ail_root }}/LEVEL_DB_DATA"
 ail_redislvdb_nb_db: 13
 
 ail_redis_bind: 127.0.0.1
-#ail_redis_bind: 192.168.1.100 10.0.0.1
+# ail_redis_bind: 192.168.1.100 10.0.0.1
 
 ## TODO
-#ail_term_tracklist: /path/file
+# ail_term_tracklist: /path/file
 
 ail_modules:
-    - Global
-    - ApiKey
-    - Attributes
-    - BankAccount
-    - Cryptocurrencies
-    - Duplicates
-    - DomClassifier
-    - Categ
-    - CreditCards
-    - DbCleaner
-    - Decoder
-    - Onion
-    - Mail
-    - Web
-    - Credential
-    - Indexer
-    - Keys
-    - Phone
-    - Release
-    - Cve
-    - WebStats
-    - LibInjection
-    - MISP_The_Hive_feeder
-    - Mixer
-    - ModuleStats
-    - ModulesInformationV2
-    - PgpDump
-    - RegexTracker
-    - SQLInjectionDetection
-    - SentimentAnalysis
-    - submit_paste
-    - Tags
-    - Tools
-    - TermTrackerMod
-#    - update-background
+  - Global
+  - ApiKey
+  - Attributes
+  - BankAccount
+  - Cryptocurrencies
+  - Duplicates
+  - DomClassifier
+  - Categ
+  - CreditCards
+  - DbCleaner
+  - Decoder
+  - Onion
+  - Mail
+  - Web
+  - Credential
+  - Indexer
+  - Keys
+  - Phone
+  - Release
+  - Cve
+  - WebStats
+  - LibInjection
+  - MISP_The_Hive_feeder
+  - Mixer
+  - ModuleStats
+  - ModulesInformationV2
+  - PgpDump
+  - RegexTracker
+  - SQLInjectionDetection
+  - SentimentAnalysis
+  - submit_paste
+  - Tags
+  - Tools
+  - TermTrackerMod
+  # - update-background
