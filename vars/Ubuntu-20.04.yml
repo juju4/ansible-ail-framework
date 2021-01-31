@@ -30,6 +30,7 @@ ail_pkg:
   - python3-pip
   - tor
   - wget
+  - libjpeg9-dev
 
 ail_pip3_deps:
   - pymisp
