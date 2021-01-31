@@ -8,6 +8,10 @@
     - bash gen_root.sh
     - bash gen_cert.sh
 
+- name: Check resulting cert files
+  command: "ls -lA {{ ail_root }}/bin/helper/gen_cert"
+  changed_when: false
+
 - name: Copy cert files
   copy:
     src: "{{ ail_root }}/bin/helper/gen_cert/{{ item }}"
