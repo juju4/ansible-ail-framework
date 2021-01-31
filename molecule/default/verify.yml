@@ -1,0 +1,24 @@
+---
+
+- name: Verify
+  hosts: ail
+  pre_tasks:
+    - name: Ubuntu | set fact
+      set_fact:
+        supervisor_svc: supervisor
+      when: ansible_distribution == "Ubuntu"
+    - name: Centos | set fact
+      set_fact:
+        supervisor_svc: supervisord
+      when: ansible_os_family == "RedHat"
+  tasks:
+    - name: supervisor status
+      command: "supervisorctl status"
+      changed_when: false
+      register: status
+    - name: Validate supervisor
+      assert:
+        that: >
+          "'FATAL' not in status.stderr and
+           'unix:///var/run/supervisor.sock no such file' not in status.stderr and
+           and status.rc == 0"
