@@ -259,10 +259,10 @@
 - name: disable redis upstream package service
   service: name=redis-server enabled=no state=stopped
 
-- name: init update version
+- name: init update version  # noqa 303
   shell: |
     set -o pipefail
-    git describe --abbrev=0 --tags | tr -d '\n' > {{ ail_root }}/update/current_version  # noqa 303
+    git describe --abbrev=0 --tags | tr -d '\n' > {{ ail_root }}/update/current_version
   args:
     executable: /bin/bash
     creates: "{{ ail_root }}/update/current_version"
