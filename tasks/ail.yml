@@ -1,5 +1,10 @@
 ---
 
+- name: remove conflicting packages
+  package:
+    name: libjpeg-turbo8-dev
+    state: absent
+
 - name: install package dependencies
   package: name={{ ail_pkg }} state=present
   register: pkg_result
