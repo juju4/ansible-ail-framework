@@ -270,6 +270,7 @@
     git describe --abbrev=0 --tags | tr -d '\n' > {{ ail_root }}/update/current_version
   args:
     executable: /bin/bash
+    chdir: "{{ ail_root }}/update"
     creates: "{{ ail_root }}/update/current_version"
 
 - meta: flush_handlers
