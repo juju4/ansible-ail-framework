@@ -15,6 +15,6 @@
 - src: https://github.com/juju4/ansible-pystemon/
   version: master
   name: juju4.pystemon
-- src: https://github.com/juju4/ansible-redis/
+- src: https://github.com/juju4/ansible-role-redis/
   version: master
   name: geerlingguy.redis
