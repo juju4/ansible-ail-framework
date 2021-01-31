@@ -1,5 +1,5 @@
-[![Build Status - Master](https://travis-ci.org/juju4/ansible-ail-framework.svg?branch=master)](https://travis-ci.org/juju4/ansible-ail-framework)
-[![Build Status - Devel](https://travis-ci.org/juju4/ansible-ail-framework.svg?branch=devel)](https://travis-ci.org/juju4/ansible-ail-framework/branches)
+[![Build Status - Master](https://travis-ci.com/juju4/ansible-ail-framework.svg?branch=master)](https://travis-ci.com/juju4/ansible-ail-framework)
+[![Build Status - Devel](https://travis-ci.com/juju4/ansible-ail-framework.svg?branch=devel)](https://travis-ci.com/juju4/ansible-ail-framework/branches)
 
 [![Actions Status - Master](https://github.com/juju4/ansible-ail-framework/workflows/AnsibleCI/badge.svg)](https://github.com/juju4/ansible-ail-framework/actions?query=branch%3Amaster)
 [![Actions Status - Devel](https://github.com/juju4/ansible-ail-framework/workflows/AnsibleCI/badge.svg?branch=devel)](https://github.com/juju4/ansible-ail-framework/actions?query=branch%3Adevel)
