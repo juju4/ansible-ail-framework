@@ -13,7 +13,7 @@
       when: ansible_os_family == "RedHat"
   tasks:
     - name: supervisor status
-      command: "supervisorctl status"
+      command: "supervisorctl status"  # noqa 303
       changed_when: false
       register: status
     - name: Validate supervisor
