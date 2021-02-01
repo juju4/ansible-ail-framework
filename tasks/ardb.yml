@@ -19,7 +19,7 @@
 - name: Ubuntu 20.04 | fetch rocksb
   command: "make {{ ardb_root }}/src/../deps/rocksdb-5.12.2"
   args:
-    chdir: "{{ ardb_root }}/src"
+    chdir: "{{ ardb_root }}"
     creates: "{{ ardb_root }}/deps/rocksdb-5.12.2/Makefile"
   when: (ansible_distribution == 'Ubuntu' and ansible_lsb.major_release|int == 20)
 
