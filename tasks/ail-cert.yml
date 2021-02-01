@@ -18,6 +18,7 @@
     dest: "{{ ail_root }}/var/www/{{ item }}"
     owner: "{{ ail_user }}"
     mode: '0400'
+    remote_src: true
   with_items:
     - server.crt
     - server.key
