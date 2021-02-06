@@ -26,6 +26,7 @@
         line: "echo never > /sys/kernel/mm/transparent_hugepage/enabled"
         insertbefore: "^exit 0"
         mode: '0644'
+        create: yes
         backup: yes
 
   when: >
