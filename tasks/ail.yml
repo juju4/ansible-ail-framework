@@ -47,6 +47,14 @@
     backup: yes
   when: python_bin != 'python3'
 
+- name: force SFlock 0.3.10
+  replace:
+    dest: "{{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
+    regexp: ^sflock.*
+    replace: sflock==0.3.10
+    mode: '0644'
+    backup: yes
+
 # https://travis-ci.org/juju4/ansible-ail-framework/jobs/560020454#L8358
 - name: force pycountry 18.12.8
   replace:
