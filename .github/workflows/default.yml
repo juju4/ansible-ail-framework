@@ -76,6 +76,7 @@ jobs:
           redis-server -v
           supervisorctl status || true
           mount
+        if: ${{ always() }}
         continue-on-error: true
       - name: After script - misc
         run: |
@@ -88,16 +89,19 @@ jobs:
           python -c "import locale; print(locale.getpreferredencoding())"
           locale
           env
+        if: ${{ always() }}
         continue-on-error: true
       - name: After script - network
         run: |
           netstat -anp || ss -nlp
+        if: ${{ always() }}
         continue-on-error: true
       - name: After script - etc
         run: |
           ls -la /etc/supervisor/conf.d/
           cat /etc/supervisor/conf.d/*
           cat /etc/environment
+        if: ${{ always() }}
         continue-on-error: true
       - name: After script - files
         run: |
@@ -109,6 +113,7 @@ jobs:
           ls -laR /var/_ail/DATA_ARDB
           sudo -H -u _ail /var/_ail/ARDB/src/ardb-server /var/_ail/AIL/configs/6382.conf
           ls -la /var/_ail/AIL/bin/helper/gen_cert/
+        if: ${{ always() }}
         continue-on-error: true
       - name: After script - logs
         run: |
@@ -117,4 +122,5 @@ jobs:
           cat /var/log/supervisor/supervisord.log
           tail -200 /var/log/supervisor/ail-framework.log
           find /var/log/supervisor/ -type f -name "ail-script-*.log" -exec cat {} \;
+        if: ${{ always() }}
         continue-on-error: true
