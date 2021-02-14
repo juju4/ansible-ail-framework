@@ -94,6 +94,7 @@ jobs:
       - name: After script - misc
         run: |
           /var/_ail/AILENV/bin/python -V
+          cat /var/_ail/AIL/requirements.txt
           /var/_ail/AILENV/bin/pip freeze
           /var/_ail/AILENV/bin/python -c "import locale; print(locale.getpreferredencoding(False))"
           /var/_ail/AILENV/bin/python -c "import locale; print(locale.getpreferredencoding())"
