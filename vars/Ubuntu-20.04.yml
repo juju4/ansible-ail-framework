@@ -47,3 +47,5 @@ supervisor_ext: conf
 supervisor_service: supervisor
 
 python_bin: python3
+
+ardb_version: HEAD

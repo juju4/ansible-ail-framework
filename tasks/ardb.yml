@@ -2,7 +2,7 @@
 
 - name: git clone ARDB
   git:
-    repo: https://github.com/yinqiwen/ardb.git
+    repo: https://github.com/ail-project/ardb.git
     dest: "{{ ardb_root }}"
     version: "{{ ardb_version | default('v0.9.7') }}"
   ignore_errors: true
@@ -14,22 +14,6 @@
     regexp: "tar jxf "
     replace: "tar --no-same-owner -jxf "
     mode: '0644'
-
-# fails if using command module
-- name: Ubuntu 20.04 | fetch rocksb
-  command: "make {{ ardb_root }}/src/../deps/rocksdb-5.12.2"
-  args:
-    chdir: "{{ ardb_root }}"
-    creates: "{{ ardb_root }}/deps/rocksdb-5.12.2/Makefile"
-  when: (ansible_distribution == 'Ubuntu' and ansible_lsb.major_release|int == 20)
-
-- name: Ubuntu 20.04 | Workaround gcc-9 - rocksdb#5303
-  replace:
-    dest: "{{ ardb_root }}/deps/rocksdb-5.12.2/Makefile"
-    regexp: '^CXXFLAGS \+= \$\{EXTRA_CXXFLAGS\}*'
-    replace: 'CXXFLAGS += ${EXTRA_CXXFLAGS} -Wno-error=deprecated-copy -Wno-error=pessimizing-move -Wno-error=class-memaccess'
-    mode: '0644'
-  when: (ansible_distribution == 'Ubuntu' and ansible_lsb.major_release|int == 20)
 
 - name: build ARDB
   command: make
