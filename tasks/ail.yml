@@ -290,7 +290,8 @@
     chdir: "{{ ail_root }}/update"
     creates: "{{ ail_root }}/update/current_version"
 
-- meta: flush_handlers
+- name: Flush handlers
+  meta: flush_handlers
 
 - name: ensure services are enabled and started
   service:

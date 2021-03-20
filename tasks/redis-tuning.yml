@@ -33,7 +33,8 @@
     not (ansible_virtualization_type is defined and
     (ansible_virtualization_type == "lxc" or ansible_virtualization_type == "docker"))
 
-- debug:
+- name: WARNING
+  debug:
     msg: >
         Warning! some kernel optimizations for redis were not enabled as you are in a container. Review them for host.
   when: >
