@@ -57,12 +57,6 @@ jobs:
           pwd
           env
           find -ls
-      - name: yamllint
-        run: |
-          cd $GITHUB_WORKSPACE/juju4.ail_framework && yamllint .
-      - name: ansible-lint
-        run: |
-          cd $GITHUB_WORKSPACE/juju4.ail_framework && ansible-lint
       - name: run test
         run: |
           cd $GITHUB_WORKSPACE/juju4.ail_framework && ansible-playbook -i localhost, --connection=local --become -vvv test/integration/default/default.yml ${ANSIBLE_EXTRA_VARS}
