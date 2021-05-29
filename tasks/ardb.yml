@@ -5,7 +5,7 @@
     repo: https://github.com/ail-project/ardb.git
     dest: "{{ ardb_root }}"
     version: "{{ ardb_version | default('v0.9.7') }}"
-  ignore_errors: true
+  failed_when: false
 
 # failing in kitchen/lxd
 - name: Allow extract with different owner
