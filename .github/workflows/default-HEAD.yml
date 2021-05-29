@@ -85,7 +85,7 @@ jobs:
         run: |
           systemctl -l --no-pager status apache2 || true
           systemctl -l --no-pager status supervisord || true
-          systemd-analyze security || true
+          systemd-analyze --no-pager security || true
           rsyslogd -v
           /var/_ail/ARDB/src/ardb-server -v
           redis-server -v
