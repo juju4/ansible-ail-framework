@@ -49,7 +49,10 @@
         - submit_paste
         - Tags
         - Tools
-        - TermTrackerMod
+        - trackers/Tracker_Term
+        - trackers/Tracker_Regex
+        - trackers/Tracker_Yara
+        - trackers/Retro_Hunt
         # - update-background
   roles:
     - juju4.ail_framework

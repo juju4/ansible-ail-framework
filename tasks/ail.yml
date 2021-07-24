@@ -240,7 +240,7 @@
 - name: set ail supervisor config for script
   template:
     src: supervisor-ail-script-model.conf.j2
-    dest: "{{ supervisor_confdir }}/ail-script-{{ item }}.{{ supervisor_ext }}"
+    dest: "{{ supervisor_confdir }}/ail-script-{{ item | regex_replace('/', '-') }}.{{ supervisor_ext }}"
     mode: '0644'
   with_items: "{{ ail_modules }}"
   notify:
@@ -338,7 +338,7 @@
 
 - name: ensure supervisor programs are started (modules)
   supervisorctl:
-    name: "ail-script-{{ item }}"
+    name: "ail-script-{{ item | regex_replace('/', '-') }}"
     state: started
   with_items: "{{ ail_modules }}"
 
