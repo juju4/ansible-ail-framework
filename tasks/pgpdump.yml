@@ -1,0 +1,34 @@
+---
+
+- name: git clone pgpdump
+  git:
+    repo: https://github.com/kazu-yamamoto/pgpdump.git
+    dest: "{{ ail_home }}/pgpdump"
+    version: "{{ ail_pgpdump_version | default('4f2326ae11ccf4050a2545df9e443137af8dcd50') }}"
+    force: no
+    update: no
+  become: yes
+  become_user: "{{ ail_user }}"
+
+- name: pgpdump configure
+  command: ./configure
+  args:
+    chdir: "{{ ail_home }}/pgpdump"
+    creates: "{{ ail_home }}/pgpdump/Makefile"
+  become: yes
+  become_user: "{{ ail_user }}"
+
+- name: pgpdump make
+  command: make
+  args:
+    chdir: "{{ ail_home }}/pgpdump"
+    creates: "{{ ail_home }}/pgpdump/pgpdump"
+  become: yes
+  become_user: "{{ ail_user }}"
+
+- name: pgpdump make install
+  command: make install
+  args:
+    chdir: "{{ ail_home }}/pgpdump"
+    creates: "/usr/local/bin/pgpdump"
+  become: yes

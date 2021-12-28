@@ -66,3 +66,7 @@ ail_modules:
   - Tools
   - TermTrackerMod
   # - update-background
+
+ail_nginx_enable: false
+ail_nginx_template: nginx-ail.conf.j2
+ail_nginx_servername: ail

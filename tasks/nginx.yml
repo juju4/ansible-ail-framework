@@ -1,0 +1,21 @@
+---
+
+- block:
+    - name: nginx AIL configuration
+      template:
+        src: "{{ ail_nginx_template }}"
+        dest: "{{ apache_sitedir }}/ail"
+        owner: '0'
+        group: '0'
+        mode: '0644'
+      notify:
+        - restart nginx
+    - name: enable AIL nginx site
+      file:
+        src: "{{ apache_sitedir }}/ail"
+        dest: "/etc/nginx/sites-enabled/ail"
+        state: link
+        mode: '0644'
+      notify:
+        - restart nginx
+  when: ansible_os_family == 'Debian'
