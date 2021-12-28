@@ -7,4 +7,4 @@
   include_vars: "RedHat-{{ ansible_distribution_version.split('.')[0] }}.yml"
   when: ansible_os_family == "RedHat"
 
-- include: ail.yml
+- import_tasks: ail.yml

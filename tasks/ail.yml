@@ -25,7 +25,7 @@
 - name: ensure right permissions for ail homedir
   file: "dest={{ ail_home }} state=directory mode=0755 owner={{ ail_user }}"
 
-- include: ardb.yml
+- import_tasks: ardb.yml
 
 - name: git clone AIL
   git:
@@ -222,7 +222,7 @@
     remote_src: true
   when: not ailcfg.stat.exists
 
-- include: ail-cert.yml
+- import_tasks: ail-cert.yml
   when: not (ail_version is defined) or ail_version == 'HEAD' or not ('v2.2' in ail_version)
 
 - name: Update python path
@@ -234,8 +234,8 @@
   when: ail_version is defined and ail_version != 'v2.0'
 
 - import_tasks: pgpdump.yml
-- include: ail-update_thirdparty.yml
-- include: redis-tuning.yml
+- import_tasks: ail-update_thirdparty.yml
+- import_tasks: redis-tuning.yml
 
 - name: set ail supervisor config
   template: "src=supervisor-{{ item }}.conf.j2 dest={{ supervisor_confdir }}/{{ item }}.{{ supervisor_ext }} mode=0644"
