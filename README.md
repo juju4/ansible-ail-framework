@@ -30,7 +30,7 @@ For example
 ```
 - host: all
   roles:
-    - juju4.ail-framework
+    - juju4.ail_framework
 ```
 
 ## Variables
@@ -45,14 +45,14 @@ Default kitchen config (.kitchen.yml) is lxd-based, while (.kitchen.vagrant.yml)
 Once you ensured all necessary roles are present, You can test with:
 ```
 $ gem install kitchen-ansible kitchen-lxd_cli kitchen-sync kitchen-vagrant
-$ cd /path/to/roles/juju4.ail-framework
+$ cd /path/to/roles/juju4.ail_framework
 $ kitchen verify
 $ kitchen login
 $ KITCHEN_YAML=".kitchen.vagrant.yml" kitchen verify
 ```
 or
 ```
-$ cd /path/to/roles/juju4.ail-framework/test/vagrant
+$ cd /path/to/roles/juju4.ail_framework/test/vagrant
 $ vagrant up
 $ vagrant ssh
 ```
@@ -80,6 +80,11 @@ $ packer build -only=digitalocean packer-*.json
 
 * Ubuntu trusty and Centos7 are not supported because of Redis 2.8. Need 3+.
 Centos7 miss also packages for some libraries even with EPEL repository.
+
+* if not finding DEFAULT_PASSWORD credentials file, call it manually
+```
+sudo -H -u _ail /var/_ail/AIL/var/www/create_default_user.py
+```
 
 ## License
 
