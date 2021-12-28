@@ -3,6 +3,9 @@
 ail_pkg:
   - git
   - build-essential
+  - automake
+  - autoconf
+  - libtool
   - libffi-dev
   - libssl-dev
   - libfuzzy-dev
@@ -31,6 +34,7 @@ ail_pkg:
   - tor
   - wget
   - libjpeg9-dev
+  - python3-nose
 
 ail_pip3_deps:
   - pymisp
