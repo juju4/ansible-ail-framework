@@ -17,42 +17,43 @@
     - ail_version: HEAD
     - ardb_version: HEAD
     - ail_modules:
-        - Global
-        - ApiKey
-        - BankAccount
-        - Cryptocurrencies
-        - Duplicates
-        - DomClassifier
-        - Categ
-        - CreditCards
-        - DbCleaner
-        - Decoder
-        - Onion
-        - Mail
-        - Web
-        - Credential
-        - Indexer
-        - Keys
-        - Phone
-        - Release
-        - Cve
-        - WebStats
-        - LibInjection
-        - MISP_The_Hive_feeder
-        - Mixer
-        - ModuleStats
-        - ModulesInformationV2
-        - PgpDump
-        - RegexTracker
-        - SQLInjectionDetection
-        - SentimentAnalysis
-        - submit_paste
-        - Tags
-        - Tools
+        - modules/Global
+        - modules/Categ
+        - modules/Indexer
+        - modules/Tags
+        - modules/submit_paste
+        - core/Sync_module
+        - modules/ApiKey
+        - modules/Credential
+        - modules/CreditCards
+        - modules/Decoder
+        - modules/DomClassifier
+        - modules/Keys
+        - modules/Onion
+        - modules/SentimentAnalysis
+        - modules/Urls
+        - modules/SQLInjectionDetection
+        - modules/LibInjection
         - trackers/Tracker_Term
         - trackers/Tracker_Regex
         - trackers/Tracker_Yara
         - trackers/Retro_Hunt
-        # - update-background
+        - ModulesInformationV2
+        - Mixer
+        - Duplicates
+        - BankAccount
+        - Mail
+        - PgpDump
+        - Cryptocurrencies
+        - Telegram
+        - Tools
+        - Cve
+        - ModuleStats
+        - MISP_The_Hive_feeder
+        - Languages
+        # if configured in core.cfg
+        # - IPAddress
+        # commented in upstream
+        # - Release
   roles:
     - juju4.ail_framework
