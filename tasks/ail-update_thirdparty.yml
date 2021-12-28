@@ -14,8 +14,12 @@
     mode: '0644'
     owner: "{{ ail_user }}"
   with_items:
-    - { u: "http://dygraphs.com/dygraph-combined.js",
+    # no combined or map files with latest 2.x - https://dygraphs.com/download.html
+    - { u: "https://raw.githubusercontent.com/cdnjs/cdnjs/master/ajax/libs/dygraph/1.1.1/dygraph-combined.js",
         d: "{{ ail_root }}/var/www/static/js/dygraph-combined.js"
+    }
+    - { u: "https://raw.githubusercontent.com/cdnjs/cdnjs/master/ajax/libs/dygraph/1.1.1/dygraph-combined.js.map",
+        d: "{{ ail_root }}/var/www/static/js/dygraph-combined.js.map"
     }
     - { u: "http://code.jquery.com/jquery-{{ JQVERSION }}.js",
         d: "{{ ail_root }}/var/www/static/js/jquery.js"
@@ -29,11 +33,16 @@
     - { u: "https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js",
         d: "{{ ail_root }}/var/www/static/js/dataTables.bootstrap.js"
     }
+    # renaming intentional - https://github.com/CIRCL/AIL-framework/blob/master/var/www/update_thirdparty.sh#L76
+    # but still request for /static/css/dataTables.bootstrap4.min.css
     - { u: "https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css",
         d: "{{ ail_root }}/var/www/static/css/dataTables.bootstrap.min.css"
     }
     - { u: "https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js",
         d: "{{ ail_root }}/var/www/static/js/dataTables.bootstrap.min.js"
+    }
+    - { u: "https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css",
+        d: "{{ ail_root }}/var/www/static/css/dataTables.bootstrap4.min.css"
     }
     - { u: "https://raw.githubusercontent.com/flot/flot/master/source/jquery.flot.js",
         d: "{{ ail_root }}/var/www/static/js/jquery.flot.js"
@@ -106,7 +115,7 @@
   with_items:
     - { s: "{{ ail_home }}/3rd-archives/bootstrap{{ BOOTSTRAP_VERSION }}.zip",
         d: "{{ ail_home }}/3rd-archives",
-        c: "{{ ail_home }}/3rd-archives/xxx"
+        c: "{{ ail_home }}/3rd-archives/bootstrap-{{ BOOTSTRAP_VERSION }}-dist/css/bootstrap.min.css"
     }
     - { s: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}.zip",
         d: "{{ ail_home }}/3rd-archives",
@@ -134,7 +143,7 @@
     }
     - { s: "{{ ail_home }}/3rd-archives/d3_{{ D3_JS_VERSION }}.zip",
         d: "{{ ail_home }}/3rd-archives",
-        c: "{{ ail_home }}/3rd-archives/xxx"
+        c: "{{ ail_home }}/3rd-archives/d3.min.js"
     }
     - { s: "{{ ail_home }}/3rd-archives/moment_2.22.2.zip",
         d: "{{ ail_home }}/3rd-archives",
@@ -147,30 +156,51 @@
 
 - name: copy relevant files of 3rd party archives - js
   copy:
-    src: "{{ item }}"
-    dest: "{{ ail_root }}/var/www/static/js"
+    src: "{{ item.s }}"
+    dest: "{{ ail_root }}/var/www/static/js/{{ item.d | default(item.s | basename) }}"
     mode: '0644'
     owner: "{{ ail_user }}"
     remote_src: true
-  with_fileglob:
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/js/*"
-    - "{{ ail_home }}/3rd-archives/popper.js-1.14.3/dist/umd/popper.min.js"
-    - "{{ ail_home }}/3rd-archives/popper.js-1.14.3/dist/umd/popper.min.js.map"
-    - "{{ ail_home }}/3rd-archives/moment-2.22.2/min/moment.min.js"
-    - "{{ ail_home }}/3rd-archives/jquery-date-range-picker-0.18.0/dist/jquery.daterangepicker.min.js"
-    - "{{ ail_home }}/3rd-archives/jquery.canvasjs.min.js"
-    - "{{ ail_home }}/3rd-archives/jquery-ui-1.12.0/jquery-ui.min.js"
+  loop:
+    - { s: "{{ ail_home }}/3rd-archives/bootstrap-{{ BOOTSTRAP_VERSION }}-dist/js/bootstrap.min.js",
+        d: bootstrap4.min.js
+    }
+    # intentional? https://github.com/CIRCL/AIL-framework/blob/master/var/www/update_thirdparty.sh#L40
+    - { s: "{{ ail_home }}/3rd-archives/bootstrap-{{ BOOTSTRAP_VERSION }}-dist/js/bootstrap.min.js.map",
+        d: bootstrap.min.js.map
+    }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/js/bootstrap.js" }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/js/bootstrap.min.js" }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/js/jquery.js" }
+    - { s: "{{ ail_home }}/3rd-archives/d3.min.js" }
+    - { s: "{{ ail_home }}/3rd-archives/moment-2.22.2/min/moment.min.js" }
+    - { s: "{{ ail_home }}/3rd-archives/jquery-date-range-picker-0.18.0/dist/jquery.daterangepicker.min.js" }
+    - { s: "{{ ail_home }}/3rd-archives/jquery.canvasjs.min.js" }
+    - { s: "{{ ail_home }}/3rd-archives/jquery-ui-1.12.0/jquery-ui.min.js" }
 
 - name: copy relevant files of 3rd party archives - css
   copy:
-    src: "{{ item }}"
-    dest: "{{ ail_root }}/var/www/static/css"
+    src: "{{ item.s }}"
+    dest: "{{ ail_root }}/var/www/static/css/{{ item.d | default(item.s | basename) }}"
     mode: '0644'
     owner: "{{ ail_user }}"
     remote_src: true
-  with_fileglob:
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/*"
-    - "{{ ail_home }}/3rd-archives/jquery-ui-1.12.0/jquery-ui.min.css"
+  loop:
+    - { s: "{{ ail_home }}/3rd-archives/bootstrap-{{ BOOTSTRAP_VERSION }}-dist/css/bootstrap.min.css",
+        d: bootstrap4.min.css
+    }
+    - { s: "{{ ail_home }}/3rd-archives/bootstrap-{{ BOOTSTRAP_VERSION }}-dist/css/bootstrap.min.css.map",
+        d: bootstrap4.min.css.map
+    }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/bootstrap-rtl.css" }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/bootstrap-rtl.min.css" }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/bootstrap.css" }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/bootstrap.min.css" }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/sb-admin-rtl.css" }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/sb-admin.css" }
+    - { s: "{{ ail_home }}/3rd-archives/jquery-ui-1.12.0/jquery-ui.min.css" }
+    - { s: "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/css/font-awesome.css" }
+    - { s: "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/css/font-awesome.css.map" }
 
 - name: ensure have webfonts dir
   file:
@@ -187,13 +217,27 @@
     remote_src: true
 - name: copy relevant files of 3rd party archives - webfonts
   copy:
-    src: "{{ item }}"
+    src: "{{ ail_home }}/3rd-archives/Font-Awesome-{{ FONT_AWESOME_VERSION }}/webfonts/{{ item }}"
     dest: "{{ ail_root }}/var/www/static/webfonts"
     mode: '0644'
     owner: "{{ ail_user }}"
     remote_src: true
-  with_fileglob:
-    - "{{ ail_home }}/3rd-archives/Font-Awesome-{{ FONT_AWESOME_VERSION }}/webfonts/*"
+  loop:
+    - fa-brands-400.eot
+    - fa-brands-400.woff
+    - fa-regular-400.svg
+    - fa-regular-400.woff2
+    - fa-solid-900.ttf
+    - fa-brands-400.svg
+    - fa-brands-400.woff2
+    - fa-regular-400.ttf
+    - fa-solid-900.eot
+    - fa-solid-900.woff
+    - fa-brands-400.ttf
+    - fa-regular-400.eot
+    - fa-regular-400.woff
+    - fa-solid-900.svg
+    - fa-solid-900.woff2
 
 - name: ensure have fonts dir
   file:
@@ -208,9 +252,18 @@
     mode: '0644'
     owner: "{{ ail_user }}"
     remote_src: true
-  with_fileglob:
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/fonts/*"
-    - "{{ ail_home }}/3rd-archives/FONT_AWESOME_4.7.0/fonts/*"
+  loop:
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/fonts/glyphicons-halflings-regular.eot"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/fonts/glyphicons-halflings-regular.ttf"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/fonts/glyphicons-halflings-regular.woff2"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/fonts/glyphicons-halflings-regular.svg"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/fonts/glyphicons-halflings-regular.woff"
+    - "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/fonts/FontAwesome.otf"
+    - "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/fonts/fontawesome-webfont.svg"
+    - "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/fonts/fontawesome-webfont.woff"
+    - "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/fonts/fontawesome-webfont.eot"
+    - "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/fonts/fontawesome-webfont.ttf"
+    - "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/fonts/fontawesome-webfont.woff2"
 
 - name: copy relevant files of 3rd party archives - css
   copy:
@@ -219,7 +272,13 @@
     mode: '0644'
     owner: "{{ ail_user }}"
     remote_src: true
-  with_fileglob:
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/*"
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-2-{{ SBADMIN_VERSION }}/dist/css/*"
+  loop:
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/bootstrap-rtl.css"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/bootstrap-rtl.min.css"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/bootstrap.css"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/bootstrap.min.css"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/sb-admin-rtl.css"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/sb-admin.css"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-2-{{ SBADMIN_VERSION }}/dist/css/sb-admin-2.css"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-2-{{ SBADMIN_VERSION }}/dist/css/timeline.css"
     - "{{ ail_home }}/3rd-archives/jquery-date-range-picker-0.18.0/dist/daterangepicker.min.css"
