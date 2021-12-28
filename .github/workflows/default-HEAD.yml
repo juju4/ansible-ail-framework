@@ -4,8 +4,8 @@ name: default-HEAD
 on:
   push:
   pull_request:
-  schedule:  # run weekly, every Wednesday 03:00
-    - cron: '0 3 * * 3'
+  schedule:  # run weekly, every Thursday 03:00
+    - cron: '0 3 * * 4'
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       max-parallel: 4
     env:
-      ANSIBLE_CALLBACK_WHITELIST: profile_tasks
+      ANSIBLE_CALLBACKS_ENABLED: profile_tasks,timer
       ANSIBLE_EXTRA_VARS: "-e ail_version=HEAD -e ardb_version=HEAD"
 
     steps:
@@ -142,5 +142,10 @@ jobs:
           cat /var/log/supervisor/supervisord.log
           tail -200 /var/log/supervisor/ail-framework.log
           find /var/log/supervisor/ -type f -name "ail-script-*.log" -exec cat {} \;
+        if: ${{ always() }}
+        continue-on-error: true
+      - name: After script - curl
+        run: |
+          curl -v https://localhost:7000
         if: ${{ always() }}
         continue-on-error: true
