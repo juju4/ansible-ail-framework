@@ -31,6 +31,7 @@
         - modules/Keys
         - modules/Onion
         - modules/SentimentAnalysis
+        - modules/Telegram
         - modules/Urls
         - modules/SQLInjectionDetection
         - modules/LibInjection
@@ -45,7 +46,6 @@
         - Mail
         - PgpDump
         - Cryptocurrencies
-        - Telegram
         - Tools
         - Cve
         - ModuleStats
