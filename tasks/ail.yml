@@ -74,6 +74,17 @@
     backup: yes
   when: ansible_distribution_release == 'xenial'
 
+# https://github.com/juju4/ansible-ail-framework/runs/5259223095?check_suite_focus=true#step:16:710
+# https://github.com/pallets/jinja/issues/1585
+- name: force MarkupSafe 2.0.1 - soft_unicode deprecation workaround
+  replace:
+    dest: "{{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
+    regexp: ^markupsafe.*
+    replace: markupsafe==2.0.1
+    mode: '0644'
+    backup: yes
+  when: ail_version == 'HEAD'
+
 - name: Initialize python3 virtualenv
   command: "virtualenv -p {{ python_bin }} {{ ail_virtualenv }}"
   args:
