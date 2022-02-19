@@ -1,5 +1,5 @@
 ---
-name: default-HEAD
+name: default-bare-HEAD
 
 on:
   push:
