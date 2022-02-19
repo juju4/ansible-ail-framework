@@ -116,7 +116,7 @@ jobs:
       - name: After script - pipdeptree
         run: |
           set -x
-          /var/_ail/AILENV/bin/pip install pipdeptree
+          sudo /var/_ail/AILENV/bin/pip install pipdeptree
           /var/_ail/AILENV/bin/pipdeptree -r
         if: ${{ always() }}
         continue-on-error: true
