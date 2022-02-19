@@ -77,12 +77,12 @@
 # https://github.com/juju4/ansible-ail-framework/runs/5259223095?check_suite_focus=true#step:16:710
 # https://github.com/pallets/jinja/issues/1585
 - name: force MarkupSafe 2.0.1 - soft_unicode deprecation workaround
-  replace:
-    dest: "{{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
-    regexp: ^markupsafe.*
-    replace: markupsafe==2.0.1
-    mode: '0644'
-    backup: yes
+  pip:
+    name: markupsafe
+    version: 2.0.1
+    executable: "{{ ail_virtualenv }}/bin/pip3"
+  register: pkg_result
+  until: pkg_result is success
   when:
     - ail_version is defined
     - ail_version == 'HEAD'
