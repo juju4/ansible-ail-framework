@@ -83,7 +83,9 @@
     replace: markupsafe==2.0.1
     mode: '0644'
     backup: yes
-  when: ail_version == 'HEAD'
+  when:
+    - ail_version is defined
+    - ail_version == 'HEAD'
 
 - name: Initialize python3 virtualenv
   command: "virtualenv -p {{ python_bin }} {{ ail_virtualenv }}"
