@@ -31,6 +31,7 @@ ail_pkg:
   - tor
   - wget
   - libjpeg9-dev
+  - p7zip-full
 
 ail_pip3_deps:
   - pymisp

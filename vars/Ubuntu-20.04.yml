@@ -35,6 +35,7 @@ ail_pkg:
   - wget
   - libjpeg9-dev
   - python3-nose
+  - p7zip-full
 
 ail_pip3_deps:
   - pymisp
