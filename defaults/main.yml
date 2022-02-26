@@ -1,5 +1,6 @@
 ---
 
+ail_version: 303c8001e5286c987a5458ecfd99291079407b61
 # ail_version: HEAD
 ail_user: _ail
 ail_home: /var/_ail
@@ -31,41 +32,44 @@ ail_redis_bind: 127.0.0.1
 # ail_term_tracklist: /path/file
 
 ail_modules:
-  - Global
-  - ApiKey
-  - Attributes
-  - BankAccount
-  - Cryptocurrencies
-  - Duplicates
-  - DomClassifier
-  - Categ
-  - CreditCards
-  - DbCleaner
-  - Decoder
-  - Onion
-  - Mail
-  - Web
-  - Credential
-  - Indexer
-  - Keys
-  - Phone
-  - Release
-  - Cve
-  - WebStats
-  - LibInjection
-  - MISP_The_Hive_feeder
-  - Mixer
-  - ModuleStats
+  - modules/Global
+  - modules/Categ
+  - modules/Indexer
+  - modules/Tags
+  - modules/submit_paste
+  - core/Sync_module
+  - modules/ApiKey
+  - modules/Credential
+  - modules/CreditCards
+  - modules/Decoder
+  - modules/DomClassifier
+  - modules/Keys
+  - modules/Onion
+  - modules/SentimentAnalysis
+  - modules/Telegram
+  - modules/Urls
+  - modules/SQLInjectionDetection
+  - modules/LibInjection
+  - trackers/Tracker_Term
+  - trackers/Tracker_Regex
+  - trackers/Tracker_Yara
+  - trackers/Retro_Hunt
   - ModulesInformationV2
+  - Mixer
+  - Duplicates
+  - BankAccount
+  - Mail
   - PgpDump
-  - RegexTracker
-  - SQLInjectionDetection
-  - SentimentAnalysis
-  - submit_paste
-  - Tags
+  - Cryptocurrencies
   - Tools
-  - TermTrackerMod
-  # - update-background
+  - Cve
+  - ModuleStats
+  - MISP_The_Hive_feeder
+  - Languages
+  # if configured in core.cfg
+  # - IPAddress
+  # commented in upstream
+  # - Release
 
 ail_nginx_enable: false
 ail_nginx_template: nginx-ail.conf.j2

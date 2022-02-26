@@ -31,7 +31,7 @@
   git:
     repo: https://github.com/CIRCL/AIL-framework.git
     dest: "{{ ail_root }}"
-    version: "{{ ail_version | default('e3800aa36a524936185334a752bc7d4497325733') }}"
+    version: "{{ ail_version }}"
   failed_when: false
   become: yes
   become_user: "{{ ail_user }}"
