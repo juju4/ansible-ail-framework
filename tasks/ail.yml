@@ -85,7 +85,7 @@
   until: pkg_result is success
   when:
     - ail_version is defined
-    - ail_version == 'HEAD'
+    - (ail_version == 'HEAD' or ail_version == '303c8001e5286c987a5458ecfd99291079407b61')
 
 - name: Initialize python3 virtualenv
   command: "virtualenv -p {{ python_bin }} {{ ail_virtualenv }}"
