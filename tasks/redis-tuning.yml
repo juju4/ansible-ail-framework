@@ -13,15 +13,15 @@
       sysctl: name="vm.overcommit_memory" value=1 sysctl_set=yes state=present reload=yes
 
     - name: check current state of Transparent Huge Pages (THP)
-      command: "cat /sys/kernel/mm/transparent_hugepage/enabled"
+      ansible.builtin.command: "cat /sys/kernel/mm/transparent_hugepage/enabled"
       register: statethp
       changed_when: false
     - name: disable Transparent Huge Pages (THP) in kernel (for redis)
-      shell: "echo never > /sys/kernel/mm/transparent_hugepage/enabled"
+      ansible.builtin.shell: "echo never > /sys/kernel/mm/transparent_hugepage/enabled"
       when: statethp is defined and statethp.stdout is defined and statethp.stdout.find("^never") == -1
 
     - name: disable Transparent Huge Pages (THP) in rc.local
-      lineinfile:
+      ansible.builtin.lineinfile:
         dest: /etc/rc.local
         line: "echo never > /sys/kernel/mm/transparent_hugepage/enabled"
         insertbefore: "^exit 0"
@@ -34,7 +34,7 @@
     (ansible_virtualization_type == "lxc" or ansible_virtualization_type == "docker"))
 
 - name: WARNING
-  debug:
+  ansible.builtin.debug:
     msg: >
         Warning! some kernel optimizations for redis were not enabled as you are in a container. Review them for host.
   when: >
@@ -43,7 +43,7 @@
 
 ## http://redis.io/topics/security
 - name: Restrict redis bind to {{ ail_redis_bind }}
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "{{ item }}"
     line: "bind {{ ail_redis_bind }}"
     mode: '0644'
@@ -57,9 +57,9 @@
 ## missing part for redis role
 - block:
     - name: ensure run directory exists
-      file: dest=/run/redis state=directory mode=0755 owner=redis group=redis
+      ansible.builtin.file: dest=/run/redis state=directory mode=0755 owner=redis group=redis
     - name: ensure pid directory for redis user at reboot (systemd-tmpfiles)
-      lineinfile:
+      ansible.builtin.lineinfile:
         dest: /etc/tmpfiles.d/redis.conf
         line: '    d    /run/redis   0755 redis redis - -'
         mode: '0644'

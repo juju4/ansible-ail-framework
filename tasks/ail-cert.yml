@@ -1,7 +1,7 @@
 ---
 
 - name: Create self-signed certificate
-  command: "{{ item }}"  # noqa 301
+  ansible.builtin.command: "{{ item }}"  # noqa 301
   args:
     chdir: "{{ ail_root }}/bin/helper/gen_cert"
   with_items:
@@ -9,11 +9,11 @@
     - bash gen_cert.sh
 
 - name: Check resulting cert files
-  command: "ls -lA {{ ail_root }}/bin/helper/gen_cert"
+  ansible.builtin.command: "ls -lA {{ ail_root }}/bin/helper/gen_cert"
   changed_when: false
 
 - name: Copy cert files
-  copy:
+  ansible.builtin.copy:
     src: "{{ ail_root }}/bin/helper/gen_cert/{{ item }}"
     dest: "{{ ail_root }}/var/www/{{ item }}"
     owner: "{{ ail_user }}"
