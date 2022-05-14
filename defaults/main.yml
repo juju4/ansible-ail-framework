@@ -14,12 +14,12 @@ pystemon_redis_host: localhost
 pystemon_redis_port: 6379
 pystemon_redis_db: 10
 
-SBADMIN_VERSION: '3.3.7'
-JQVERSION: "1.12.4"
-BOOTSTRAP_VERSION: '4.2.1'
-FONT_AWESOME_VERSION: '5.7.1'
-D3_JS_VERSION: '5.5.0'
-POPPER_VERSION: '2.0.6'
+sbadmin_version: '3.3.7'
+jq_version: "1.12.4"
+bootstrap_version: '4.2.1'
+font_awesome_version: '5.7.1'
+d3_js_version: '5.5.0'
+popper_version: '2.0.6'
 
 ail_redislvdbhost: 127.0.0.1
 ail_redislvdbdir: "{{ ail_root }}/LEVEL_DB_DATA"

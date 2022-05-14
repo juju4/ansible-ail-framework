@@ -21,7 +21,7 @@
     - { u: "https://raw.githubusercontent.com/cdnjs/cdnjs/master/ajax/libs/dygraph/1.1.1/dygraph-combined.js.map",
         d: "{{ ail_root }}/var/www/static/js/dygraph-combined.js.map"
     }
-    - { u: "http://code.jquery.com/jquery-{{ JQVERSION }}.js",
+    - { u: "http://code.jquery.com/jquery-{{ jq_version }}.js",
         d: "{{ ail_root }}/var/www/static/js/jquery.js"
     }
     - { u: "https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js",
@@ -65,20 +65,20 @@
     - { u: "https://www.circl.lu/assets/images/logos/AIL-logo.png",
         d: "{{ ail_root }}/var/www/static/image/AIL-logo.png"
     }
-    - { u: "https://github.com/twbs/bootstrap/releases/download/v{{ BOOTSTRAP_VERSION }}/bootstrap-{{ BOOTSTRAP_VERSION }}-dist.zip",
-        d: "{{ ail_home }}/3rd-archives/bootstrap{{ BOOTSTRAP_VERSION }}.zip"
+    - { u: "https://github.com/twbs/bootstrap/releases/download/v{{ bootstrap_version }}/bootstrap-{{ bootstrap_version }}-dist.zip",
+        d: "{{ ail_home }}/3rd-archives/bootstrap{{ bootstrap_version }}.zip"
     }
-    - { u: "https://unpkg.com/@popperjs/core@{{ POPPER_VERSION }}/dist/umd/popper.min.js",
+    - { u: "https://unpkg.com/@popperjs/core@{{ popper_version }}/dist/umd/popper.min.js",
         d: "{{ ail_root }}/var/www/static/js/popper.min.js"
     }
-    - { u: "https://unpkg.com/@popperjs/core@{{ POPPER_VERSION }}/dist/umd/popper.min.js.map",
+    - { u: "https://unpkg.com/@popperjs/core@{{ popper_version }}/dist/umd/popper.min.js.map",
         d: "{{ ail_root }}/var/www/static/js/popper.min.js.map"
     }
-    - { u: "https://github.com/BlackrockDigital/startbootstrap-sb-admin/archive/v{{ SBADMIN_VERSION }}.zip",
-        d: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}.zip"
+    - { u: "https://github.com/BlackrockDigital/startbootstrap-sb-admin/archive/v{{ sbadmin_version }}.zip",
+        d: "{{ ail_home }}/3rd-archives/{{ sbadmin_version }}.zip"
     }
-    - { u: "https://github.com/BlackrockDigital/startbootstrap-sb-admin-2/archive/v{{ SBADMIN_VERSION }}.zip",
-        d: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}-2.zip"
+    - { u: "https://github.com/BlackrockDigital/startbootstrap-sb-admin-2/archive/v{{ sbadmin_version }}.zip",
+        d: "{{ ail_home }}/3rd-archives/{{ sbadmin_version }}-2.zip"
     }
     - { u: "http://canvasjs.com/fdm/chart/",
         d: "{{ ail_home }}/3rd-archives/canvasjs.zip"
@@ -89,11 +89,11 @@
     - { u: "https://github.com/FortAwesome/Font-Awesome/archive/v4.7.0.zip",
         d: "{{ ail_home }}/3rd-archives/FONT_AWESOME_4.7.0.zip"
     }
-    - { u: "https://github.com/FortAwesome/Font-Awesome/archive/{{ FONT_AWESOME_VERSION }}.zip",
-        d: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{ FONT_AWESOME_VERSION }}.zip"
+    - { u: "https://github.com/FortAwesome/Font-Awesome/archive/{{ font_awesome_version }}.zip",
+        d: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{ font_awesome_version }}.zip"
     }
-    - { u: "https://github.com/d3/d3/releases/download/v{{ D3_JS_VERSION }}/d3.zip",
-        d: "{{ ail_home }}/3rd-archives/d3_{{ D3_JS_VERSION }}.zip"
+    - { u: "https://github.com/d3/d3/releases/download/v{{ d3_js_version }}/d3.zip",
+        d: "{{ ail_home }}/3rd-archives/d3_{{ d3_js_version }}.zip"
     }
     - { u: "https://github.com/moment/moment/archive/2.22.2.zip",
         d: "{{ ail_home }}/3rd-archives/moment_2.22.2.zip"
@@ -113,17 +113,17 @@
     mode: '0755'
     remote_src: true
   with_items:
-    - { s: "{{ ail_home }}/3rd-archives/bootstrap{{ BOOTSTRAP_VERSION }}.zip",
+    - { s: "{{ ail_home }}/3rd-archives/bootstrap{{ bootstrap_version }}.zip",
         d: "{{ ail_home }}/3rd-archives",
-        c: "{{ ail_home }}/3rd-archives/bootstrap-{{ BOOTSTRAP_VERSION }}-dist/css/bootstrap.min.css"
+        c: "{{ ail_home }}/3rd-archives/bootstrap-{{ bootstrap_version }}-dist/css/bootstrap.min.css"
     }
-    - { s: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}.zip",
+    - { s: "{{ ail_home }}/3rd-archives/{{ sbadmin_version }}.zip",
         d: "{{ ail_home }}/3rd-archives",
-        c: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/js"
+        c: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/js"
     }
-    - { s: "{{ ail_home }}/3rd-archives/{{ SBADMIN_VERSION }}-2.zip",
+    - { s: "{{ ail_home }}/3rd-archives/{{ sbadmin_version }}-2.zip",
         d: "{{ ail_home }}/3rd-archives",
-        c: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-2-{{ SBADMIN_VERSION }}/js"
+        c: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-2-{{ sbadmin_version }}/js"
     }
     - { s: "{{ ail_home }}/3rd-archives/canvasjs.zip",
         d: "{{ ail_home }}/3rd-archives",
@@ -137,11 +137,11 @@
         d: "{{ ail_home }}/3rd-archives",
         c: "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/CONTRIBUTING.md"
     }
-    - { s: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{ FONT_AWESOME_VERSION }}.zip",
+    - { s: "{{ ail_home }}/3rd-archives/FONT_AWESOME_{{ font_awesome_version }}.zip",
         d: "{{ ail_home }}/3rd-archives",
-        c: "{{ ail_home }}/3rd-archives/Font-Awesome-{{ FONT_AWESOME_VERSION }}/CONTRIBUTING.md"
+        c: "{{ ail_home }}/3rd-archives/Font-Awesome-{{ font_awesome_version }}/CONTRIBUTING.md"
     }
-    - { s: "{{ ail_home }}/3rd-archives/d3_{{ D3_JS_VERSION }}.zip",
+    - { s: "{{ ail_home }}/3rd-archives/d3_{{ d3_js_version }}.zip",
         d: "{{ ail_home }}/3rd-archives",
         c: "{{ ail_home }}/3rd-archives/d3.min.js"
     }
@@ -162,16 +162,16 @@
     owner: "{{ ail_user }}"
     remote_src: true
   loop:
-    - { s: "{{ ail_home }}/3rd-archives/bootstrap-{{ BOOTSTRAP_VERSION }}-dist/js/bootstrap.min.js",
+    - { s: "{{ ail_home }}/3rd-archives/bootstrap-{{ bootstrap_version }}-dist/js/bootstrap.min.js",
         d: bootstrap4.min.js
     }
     # intentional? https://github.com/CIRCL/AIL-framework/blob/master/var/www/update_thirdparty.sh#L40
-    - { s: "{{ ail_home }}/3rd-archives/bootstrap-{{ BOOTSTRAP_VERSION }}-dist/js/bootstrap.min.js.map",
+    - { s: "{{ ail_home }}/3rd-archives/bootstrap-{{ bootstrap_version }}-dist/js/bootstrap.min.js.map",
         d: bootstrap.min.js.map
     }
-    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/js/bootstrap.js" }
-    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/js/bootstrap.min.js" }
-    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/js/jquery.js" }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/js/bootstrap.js" }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/js/bootstrap.min.js" }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/js/jquery.js" }
     - { s: "{{ ail_home }}/3rd-archives/d3.min.js" }
     - { s: "{{ ail_home }}/3rd-archives/moment-2.22.2/min/moment.min.js" }
     - { s: "{{ ail_home }}/3rd-archives/jquery-date-range-picker-0.18.0/dist/jquery.daterangepicker.min.js" }
@@ -186,18 +186,18 @@
     owner: "{{ ail_user }}"
     remote_src: true
   loop:
-    - { s: "{{ ail_home }}/3rd-archives/bootstrap-{{ BOOTSTRAP_VERSION }}-dist/css/bootstrap.min.css",
+    - { s: "{{ ail_home }}/3rd-archives/bootstrap-{{ bootstrap_version }}-dist/css/bootstrap.min.css",
         d: bootstrap4.min.css
     }
-    - { s: "{{ ail_home }}/3rd-archives/bootstrap-{{ BOOTSTRAP_VERSION }}-dist/css/bootstrap.min.css.map",
+    - { s: "{{ ail_home }}/3rd-archives/bootstrap-{{ bootstrap_version }}-dist/css/bootstrap.min.css.map",
         d: bootstrap4.min.css.map
     }
-    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/bootstrap-rtl.css" }
-    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/bootstrap-rtl.min.css" }
-    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/bootstrap.css" }
-    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/bootstrap.min.css" }
-    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/sb-admin-rtl.css" }
-    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/sb-admin.css" }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/css/bootstrap-rtl.css" }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/css/bootstrap-rtl.min.css" }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/css/bootstrap.css" }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/css/bootstrap.min.css" }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/css/sb-admin-rtl.css" }
+    - { s: "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/css/sb-admin.css" }
     - { s: "{{ ail_home }}/3rd-archives/jquery-ui-1.12.0/jquery-ui.min.css" }
     - { s: "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/css/font-awesome.css" }
     - { s: "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/css/font-awesome.css.map" }
@@ -210,14 +210,14 @@
     owner: "{{ ail_user }}"
 - name: copy relevant files of 3rd party archives - fonts awesome css
   ansible.builtin.copy:
-    src: "{{ ail_home }}/3rd-archives/Font-Awesome-{{ FONT_AWESOME_VERSION }}/css/all.min.css"
+    src: "{{ ail_home }}/3rd-archives/Font-Awesome-{{ font_awesome_version }}/css/all.min.css"
     dest: "{{ ail_root }}/var/www/static/css/font-awesome.min.css"
     mode: '0644'
     owner: "{{ ail_user }}"
     remote_src: true
 - name: copy relevant files of 3rd party archives - webfonts
   ansible.builtin.copy:
-    src: "{{ ail_home }}/3rd-archives/Font-Awesome-{{ FONT_AWESOME_VERSION }}/webfonts/{{ item }}"
+    src: "{{ ail_home }}/3rd-archives/Font-Awesome-{{ font_awesome_version }}/webfonts/{{ item }}"
     dest: "{{ ail_root }}/var/www/static/webfonts"
     mode: '0644'
     owner: "{{ ail_user }}"
@@ -253,11 +253,11 @@
     owner: "{{ ail_user }}"
     remote_src: true
   loop:
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/fonts/glyphicons-halflings-regular.eot"
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/fonts/glyphicons-halflings-regular.ttf"
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/fonts/glyphicons-halflings-regular.woff2"
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/fonts/glyphicons-halflings-regular.svg"
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/fonts/glyphicons-halflings-regular.woff"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/fonts/glyphicons-halflings-regular.eot"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/fonts/glyphicons-halflings-regular.ttf"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/fonts/glyphicons-halflings-regular.woff2"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/fonts/glyphicons-halflings-regular.svg"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/fonts/glyphicons-halflings-regular.woff"
     - "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/fonts/FontAwesome.otf"
     - "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/fonts/fontawesome-webfont.svg"
     - "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/fonts/fontawesome-webfont.woff"
@@ -273,12 +273,12 @@
     owner: "{{ ail_user }}"
     remote_src: true
   loop:
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/bootstrap-rtl.css"
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/bootstrap-rtl.min.css"
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/bootstrap.css"
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/bootstrap.min.css"
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/sb-admin-rtl.css"
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ SBADMIN_VERSION }}/css/sb-admin.css"
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-2-{{ SBADMIN_VERSION }}/dist/css/sb-admin-2.css"
-    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-2-{{ SBADMIN_VERSION }}/dist/css/timeline.css"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/css/bootstrap-rtl.css"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/css/bootstrap-rtl.min.css"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/css/bootstrap.css"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/css/bootstrap.min.css"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/css/sb-admin-rtl.css"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-{{ sbadmin_version }}/css/sb-admin.css"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-2-{{ sbadmin_version }}/dist/css/sb-admin-2.css"
+    - "{{ ail_home }}/3rd-archives/startbootstrap-sb-admin-2-{{ sbadmin_version }}/dist/css/timeline.css"
     - "{{ ail_home }}/3rd-archives/jquery-date-range-picker-0.18.0/dist/daterangepicker.min.css"
