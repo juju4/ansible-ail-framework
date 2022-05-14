@@ -162,7 +162,8 @@
     replace: 'yaml.load(open(\1), Loader=yaml.SafeLoader)'
     mode: '0755'
 
-- block:
+- name: pystemon-feeder
+  block:
     - name: review pystemon-feeder settings
       ansible.builtin.replace:
         dest: "{{ ail_root }}/bin/feeder/pystemon-feeder.py"

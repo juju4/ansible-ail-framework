@@ -8,7 +8,8 @@
 #    'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order
 #    to retain the setting after a reboot. Redis must be restarted after THP is disabled.
 
-- block:
+- name: Not lxc or docker
+  block:
     - name: set vm.overcommit_memory = 1 for redis in case of low memory
       sysctl: name="vm.overcommit_memory" value=1 sysctl_set=yes state=present reload=yes
 
@@ -55,7 +56,8 @@
     - supervisor update
 
 ## missing part for redis role
-- block:
+- name: systemd | set run dir as tmpfiles.d
+  block:
     - name: ensure run directory exists
       ansible.builtin.file: dest=/run/redis state=directory mode=0755 owner=redis group=redis
     - name: ensure pid directory for redis user at reboot (systemd-tmpfiles)

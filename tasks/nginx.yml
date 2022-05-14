@@ -1,6 +1,7 @@
 ---
 
-- block:
+- name: Debian
+  block:
     - name: nginx AIL configuration
       ansible.builtin.template:
         src: "{{ ail_nginx_template }}"
