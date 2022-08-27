@@ -1,6 +1,6 @@
 ---
 
-- name: git clone pgpdump
+- name: Git clone pgpdump
   ansible.builtin.git:
     repo: https://github.com/kazu-yamamoto/pgpdump.git
     dest: "{{ ail_home }}/pgpdump"
@@ -10,7 +10,7 @@
   become: yes
   become_user: "{{ ail_user }}"
 
-- name: pgpdump configure
+- name: Pgpdump configure
   ansible.builtin.command: ./configure
   args:
     chdir: "{{ ail_home }}/pgpdump"
@@ -18,7 +18,7 @@
   become: yes
   become_user: "{{ ail_user }}"
 
-- name: pgpdump make
+- name: Pgpdump make
   ansible.builtin.command: make
   args:
     chdir: "{{ ail_home }}/pgpdump"
@@ -26,7 +26,7 @@
   become: yes
   become_user: "{{ ail_user }}"
 
-- name: pgpdump make install
+- name: Pgpdump make install
   ansible.builtin.command: make install
   args:
     chdir: "{{ ail_home }}/pgpdump"

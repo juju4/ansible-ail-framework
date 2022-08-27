@@ -2,7 +2,7 @@
 
 - name: Debian
   block:
-    - name: nginx AIL configuration
+    - name: Nginx AIL configuration
       ansible.builtin.template:
         src: "{{ ail_nginx_template }}"
         dest: "{{ apache_sitedir }}/ail"
@@ -10,13 +10,13 @@
         group: '0'
         mode: '0644'
       notify:
-        - restart nginx
-    - name: enable AIL nginx site
+        - Restart nginx
+    - name: Enable AIL nginx site
       ansible.builtin.file:
         src: "{{ apache_sitedir }}/ail"
         dest: "/etc/nginx/sites-enabled/ail"
         state: link
         mode: '0644'
       notify:
-        - restart nginx
+        - Restart nginx
   when: ansible_os_family == 'Debian'

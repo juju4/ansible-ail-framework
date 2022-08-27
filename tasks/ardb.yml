@@ -1,6 +1,6 @@
 ---
 
-- name: git clone ARDB
+- name: Git clone ARDB
   ansible.builtin.git:
     repo: https://github.com/ail-project/ardb.git
     dest: "{{ ardb_root }}"
@@ -15,7 +15,7 @@
     replace: "tar --no-same-owner -jxf "
     mode: '0644'
 
-- name: build ARDB
+- name: Build ARDB
   ansible.builtin.command: make
   args:
     chdir: "{{ ardb_root }}"
@@ -24,7 +24,7 @@
   poll: 0
   register: ardb_build
 
-- name: check build status
+- name: Check build status
   ansible.builtin.async_status:
     jid: "{{ ardb_build.ansible_job_id }}"
   register: job_result

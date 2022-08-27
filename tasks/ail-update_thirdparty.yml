@@ -1,13 +1,13 @@
 ---
 
-- name: have 3rd parties archives directory
+- name: Have 3rd parties archives directory
   ansible.builtin.file:
     dest: "{{ ail_home }}/3rd-archives"
     state: directory
     mode: '0755'
     owner: "{{ ail_user }}"
 
-- name: download 3rd parties dependencies
+- name: Download 3rd parties dependencies
   ansible.builtin.get_url:
     url: "{{ item.u }}"
     dest: "{{ item.d }}"
@@ -104,7 +104,7 @@
   register: dl_result
   until: dl_result is success
 
-- name: uncompress 3rd party archives
+- name: Uncompress 3rd party archives
   ansible.builtin.unarchive:
     src: "{{ item.s }}"
     dest: "{{ item.d }}"
@@ -154,7 +154,7 @@
         c: "{{ ail_home }}/3rd-archives/xxx"
     }
 
-- name: copy relevant files of 3rd party archives - js
+- name: Copy relevant files of 3rd party archives - js
   ansible.builtin.copy:
     src: "{{ item.s }}"
     dest: "{{ ail_root }}/var/www/static/js/{{ item.d | default(item.s | basename) }}"
@@ -178,7 +178,7 @@
     - { s: "{{ ail_home }}/3rd-archives/jquery.canvasjs.min.js" }
     - { s: "{{ ail_home }}/3rd-archives/jquery-ui-1.12.0/jquery-ui.min.js" }
 
-- name: copy relevant files of 3rd party archives - css
+- name: Copy relevant files of 3rd party archives - css
   ansible.builtin.copy:
     src: "{{ item.s }}"
     dest: "{{ ail_root }}/var/www/static/css/{{ item.d | default(item.s | basename) }}"
@@ -202,20 +202,20 @@
     - { s: "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/css/font-awesome.css" }
     - { s: "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/css/font-awesome.css.map" }
 
-- name: ensure have webfonts dir
+- name: Ensure have webfonts dir
   ansible.builtin.file:
     dest: "{{ ail_root }}/var/www/static/webfonts"
     state: directory
     mode: '0755'
     owner: "{{ ail_user }}"
-- name: copy relevant files of 3rd party archives - fonts awesome css
+- name: Copy relevant files of 3rd party archives - fonts awesome css
   ansible.builtin.copy:
     src: "{{ ail_home }}/3rd-archives/Font-Awesome-{{ font_awesome_version }}/css/all.min.css"
     dest: "{{ ail_root }}/var/www/static/css/font-awesome.min.css"
     mode: '0644'
     owner: "{{ ail_user }}"
     remote_src: true
-- name: copy relevant files of 3rd party archives - webfonts
+- name: Copy relevant files of 3rd party archives - webfonts
   ansible.builtin.copy:
     src: "{{ ail_home }}/3rd-archives/Font-Awesome-{{ font_awesome_version }}/webfonts/{{ item }}"
     dest: "{{ ail_root }}/var/www/static/webfonts"
@@ -239,13 +239,13 @@
     - fa-solid-900.svg
     - fa-solid-900.woff2
 
-- name: ensure have fonts dir
+- name: Ensure have fonts dir
   ansible.builtin.file:
     dest: "{{ ail_root }}/var/www/static/fonts"
     state: directory
     mode: '0755'
     owner: "{{ ail_user }}"
-- name: copy relevant files of 3rd party archives - fonts
+- name: Copy relevant files of 3rd party archives - fonts
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ ail_root }}/var/www/static/fonts"
@@ -265,7 +265,7 @@
     - "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/fonts/fontawesome-webfont.ttf"
     - "{{ ail_home }}/3rd-archives/Font-Awesome-4.7.0/fonts/fontawesome-webfont.woff2"
 
-- name: copy relevant files of 3rd party archives - css
+- name: Copy relevant files of 3rd party archives - css
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ ail_root }}/var/www/static/css"

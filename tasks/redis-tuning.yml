@@ -10,18 +10,21 @@
 
 - name: Not lxc or docker
   block:
-    - name: set vm.overcommit_memory = 1 for redis in case of low memory
+    - name: Set vm.overcommit_memory = 1 for redis in case of low memory
       sysctl: name="vm.overcommit_memory" value=1 sysctl_set=yes state=present reload=yes
 
-    - name: check current state of Transparent Huge Pages (THP)
+    - name: Check current state of Transparent Huge Pages (THP)
       ansible.builtin.command: "cat /sys/kernel/mm/transparent_hugepage/enabled"
       register: statethp
       changed_when: false
-    - name: disable Transparent Huge Pages (THP) in kernel (for redis)
+    - name: Disable Transparent Huge Pages (THP) in kernel (for redis)
       ansible.builtin.shell: "echo never > /sys/kernel/mm/transparent_hugepage/enabled"
-      when: statethp is defined and statethp.stdout is defined and statethp.stdout.find("^never") == -1
+      when:
+        - statethp is defined
+        - statethp.stdout is defined
+        - statethp.stdout.find("^never") == -1
 
-    - name: disable Transparent Huge Pages (THP) in rc.local
+    - name: Disable Transparent Huge Pages (THP) in rc.local
       ansible.builtin.lineinfile:
         dest: /etc/rc.local
         line: "echo never > /sys/kernel/mm/transparent_hugepage/enabled"
@@ -53,14 +56,14 @@
   with_fileglob:
     - /var/_ail/AIL/configs/*.conf
   notify:
-    - supervisor update
+    - Supervisor update
 
 ## missing part for redis role
-- name: systemd | set run dir as tmpfiles.d
+- name: Systemd | set run dir as tmpfiles.d
   block:
-    - name: ensure run directory exists
+    - name: Ensure run directory exists
       ansible.builtin.file: dest=/run/redis state=directory mode=0755 owner=redis group=redis
-    - name: ensure pid directory for redis user at reboot (systemd-tmpfiles)
+    - name: Ensure pid directory for redis user at reboot (systemd-tmpfiles)
       ansible.builtin.lineinfile:
         dest: /etc/tmpfiles.d/redis.conf
         line: '    d    /run/redis   0755 redis redis - -'

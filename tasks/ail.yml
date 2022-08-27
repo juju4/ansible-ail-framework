@@ -1,17 +1,17 @@
 ---
 
-- name: remove conflicting packages
+- name: Remove conflicting packages
   ansible.builtin.package:
     name: libjpeg-turbo8-dev
     state: absent
 
-- name: install package dependencies
+- name: Install package dependencies
   ansible.builtin.package: name={{ ail_pkg }} state=present
   register: pkg_result
   async: 900
   poll: 0
 
-- name: check dependencies install status
+- name: Check dependencies install status
   ansible.builtin.async_status:
     jid: "{{ pkg_result.ansible_job_id }}"
   register: job_result
@@ -19,15 +19,15 @@
   retries: 15
   delay: 60
 
-- name: create ail user
+- name: Create ail user
   ansible.builtin.user: name="{{ ail_user }}" home="{{ ail_home }}" comment="AIL app user" shell=/bin/bash
 
-- name: ensure right permissions for ail homedir
+- name: Ensure right permissions for ail homedir
   ansible.builtin.file: "dest={{ ail_home }} state=directory mode=0755 owner={{ ail_user }}"
 
 - import_tasks: ardb.yml
 
-- name: git clone AIL
+- name: Git clone AIL
   ansible.builtin.git:
     repo: https://github.com/CIRCL/AIL-framework.git
     dest: "{{ ail_root }}"
@@ -36,7 +36,7 @@
   become: yes
   become_user: "{{ ail_user }}"
 
-- name: re-enable adns pip dependency
+- name: Re-enable adns pip dependency
   ansible.builtin.replace:
     dest: "{{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
     regexp: >
@@ -47,7 +47,7 @@
     backup: yes
   when: python_bin != 'python3'
 
-- name: force SFlock 0.3.10
+- name: Force SFlock 0.3.10
   ansible.builtin.replace:
     dest: "{{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
     regexp: ^sflock.*
@@ -56,7 +56,7 @@
     backup: yes
 
 # https://travis-ci.org/juju4/ansible-ail-framework/jobs/560020454#L8358
-- name: force pycountry 18.12.8
+- name: Force pycountry 18.12.8
   ansible.builtin.replace:
     dest: "{{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
     regexp: ^pycountry.*
@@ -76,7 +76,7 @@
 
 # https://github.com/juju4/ansible-ail-framework/runs/5259223095?check_suite_focus=true#step:16:710
 # https://github.com/pallets/jinja/issues/1585
-- name: force MarkupSafe 2.0.1 - soft_unicode deprecation workaround
+- name: Force MarkupSafe 2.0.1 - soft_unicode deprecation workaround
   ansible.builtin.pip:
     name: markupsafe
     version: 2.0.1
@@ -116,7 +116,7 @@
 
 # FIXME! pip fails. pip module pointing wrong pip version
 #   adnsmodule.c:62:8: error: unknown type name 'PyModuleDef' => using python2 instead of python3???
-- name: install pip dependencies  # noqa 301
+- name: Install pip dependencies  # noqa 301
   # pip:
   #   requirements: "{{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
   #   virtualenv: "{{ ail_virtualenv }}"
@@ -126,15 +126,15 @@
   environment:
     LC_ALL: C
 
-- name: install pip3 dependencies
+- name: Install pip3 dependencies
   ansible.builtin.pip:
     name: "{{ ail_pip3_deps | default([]) }}"
     executable: "{{ ail_virtualenv }}/bin/pip3"
-  when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 16)
+  when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version | int >= 16)
   register: pkg_result
   until: pkg_result is success
 
-- name: extra configuration for AILENV
+- name: Extra configuration for AILENV
   ansible.builtin.lineinfile:
     dest: "{{ ail_virtualenv }}/bin/activate"
     line: "{{ item }}"
@@ -147,7 +147,7 @@
     - "export AIL_REDIS={{ ail_root }}/redis/src"
     - "export AIL_ARDB={{ ail_root }}/ardb/src"
 
-- name: ensure appropriate directories exist
+- name: Ensure appropriate directories exist
   ansible.builtin.file: "dest={{ item }} state=directory mode=0755 owner={{ ail_user }}"
   with_items:
     - "{{ ail_root }}/PASTES"
@@ -162,9 +162,9 @@
     replace: 'yaml.load(open(\1), Loader=yaml.SafeLoader)'
     mode: '0755'
 
-- name: pystemon-feeder
+- name: Pystemon-feeder
   block:
-    - name: review pystemon-feeder settings
+    - name: Review pystemon-feeder settings
       ansible.builtin.replace:
         dest: "{{ ail_root }}/bin/feeder/pystemon-feeder.py"
         regex: "{{ item.re }}"
@@ -176,13 +176,13 @@
             rep: "r = redis.StrictRedis(host='{{ pystemon_redis_host }}', db={{ pystemon_redis_db }})"
         }
         - { re: '^pystemonpath = ".*"', rep: "pystemonpath = \"{{ pystemon_root }}\"" }
-    - name: configure pystemon-feeder in supervisor
+    - name: Configure pystemon-feeder in supervisor
       ansible.builtin.template:
         src: supervisor-pystemonfeeder.conf.j2
         dest: "{{ supervisor_confdir }}/pystemonfeeder.{{ supervisor_ext }}"
         mode: '0644'
       notify:
-        - supervisor update
+        - Supervisor update
   when: ail_enable_pystemonfeeder is defined and ail_enable_pystemonfeeder
 
 - name: Download the necessary NLTK corpora
@@ -223,11 +223,11 @@
     ail_config_path: "{{ ail_root }}/configs/core.cfg"
   when: not (ail_version is defined) or ail_version == 'HEAD' or not ('v2.2' in ail_version)
 ## alternative: use a template if need to modify config
-- name: check if existing config
+- name: Check if existing config
   ansible.builtin.stat:
     path: "{{ ail_config_path }}"
   register: ailcfg
-- name: copy sample config
+- name: Copy sample config
   ansible.builtin.copy:
     src: "{{ ail_config_path }}.sample"
     dest: "{{ ail_config_path }}"
@@ -251,7 +251,7 @@
 - import_tasks: ail-update_thirdparty.yml
 - import_tasks: redis-tuning.yml
 
-- name: set ail supervisor config
+- name: Set ail supervisor config
   ansible.builtin.template: "src=supervisor-{{ item }}.conf.j2 dest={{ supervisor_confdir }}/{{ item }}.{{ supervisor_ext }} mode=0644"
   with_items:
     - ail
@@ -265,18 +265,18 @@
     ## Note2: specific file as have arguments
     # - ail-script-ModuleInformation
   notify:
-    - supervisor update
+    - Supervisor update
 
-- name: set ail supervisor config for scripts
+- name: Set ail supervisor config for scripts
   ansible.builtin.template:
     src: supervisor-ail-script-model.conf.j2
     dest: "{{ supervisor_confdir }}/ail-script-{{ item | regex_replace('/', '-') }}.{{ supervisor_ext }}"
     mode: '0644'
   with_items: "{{ ail_modules }}"
   notify:
-    - supervisor update
+    - Supervisor update
 
-- name: ensure absolute path in redis 6382 config
+- name: Ensure absolute path in redis 6382 config
   ansible.builtin.replace:
     dest: "{{ ail_root }}/configs/6382.conf"
     regexp: "{{ item.re }}"
@@ -288,33 +288,33 @@
     - { re: "^home  DATA_ARDB/", rep: "home {{ ail_root }}/DATA_ARDB/" }
 # https://github.com/facebook/rocksdb/wiki/Direct-IO
 # https://github.com/facebook/rocksdb/blob/aa1857e2df9251c57b9a61e1543969e9be0811bf/db/db_impl/db_impl_open.cc#L394
-- name: configure use_direct_io_for_flush_and_compaction in redis 6382 config
+- name: Configure use_direct_io_for_flush_and_compaction in redis 6382 config
   ansible.builtin.replace:
     dest: "{{ ail_root }}/configs/6382.conf"
     regexp: "use_direct_io_for_flush_and_compaction=.*;"
     replace: "use_direct_io_for_flush_and_compaction={{ ail_rocksdb_directio | default('false') }};"
     mode: '0644'
-- name: ensure absolute path in launch_queues.py
+- name: Ensure absolute path in launch_queues.py
   ansible.builtin.replace:
     dest: "{{ ail_root }}/bin/launch_queues.py"
     regexp: "'./Queue"
     replace: "'{{ ail_root }}/bin/Queue"
     mode: '0755'
     backup: yes
-- name: check for all_modules.txt
+- name: Check for all_modules.txt
   ansible.builtin.stat: path={{ ail_root }}/doc/all_modules.txt
   register: allmodules
-- name: for ModuleInformation.py start - BUG?
+- name: For ModuleInformation.py start - BUG?
   ansible.builtin.file:
     dest: "{{ ail_root }}/doc/all_modules.txt"
     mode: '0600'
     state: touch
   when: not allmodules.stat.exists
 
-- name: disable redis upstream package service
+- name: Disable redis upstream package service
   ansible.builtin.service: name=redis-server enabled=no state=stopped
 
-- name: init update version  # noqa 303
+- name: Init update version  # noqa 303
   ansible.builtin.shell: |
     set -o pipefail
     git describe --abbrev=0 --tags | tr -d '\n' > {{ ail_root }}/update/current_version
@@ -326,14 +326,14 @@
 - name: Flush handlers
   ansible.builtin.meta: flush_handlers
 
-- name: ensure services are enabled and started
+- name: Ensure services are enabled and started
   ansible.builtin.service:
     name: "{{ item }}"
     enabled: yes
     state: started
   with_items: "{{ ail_services }}"
 
-- name: ensure supervisor programs are started (core part)
+- name: Ensure supervisor programs are started (core part)
   supervisorctl:
     name: "{{ item }}"
     state: started
@@ -345,7 +345,7 @@
     - ail-logqueue
     - ail-queues
 
-- name: update-background
+- name: Update-background
   ansible.builtin.command: >
     {{ ail_virtualenv }}/bin/python {{ ail_root }}/bin/update-background.py
   args:
@@ -363,13 +363,13 @@
   register: updatebackground
   when: ail_version is defined and ail_version != 'v2.0'
 
-- name: update-background log
+- name: Update-background log
   ansible.builtin.copy:
     content: "{{ updatebackground }}"
     dest: /var/log/supervisor/ail-script-update-background.log
     mode: '0644'
 
-- name: ensure supervisor programs are started (modules)
+- name: Ensure supervisor programs are started (modules)
   supervisorctl:
     name: "ail-script-{{ item | regex_replace('/', '-') }}"
     state: started
