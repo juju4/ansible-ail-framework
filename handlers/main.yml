@@ -1,7 +1,10 @@
 ---
 
 - name: Supervisor update
-  ansible.builtin.service: name={{ supervisor_service }} state=restarted sleep=5
+  ansible.builtin.service:
+    name: "{{ supervisor_service }}"
+    state: "restarted"
+    sleep: "5"
 
 - name: Restart nginx
   ansible.builtin.service:

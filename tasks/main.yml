@@ -7,4 +7,5 @@
   ansible.builtin.include_vars: "RedHat-{{ ansible_distribution_version.split('.')[0] }}.yml"
   when: ansible_os_family == "RedHat"
 
-- import_tasks: ail.yml
+- name: Import ail
+  ansible.builtin.import_tasks: ail.yml

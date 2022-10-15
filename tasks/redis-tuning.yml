@@ -9,9 +9,17 @@
 #    to retain the setting after a reboot. Redis must be restarted after THP is disabled.
 
 - name: Not lxc or docker
+  when: >
+    not (ansible_virtualization_type is defined and
+    (ansible_virtualization_type == "lxc" or ansible_virtualization_type == "docker"))
   block:
     - name: Set vm.overcommit_memory = 1 for redis in case of low memory
-      sysctl: name="vm.overcommit_memory" value=1 sysctl_set=yes state=present reload=yes
+      ansible.posix.sysctl:
+        name: "vm.overcommit_memory"
+        value: 1
+        sysctl_set: yes
+        state: present
+        reload: yes
 
     - name: Check current state of Transparent Huge Pages (THP)
       ansible.builtin.command: "cat /sys/kernel/mm/transparent_hugepage/enabled"
@@ -32,10 +40,6 @@
         mode: '0644'
         create: yes
         backup: yes
-
-  when: >
-    not (ansible_virtualization_type is defined and
-    (ansible_virtualization_type == "lxc" or ansible_virtualization_type == "docker"))
 
 - name: WARNING
   ansible.builtin.debug:
@@ -60,13 +64,18 @@
 
 ## missing part for redis role
 - name: Systemd | set run dir as tmpfiles.d
+  when: ansible_service_mgr == 'systemd'
   block:
     - name: Ensure run directory exists
-      ansible.builtin.file: dest=/run/redis state=directory mode=0755 owner=redis group=redis
+      ansible.builtin.file:
+        dest: /run/redis
+        state: directory
+        mode: 0755
+        owner: redis
+        group: redis
     - name: Ensure pid directory for redis user at reboot (systemd-tmpfiles)
       ansible.builtin.lineinfile:
         dest: /etc/tmpfiles.d/redis.conf
         line: '    d    /run/redis   0755 redis redis - -'
         mode: '0644'
         create: yes
-  when: ansible_service_mgr == 'systemd'

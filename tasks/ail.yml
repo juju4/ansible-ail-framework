@@ -6,7 +6,9 @@
     state: absent
 
 - name: Install package dependencies
-  ansible.builtin.package: name={{ ail_pkg }} state=present
+  ansible.builtin.package:
+    name: "{{ ail_pkg }}"
+    state: "present"
   register: pkg_result
   async: 900
   poll: 0
@@ -20,12 +22,21 @@
   delay: 60
 
 - name: Create ail user
-  ansible.builtin.user: name="{{ ail_user }}" home="{{ ail_home }}" comment="AIL app user" shell=/bin/bash
+  ansible.builtin.user:
+    name: "{{ ail_user }}"
+    home: "{{ ail_home }}"
+    comment: "AIL app user"
+    shell: /bin/bash
 
 - name: Ensure right permissions for ail homedir
-  ansible.builtin.file: "dest={{ ail_home }} state=directory mode=0755 owner={{ ail_user }}"
+  ansible.builtin.file:
+    dest: "{{ ail_home }}"
+    state: "directory"
+    mode: "0755"
+    owner: "{{ ail_user }}"
 
-- import_tasks: ardb.yml
+- name: Import ardb
+  ansible.builtin.import_tasks: ardb.yml
 
 - name: Git clone AIL
   ansible.builtin.git:
@@ -110,13 +121,13 @@
   until: pkg_result is success
 
 - name: Ensure pybgpranking is installed - not on pypi
-  ansible.builtin.command: "{{ ail_virtualenv }}/bin/pip3 install git+https://github.com/D4-project/BGP-Ranking.git/@7e698f87366e6f99b4d0d11852737db28e3ddc62#egg=pybgpranking&subdirectory=client"  # noqa 204 301
+  ansible.builtin.command: "{{ ail_virtualenv }}/bin/pip3 install git+https://github.com/D4-project/BGP-Ranking.git/@7e698f87366e6f99b4d0d11852737db28e3ddc62#egg=pybgpranking&subdirectory=client"  # noqa no-free-form no-changed-when
   environment:
     LC_ALL: C
 
 # FIXME! pip fails. pip module pointing wrong pip version
 #   adnsmodule.c:62:8: error: unknown type name 'PyModuleDef' => using python2 instead of python3???
-- name: Install pip dependencies  # noqa 301
+- name: Install pip dependencies  # noqa no-changed-when
   # pip:
   #   requirements: "{{ ail_root }}/{{ ail_requirement | default('requirements.txt') }}"
   #   virtualenv: "{{ ail_virtualenv }}"
@@ -148,7 +159,11 @@
     - "export AIL_ARDB={{ ail_root }}/ardb/src"
 
 - name: Ensure appropriate directories exist
-  ansible.builtin.file: "dest={{ item }} state=directory mode=0755 owner={{ ail_user }}"
+  ansible.builtin.file:
+    dest: "{{ item }}"
+    state: "directory"
+    mode: "0755"
+    owner: "{{ ail_user }}"
   with_items:
     - "{{ ail_root }}/PASTES"
     - "{{ ail_root }}/Blooms"
@@ -163,6 +178,7 @@
     mode: '0755'
 
 - name: Pystemon-feeder
+  when: ail_enable_pystemonfeeder is defined and ail_enable_pystemonfeeder
   block:
     - name: Review pystemon-feeder settings
       ansible.builtin.replace:
@@ -183,7 +199,6 @@
         mode: '0644'
       notify:
         - Supervisor update
-  when: ail_enable_pystemonfeeder is defined and ail_enable_pystemonfeeder
 
 - name: Download the necessary NLTK corpora
   ansible.builtin.command: >
@@ -209,7 +224,7 @@
   become: yes
   become_user: "{{ ail_user }}"
 
-- name: Create the file all_module and update the graph in doc  # noqa 301
+- name: Create the file all_module and update the graph in doc  # noqa no-changed-when
   ansible.builtin.command: "{{ ail_root }}/doc/generate_modules_data_flow_graph.sh"
   become: yes
   become_user: "{{ ail_user }}"
@@ -236,7 +251,8 @@
     remote_src: true
   when: not ailcfg.stat.exists
 
-- import_tasks: ail-cert.yml
+- name: Import ail-cert
+  ansible.builtin.import_tasks: ail-cert.yml
   when: not (ail_version is defined) or ail_version == 'HEAD' or not ('v2.2' in ail_version)
 
 - name: Update python path
@@ -247,12 +263,18 @@
     mode: '0755'
   when: ail_version is defined and ail_version != 'v2.0'
 
-- import_tasks: pgpdump.yml
-- import_tasks: ail-update_thirdparty.yml
-- import_tasks: redis-tuning.yml
+- name: Import pgpdump
+  ansible.builtin.import_tasks: pgpdump.yml
+- name: Import ail-update_thirdparty
+  ansible.builtin.import_tasks: ail-update_thirdparty.yml
+- name: Import redis-tuning
+  ansible.builtin.import_tasks: redis-tuning.yml
 
 - name: Set ail supervisor config
-  ansible.builtin.template: "src=supervisor-{{ item }}.conf.j2 dest={{ supervisor_confdir }}/{{ item }}.{{ supervisor_ext }} mode=0644"
+  ansible.builtin.template:
+    src: "supervisor-{{ item }}.conf.j2"
+    dest: "{{ supervisor_confdir }}/{{ item }}.{{ supervisor_ext }}"
+    mode: "0644"
   with_items:
     - ail
     - ail-redis6379
@@ -302,7 +324,8 @@
     mode: '0755'
     backup: yes
 - name: Check for all_modules.txt
-  ansible.builtin.stat: path={{ ail_root }}/doc/all_modules.txt
+  ansible.builtin.stat:
+    path: "{{ ail_root }}/doc/all_modules.txt"
   register: allmodules
 - name: For ModuleInformation.py start - BUG?
   ansible.builtin.file:
@@ -312,9 +335,12 @@
   when: not allmodules.stat.exists
 
 - name: Disable redis upstream package service
-  ansible.builtin.service: name=redis-server enabled=no state=stopped
+  ansible.builtin.service:
+    name: redis-server
+    enabled: no
+    state: stopped
 
-- name: Init update version  # noqa 303
+- name: Init update version  # noqa no-free-form
   ansible.builtin.shell: |
     set -o pipefail
     git describe --abbrev=0 --tags | tr -d '\n' > {{ ail_root }}/update/current_version
@@ -334,7 +360,7 @@
   with_items: "{{ ail_services }}"
 
 - name: Ensure supervisor programs are started (core part)
-  supervisorctl:
+  community.general.supervisorctl:
     name: "{{ item }}"
     state: started
   with_items:
@@ -370,7 +396,7 @@
     mode: '0644'
 
 - name: Ensure supervisor programs are started (modules)
-  supervisorctl:
+  community.general.supervisorctl:
     name: "ail-script-{{ item | regex_replace('/', '-') }}"
     state: started
   with_items: "{{ ail_modules }}"
@@ -391,5 +417,6 @@
     port: "7000"
     delay: 15
 
-- import_tasks: nginx.yml
+- name: Import nginx
+  ansible.builtin.import_tasks: nginx.yml
   when: ail_nginx_enable

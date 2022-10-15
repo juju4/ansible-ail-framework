@@ -1,6 +1,7 @@
 ---
 
 - name: Debian
+  when: ansible_os_family == 'Debian'
   block:
     - name: Nginx AIL configuration
       ansible.builtin.template:
@@ -19,4 +20,3 @@
         mode: '0644'
       notify:
         - Restart nginx
-  when: ansible_os_family == 'Debian'

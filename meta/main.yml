@@ -18,9 +18,9 @@ galaxy_info:
     - system
     - security
 dependencies:
-  - juju4.redhat_epel
-  - juju4.faup
-  - juju4.tlsh
-  - geerlingguy.redis
-  # - juju4.redis-leveldb
-  - juju4.pystemon
+  - role: juju4.redhat_epel
+  - role: juju4.faup
+  - role: juju4.tlsh
+  - role: geerlingguy.redis
+  # - role: juju4.redis-leveldb
+  - role: juju4.pystemon
