@@ -4,7 +4,7 @@
   ansible.builtin.git:
     repo: https://github.com/ail-project/ardb.git
     dest: "{{ ardb_root }}"
-    version: "{{ ardb_version | default('v0.9.7') }}"
+    version: "{{ ardb_version }}"
   failed_when: false
 
 # failing in kitchen/lxd

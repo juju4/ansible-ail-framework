@@ -8,6 +8,7 @@ ail_root: "{{ ail_home }}/AIL"
 ## Note: virtualenv not inside AIL to avoid conflict with git operations
 ail_virtualenv: "{{ ail_home }}/AILENV"
 ardb_root: "{{ ail_home }}/ARDB"
+ardb_version: cdf625254cc2402dd7150fba6d7ba7daf4f6964b
 
 ail_enable_pystemonfeeder: false
 pystemon_redis_host: localhost
