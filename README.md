@@ -1,3 +1,6 @@
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+# DEPRECATED/LOOKING FOR MAINTAINERS -> to be archived else
+
 [![Actions Status - Master](https://github.com/juju4/ansible-ail-framework/workflows/AnsibleCI/badge.svg)](https://github.com/juju4/ansible-ail-framework/actions?query=branch%3Amaster)
 [![Actions Status - Devel](https://github.com/juju4/ansible-ail-framework/workflows/AnsibleCI/badge.svg?branch=devel)](https://github.com/juju4/ansible-ail-framework/actions?query=branch%3Adevel)
 
