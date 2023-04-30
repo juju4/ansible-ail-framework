@@ -183,7 +183,7 @@
     - name: Review pystemon-feeder settings
       ansible.builtin.replace:
         dest: "{{ ail_root }}/bin/feeder/pystemon-feeder.py"
-        regex: "{{ item.re }}"
+        regexp: "{{ item.re }}"
         replace: "{{ item.rep }}"
         mode: '0755'
         backup: yes

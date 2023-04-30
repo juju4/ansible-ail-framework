@@ -1,59 +1,60 @@
 ---
 
-- hosts: all
+- name: Test integration playbook
+  hosts: all
   vars:
-    - faup_virtualenv_path: "{{ ail_virtualenv }}"
-    - faup_virtualenv_user: "{{ ail_user }}"
-    - faup_virtualenv_home: "{{ ail_home }}"
-    - faup_ownership:
-        - { d: "{{ ail_home }}/.cache/pip", s: directory, m: '0755', o: "www-data" }
-        - { d: "{{ toolsetdir }}/faup/src/lib/bindings/python/build", s: directory, m: '0755', o: "{{ ail_user }}" }
-        - { d: "{{ toolsetdir }}/faup/src/lib/bindings/python/pyfaup.egg-info", s: directory, m: '0755', o: "{{ ail_user }}" }
-    - tlsh_virtualenv_path: "{{ ail_virtualenv }}"
-    - tlsh_virtualenv_user: "{{ ail_user }}"
-    - tlsh_virtualenv_home: "{{ ail_home }}"
-    - tlsh_version: a67c69b0cdfd168c62c159d41b8a3612ee2b0df1
-    - redis_configure: false
-    - ail_version: HEAD
-    - ardb_version: HEAD
-    - ail_modules:
-        - modules/Global
-        - modules/Categ
-        - modules/Indexer
-        - modules/Tags
-        - modules/submit_paste
-        - core/Sync_module
-        - modules/ApiKey
-        - modules/Credential
-        - modules/CreditCards
-        - modules/Decoder
-        - modules/DomClassifier
-        - modules/Keys
-        - modules/Onion
-        - modules/SentimentAnalysis
-        - modules/Telegram
-        - modules/Urls
-        - modules/SQLInjectionDetection
-        - modules/LibInjection
-        - trackers/Tracker_Term
-        - trackers/Tracker_Regex
-        - trackers/Tracker_Yara
-        - trackers/Retro_Hunt
-        - ModulesInformationV2
-        - Mixer
-        - Duplicates
-        - BankAccount
-        - Mail
-        - PgpDump
-        - Cryptocurrencies
-        - Tools
-        - Cve
-        - ModuleStats
-        - MISP_The_Hive_feeder
-        - Languages
-        # if configured in core.cfg
-        # - IPAddress
-        # commented in upstream
-        # - Release
+    faup_virtualenv_path: "{{ ail_virtualenv }}"
+    faup_virtualenv_user: "{{ ail_user }}"
+    faup_virtualenv_home: "{{ ail_home }}"
+    faup_ownership:
+      - { d: "{{ ail_home }}/.cache/pip", s: directory, m: '0755', o: "www-data" }
+      - { d: "{{ toolsetdir }}/faup/src/lib/bindings/python/build", s: directory, m: '0755', o: "{{ ail_user }}" }
+      - { d: "{{ toolsetdir }}/faup/src/lib/bindings/python/pyfaup.egg-info", s: directory, m: '0755', o: "{{ ail_user }}" }
+    tlsh_virtualenv_path: "{{ ail_virtualenv }}"
+    tlsh_virtualenv_user: "{{ ail_user }}"
+    tlsh_virtualenv_home: "{{ ail_home }}"
+    tlsh_version: a67c69b0cdfd168c62c159d41b8a3612ee2b0df1
+    redis_configure: false
+    ail_version: HEAD
+    ardb_version: HEAD
+    ail_modules:
+      - modules/Global
+      - modules/Categ
+      - modules/Indexer
+      - modules/Tags
+      - modules/submit_paste
+      - core/Sync_module
+      - modules/ApiKey
+      - modules/Credential
+      - modules/CreditCards
+      - modules/Decoder
+      - modules/DomClassifier
+      - modules/Keys
+      - modules/Onion
+      - modules/SentimentAnalysis
+      - modules/Telegram
+      - modules/Urls
+      - modules/SQLInjectionDetection
+      - modules/LibInjection
+      - trackers/Tracker_Term
+      - trackers/Tracker_Regex
+      - trackers/Tracker_Yara
+      - trackers/Retro_Hunt
+      - ModulesInformationV2
+      - Mixer
+      - Duplicates
+      - BankAccount
+      - Mail
+      - PgpDump
+      - Cryptocurrencies
+      - Tools
+      - Cve
+      - ModuleStats
+      - MISP_The_Hive_feeder
+      - Languages
+      # if configured in core.cfg
+      # - IPAddress
+      # commented in upstream
+      # - Release
   roles:
     - juju4.ail_framework

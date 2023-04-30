@@ -25,7 +25,7 @@
       ansible.builtin.command: "cat /sys/kernel/mm/transparent_hugepage/enabled"
       register: statethp
       changed_when: false
-    - name: Disable Transparent Huge Pages (THP) in kernel (for redis)
+    - name: Disable Transparent Huge Pages (THP) in kernel (for redis)  # noqa no-changed-when
       ansible.builtin.shell: "echo never > /sys/kernel/mm/transparent_hugepage/enabled"
       when:
         - statethp is defined
