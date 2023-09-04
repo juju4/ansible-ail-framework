@@ -24,7 +24,7 @@ jobs:
       ANSIBLE_EXTRA_VARS: "-e ail_version=HEAD -e ardb_version=HEAD"
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: juju4.ail_framework
       - name: Set up Python
