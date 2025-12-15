@@ -24,7 +24,7 @@ jobs:
       ANSIBLE_EXTRA_VARS: ""
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           path: juju4.ail_framework
       - name: Set up Python
